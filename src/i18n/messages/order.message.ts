@@ -1,0 +1,68 @@
+export const orderMessages = {
+  en: {
+    you_cannot_get_a_ticket_through_5: 'You cannot get a ticket through 5',
+    order_not_found: 'Order not found.',
+    failed_to_create_order: 'Failed to create order.',
+    already_exist_order: 'Order already exists.',
+    failed_to_fetch_order_list: 'Failed to fetch order list.',
+    failed_to_fetch_order_deatils: 'Failed to fetch order details.',
+    failed_to_update_order: 'Failed to update order.',
+    cannot_delete_order_due_to_related_records_in_other_tables:
+      'Cannot delete order due to related records in other tables.',
+    failed_to_delete_order: 'Failed to delete order.',
+    order_created_successfully: 'Order Created Successfully',
+    order_fetched_successfully: 'Order Fetched Successfully',
+    order_updated_successfully: 'Order Updated Successfully',
+    order_deleted_successfully: 'Order Deleted Successfully',
+  },
+  uz: {
+    you_cannot_get_a_ticket_through_5: '5 tadan ortiq chipta ololmaysiz',
+    order_not_found: 'Buyurtma topilmadi.',
+    failed_to_create_order: 'Buyurtmani yaratishda xatolik.',
+    already_exist_order: 'Buyurtma allaqachon mavjud.',
+    failed_to_fetch_order_list: "Buyurtmalar ro'yxatini olib bo'lmadi.",
+    failed_to_fetch_order_deatils: "Buyurtma tafsilotlarini olib bo'lmadi.",
+    failed_to_update_order: "Buyurtmani yangilab bo'lmadi.",
+    cannot_delete_order_due_to_related_records_in_other_tables:
+      'Boshqa jadvallardagi tegishli yozuvlar tufayli buyurtmani oʻchirib boʻlmaydi.',
+    failed_to_delete_order: 'Buyurtmani o‘chirib bo‘lmadi.',
+    order_created_successfully: 'Buyurtma muvaffaqiyatli yaratildi',
+    order_fetched_successfully: 'Buyurtma muvaffaqiyatli olindi',
+    order_updated_successfully: 'Buyurtma muvaffaqiyatli yangilandi',
+    order_deleted_successfully: 'Buyurtma muvaffaqiyatli o‘chirildi',
+  },
+  qq: {
+    you_cannot_get_a_ticket_through_5: '5 ten artıq shıpta alalmaysız ',
+    order_not_found: 'Buyırtpa tabilǵan zatdı.',
+    failed_to_create_order: "Buyırtpa jaratıp bo'lmadi.",
+    already_exist_order: 'Ámeldegi kategoriya.',
+    failed_to_fetch_order_list: 'Buyırtpalar dizimin alıw áwmetsiz tawsıldı.',
+    failed_to_fetch_order_deatils:
+      'Buyırtpa maǵlıwmatların alıw áwmetsiz tawsıldı.',
+    failed_to_update_order: "Buyırtpani jańalap bo'lmadi.",
+    cannot_delete_order_due_to_related_records_in_other_tables:
+      "Basqa kestelerdegi baylanıslı jazıwlar sebepli buyırtpani óshirip bo'lmadi.",
+    failed_to_delete_order: "Buyırtpani óshirip bo'lmadi.",
+    order_created_successfully: 'Buyırtpa múvaffaqiyatlı jaratıldı',
+    order_fetched_successfully: 'Buyırtpa múvaffaqiyatlı alındı',
+    order_updated_successfully: 'Buyırtpa múvaffaqiyatlı jańalandi',
+    order_deleted_successfully: 'Buyırtpa múvaffaqiyatlı óshirildi',
+  },
+  ru: {
+    you_cannot_get_a_ticket_through_5:
+      ' Вы не можете получить более 5 билетов.',
+    order_not_found: 'Заказ не найден.',
+    failed_to_create_order: 'Ошибка при создании заказа.',
+    already_exist_order: 'Заказ уже существует.',
+    failed_to_fetch_order_list: 'Не удалось получить список заказов.',
+    failed_to_fetch_order_deatils: 'Не удалось получить детали заказа.',
+    failed_to_update_order: 'Не удалось обновить заказ.',
+    cannot_delete_order_due_to_related_records_in_other_tables:
+      'Невозможно удалить заказ из-за связанных записей в других таблицах.',
+    failed_to_delete_order: 'Не удалось удалить заказ.',
+    order_created_successfully: 'Заказ успешно создан.',
+    order_fetched_successfully: 'Заказ успешно получен.',
+    order_updated_successfully: 'Заказ успешно обновлен.',
+    order_deleted_successfully: 'Заказ успешно удален.',
+  },
+};

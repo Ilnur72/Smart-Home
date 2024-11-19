@@ -1,0 +1,63 @@
+export const regionMessages = {
+  en: {
+    region_not_found: 'Region not found.',
+    failed_to_create_region: 'Failed to create region.',
+    already_exist_region: 'Region already exists.',
+    failed_to_fetch_region_list: 'Failed to fetch region list.',
+    failed_to_fetch_region_deatils: 'Failed to fetch region details.',
+    failed_to_update_region: 'Failed to update region.',
+    cannot_delete_region_due_to_related_records_in_other_tables:
+      'Cannot delete region due to related records in other tables.',
+    failed_to_delete_region: 'Failed to delete region.',
+    region_created_successfully: 'Region Created Successfully',
+    region_fetched_successfully: 'Region Fetched Successfully',
+    region_updated_successfully: 'Region Updated Successfully',
+    region_deleted_successfully: 'Region Deleted Successfully',
+  },
+  uz: {
+    region_not_found: 'Region topilmadi.',
+    failed_to_create_region: 'Regionni yaratishda xatolik.',
+    already_exist_region: 'Region allaqachon mavjud.',
+    failed_to_fetch_region_list: "Regionlar ro'yxatini olib bo'lmadi.",
+    failed_to_fetch_region_deatils: "Region tafsilotlarini olib bo'lmadi.",
+    failed_to_update_region: "Regionni yangilab bo'lmadi.",
+    cannot_delete_region_due_to_related_records_in_other_tables:
+      'Boshqa jadvallardagi tegishli yozuvlar tufayli regionni oʻchirib boʻlmaydi.',
+    failed_to_delete_region: 'Regionni o‘chirib bo‘lmadi.',
+    region_created_successfully: 'Region muvaffaqiyatli yaratildi',
+    region_fetched_successfully: 'Region muvaffaqiyatli olindi',
+    region_updated_successfully: 'Region muvaffaqiyatli yangilandi',
+    region_deleted_successfully: 'Region muvaffaqiyatli o‘chirildi',
+  },
+  qq: {
+    region_not_found: 'Region tabilǵan zatdı.',
+    failed_to_create_region: "Region jaratıp bo'lmadi.",
+    already_exist_region: 'Ámeldegi region.',
+    failed_to_fetch_region_list: 'Regionlar dizimin alıw áwmetsiz tawsıldı.',
+    failed_to_fetch_region_deatils:
+      'Region maǵlıwmatların alıw áwmetsiz tawsıldı.',
+    failed_to_update_region: "Regionni jańalap bo'lmadi.",
+    cannot_delete_region_due_to_related_records_in_other_tables:
+      "Basqa kestelerdegi baylanıslı jazıwlar sebepli regiondi óshirip bo'lmadi.",
+    failed_to_delete_region: "Regionni óshirip bo'lmadi.",
+    region_created_successfully: 'Region múvaffaqiyatlı jaratıldı',
+    region_fetched_successfully: 'Region múvaffaqiyatlı alındı',
+    region_updated_successfully: 'Region múvaffaqiyatlı jańalandi',
+    region_deleted_successfully: 'Region múvaffaqiyatlı óshirildi',
+  },
+  ru: {
+    region_not_found: 'Регион не найден.',
+    failed_to_create_region: 'Ошибка при создании региона.',
+    already_exist_region: 'Регион уже существует.',
+    failed_to_fetch_region_list: 'Не удалось получить список регионов.',
+    failed_to_fetch_region_deatils: 'Не удалось получить детали региона.',
+    failed_to_update_region: 'Не удалось обновить регион.',
+    cannot_delete_region_due_to_related_records_in_other_tables:
+      'Невозможно удалить регион из-за связанных записей в других таблицах.',
+    failed_to_delete_region: 'Не удалось удалить регион.',
+    region_created_successfully: 'Регион успешно создан.',
+    region_fetched_successfully: 'Регион успешно получен.',
+    region_updated_successfully: 'Регион успешно обновлен.',
+    region_deleted_successfully: 'Регион успешно удален.',
+  },
+};
