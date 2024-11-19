@@ -1,4 +1,10 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  NotFoundException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -127,6 +133,22 @@ export class UserService {
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
+    }
+  }
+
+  async findOneByPhone(phone?: string): Promise<any> {
+    try {
+      const existing = await this.userRepository.findOne({
+        where: { phone, isDeleted: false },
+      });
+      if (!existing) throw new NotFoundException(`User not found`);
+
+      return existing;
+    } catch (error) {
+      if (error.status === 404) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to fetch user details');
     }
   }
 

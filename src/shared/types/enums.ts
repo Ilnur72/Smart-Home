@@ -8,3 +8,8 @@ export enum LanguageStatus {
   RU = 'RU',
   EN = 'EN',
 }
+
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+}
