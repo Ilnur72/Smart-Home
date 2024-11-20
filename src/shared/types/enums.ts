@@ -12,4 +12,5 @@ export enum LanguageStatus {
 export enum UserRole {
   ADMIN = 'ADMIN',
   USER = 'USER',
+  OPERATOR = 'OPERATOR',
 }

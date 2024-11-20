@@ -9,36 +9,39 @@ import {
   Put,
   Headers,
   UseGuards,
+  Inject,
 } from '@nestjs/common';
-import { BuildingService } from './building.service';
+import { OperatorService } from './operator.service';
 
-import { CreateBuildingDto } from './dto/create-building.dto';
-import { UpdateBuildingDto } from './dto/update-building.dto';
+import { CreateOperatorDto } from './dto/create-operator.dto';
+import { UpdateOperatorDto } from './dto/update-operator.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { LanguageStatus, UserRole } from '../../shared/types/enums';
+import { LanguageStatus } from '../../shared/types/enums';
 import { MessageService } from '../../i18n/message.service';
 import { IsLoggedIn } from '../../shared/guards/is-loggedin.guard';
-import { SetRoles } from '../auth/set-roles.decorator';
+import { REQUEST } from '@nestjs/core';
+// import { SetRoles } from '../auth/set-roles.decorator';
 import { HasRole } from '../../shared/guards/has-roles.guard';
 
-@ApiTags('Building')
-@Controller('building')
-export class BuildingController {
+// @SetRoles(OperatorRole.ADMIN)
+@UseGuards(IsLoggedIn, HasRole)
+@ApiTags('Operator')
+@Controller('operator')
+export class OperatorController {
   constructor(
-    private readonly buildingService: BuildingService,
+    private readonly operatorService: OperatorService,
     private readonly messageService: MessageService,
+    @Inject(REQUEST) private readonly request: Request,
   ) {}
 
-  // @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
   @Post()
   async create(
-    @Body() createBuildingDto: CreateBuildingDto,
+    @Body() createOperatorDto: CreateOperatorDto,
     @Headers('accept-language') language: LanguageStatus,
   ) {
     try {
-      const data = await this.buildingService.create(
-        createBuildingDto,
+      const data = await this.operatorService.create(
+        createOperatorDto,
         language,
       );
 
@@ -47,9 +50,9 @@ export class BuildingController {
         code: 201,
         data,
         message: this.messageService.getMessage(
-          'building',
+          'operator',
           language,
-          'building_created_successfully',
+          'operator_created_successfully',
         ),
       };
     } catch (error) {
@@ -59,12 +62,12 @@ export class BuildingController {
 
   @Get()
   async findAll(
-    @Query() findBuildingDto: any,
+    @Query() findOperatorDto: any,
     @Headers('accept-language') language: LanguageStatus,
   ) {
     try {
-      const data = await this.buildingService.findAll(
-        findBuildingDto,
+      const data = await this.operatorService.findAll(
+        findOperatorDto,
         language,
       );
       return {
@@ -72,14 +75,35 @@ export class BuildingController {
         code: 200,
         data,
         message: this.messageService.getMessage(
-          'building',
+          'operator',
           language,
-          'building_fetched_successfully',
+          'operator_fetched_successfully',
         ),
       };
     } catch (error) {
-      console.log(error);
+      throw error;
+    }
+  }
 
+  // @SetRoles(OperatorRole.ADMIN, OperatorRole.USER)
+  @Get('current')
+  async findMe(@Headers('accept-language') language: LanguageStatus) {
+    try {
+      const data = await this.operatorService.findOne(
+        this.request['operator'].id,
+        language,
+      );
+      return {
+        success: true,
+        code: 200,
+        data,
+        message: this.messageService.getMessage(
+          'operator',
+          language,
+          'operator_fetched_successfully',
+        ),
+      };
+    } catch (error) {
       throw error;
     }
   }
@@ -90,17 +114,15 @@ export class BuildingController {
     @Headers('accept-language') language: LanguageStatus,
   ) {
     try {
-      const data = await this.buildingService.findOne(id, language);
-      console.log(data);
-      
+      const data = await this.operatorService.findOne(id, language);
       return {
         success: true,
         code: 200,
         data,
         message: this.messageService.getMessage(
-          'building',
+          'operator',
           language,
-          'building_fetched_successfully',
+          'operator_fetched_successfully',
         ),
       };
     } catch (error) {
@@ -108,23 +130,22 @@ export class BuildingController {
     }
   }
 
-  @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  // @SetRoles(OperatorRole.ADMIN, OperatorRole.USER)
   @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateBuildingDto: UpdateBuildingDto,
+    @Body() updateOperatorDto: UpdateOperatorDto,
     @Headers('accept-language') language: LanguageStatus,
   ) {
     try {
-      await this.buildingService.update(id, updateBuildingDto, language);
+      await this.operatorService.update(id, updateOperatorDto, language);
       return {
         success: true,
         code: 204,
         message: this.messageService.getMessage(
-          'building',
+          'operator',
           language,
-          'building_updated_successfully',
+          'operator_updated_successfully',
         ),
       };
     } catch (error) {
@@ -132,22 +153,21 @@ export class BuildingController {
     }
   }
 
-  @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  // @SetRoles(OperatorRole.ADMIN, OperatorRole.USER)
   @Delete(':id')
   async remove(
     @Param('id') id: string,
     @Headers('accept-language') language: LanguageStatus,
   ) {
     try {
-      await this.buildingService.remove(id, language);
+      await this.operatorService.remove(id, language);
       return {
         success: true,
         code: 204,
         message: this.messageService.getMessage(
-          'building',
+          'operator',
           language,
-          'building_deleted_successfully',
+          'operator_deleted_successfully',
         ),
       };
     } catch (error) {

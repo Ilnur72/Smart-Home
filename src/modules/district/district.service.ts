@@ -1,53 +1,54 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { CreateBuildingDto } from './dto/create-building.dto';
-import { UpdateBuildingDto } from './dto/update-building.dto';
+import { CreateDistrictDto } from './dto/create-district.dto';
+import { UpdateDistrictDto } from './dto/update-district.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Building } from './entities/building.entity';
+import { District } from './entities/district.entity';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
 import { LanguageStatus } from '../../shared/types/enums';
 
 @Injectable()
-export class BuildingService {
+export class DistrictService {
   constructor(
-    @InjectRepository(Building)
-    private buildingRepository: Repository<Building>,
+    @InjectRepository(District)
+    private districtRepository: Repository<District>,
     private readonly messageService: MessageService,
   ) {}
 
-  async create(createBuildingDto: CreateBuildingDto, language: string) {
+  async create(createDistrictDto: CreateDistrictDto, language: string) {
     try {
-      // const existing = await this.buildingRepository.findOne({
-      //   where: { name: createBuildingDto.name },
-      // });
-      // if (existing)
-      //   throw new HttpException(
-      //     this.messageService.getMessage(
-      //       'building',
-      //       language,
-      //       'already_exist_building',
-      //     ),
-      //     HttpStatus.BAD_REQUEST,
-      //   );
+      const existing = await this.districtRepository.findOne({
+        where: { name: createDistrictDto.name },
+      });
+      if (existing)
+        throw new HttpException(
+          this.messageService.getMessage(
+            'district',
+            language,
+            'already_exist_district',
+          ),
+          HttpStatus.BAD_REQUEST,
+        );
 
-      const newBuilding = this.buildingRepository.create(createBuildingDto);
-      return await this.buildingRepository.save(newBuilding);
+      const newDistrict = this.districtRepository.create(createDistrictDto);
+      return await this.districtRepository.save(newDistrict);
     } catch (error) {
       if (error.status === 400) {
         throw new HttpException(
           this.messageService.getMessage(
-            'building',
+            'district',
             language,
-            'already_exist_building',
+            'already_exist_district',
           ),
           HttpStatus.BAD_REQUEST,
         );
       }
+      console.log(error);
       throw new HttpException(
         this.messageService.getMessage(
-          'building',
+          'district',
           language,
-          'failed_to_create_building',
+          'failed_to_create_district',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
@@ -55,17 +56,26 @@ export class BuildingService {
   }
 
   async findAll(
-    { search, filters = { is_deleted: false } }: any,
-    language?: LanguageStatus,
+    {
+      search,
+      filters = { is_deleted: false },
+    }: // sort = { by: 'createdAt', order: SortOrder.DESC },
+
+    any,
+    language: LanguageStatus,
   ): Promise<any> {
     try {
-      const existing = this.buildingRepository.createQueryBuilder('building');
+      const existing = this.districtRepository.createQueryBuilder('district');
 
       if (search) {
-        existing.where('building.name ILIKE :search ILIKE :search', {
-          search: `%${search}%`,
-        });
+        existing.where(
+          'district.name ILIKE :search OR district.surname ILIKE :search',
+          { search: `%${search}%` },
+        );
       }
+      // if (sort.by && sort.order) {
+      //   existing.orderBy(`district.${sort.by}`, sort.order);
+      // }
       if (filters) {
         existing.andWhere(filters);
       }
@@ -76,10 +86,11 @@ export class BuildingService {
     } catch (error) {
       throw new HttpException(
         this.messageService.getMessage(
-          'building',
+          'district',
           language,
-          'failed_to_fetch_building_list',
+          'failed_to_fetch_district_list',
         ),
+
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -87,47 +98,32 @@ export class BuildingService {
 
   async findOne(id: string, language: LanguageStatus): Promise<any> {
     try {
-      const existing = await this.buildingRepository.findOne({
+      const existing = await this.districtRepository.findOne({
         where: { id, is_deleted: false },
-        relations: ['district', 'district.regions'],
       });
+      console.log(existing);
 
       if (!existing) {
         throw new HttpException(
           this.messageService.getMessage(
-            'building',
+            'district',
             language,
-            'building_not_found',
+            'district_not_found',
           ),
           HttpStatus.NOT_FOUND,
         );
       }
-      const { address, region_id, district_id, district, ...filteredBuilding } =
-        existing;
-
-      const fullAddress = {
-        street: address,
-        district: district.name,
-        region: district.regions.name,
-      };
-      console.log({
-        ...filteredBuilding,
-        address: fullAddress,
-      });
-
-      return {
-        ...filteredBuilding,
-        address: fullAddress,
-      };
+      return existing;
     } catch (error) {
+      console.log(error);
       if (error.status === 404) {
         throw error;
       }
       throw new HttpException(
         this.messageService.getMessage(
-          'building',
+          'district',
           language,
-          'failed_to_fetch_building_deatils',
+          'failed_to_fetch_district_deatils',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
@@ -136,36 +132,36 @@ export class BuildingService {
 
   async update(
     id: string,
-    updateBuildingDto: UpdateBuildingDto,
+    updateDistrictDto: UpdateDistrictDto,
     language: LanguageStatus,
-  ): Promise<Building> {
+  ): Promise<District> {
     try {
-      const existing = await this.buildingRepository.findOne({
+      const existing = await this.districtRepository.findOne({
         where: { id, is_deleted: false },
       });
       if (!existing)
         throw new HttpException(
           this.messageService.getMessage(
-            'building',
+            'district',
             language,
-            'building_not_found',
+            'district_not_found',
           ),
           HttpStatus.NOT_FOUND,
         );
-      const updatedBuilding = this.buildingRepository.merge(
+      const updatedDistrict = this.districtRepository.merge(
         existing,
-        updateBuildingDto,
+        updateDistrictDto,
       );
-      return await this.buildingRepository.save(updatedBuilding);
+      return await this.districtRepository.save(updatedDistrict);
     } catch (error) {
       if (error.status === 404) {
         throw error;
       }
       throw new HttpException(
         this.messageService.getMessage(
-          'building',
+          'district',
           language,
-          'failed_to_update_building',
+          'failed_to_update_district',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
@@ -174,42 +170,41 @@ export class BuildingService {
 
   async remove(id: string, language: LanguageStatus): Promise<any> {
     try {
-      const existing = await this.buildingRepository.findOne({
+      const existing = await this.districtRepository.findOne({
         where: { id, is_deleted: false },
       });
       if (!existing) {
         throw new HttpException(
           this.messageService.getMessage(
-            'building',
+            'district',
             language,
-            'building_not_found',
+            'district_not_found',
           ),
           HttpStatus.NOT_FOUND,
         );
       }
-      const building = this.buildingRepository.merge(existing, {
+      const district = this.districtRepository.merge(existing, {
         is_deleted: true,
-        deleted_at: new Date(),
       });
-      await this.buildingRepository.save(building);
+      await this.districtRepository.save(district);
     } catch (error) {
       if (error.status === 404) {
         throw error;
       } else if (error.code === '23503') {
         throw new HttpException(
           this.messageService.getMessage(
-            'building',
+            'district',
             language,
-            'cannot_delete_building_due_to_related_records_in_other_tables',
+            'cannot_delete_district_due_to_related_records_in_other_tables',
           ),
           HttpStatus.BAD_REQUEST,
         );
       }
       throw new HttpException(
         this.messageService.getMessage(
-          'building',
+          'district',
           language,
-          'failed_to_delete_building',
+          'failed_to_delete_district',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );

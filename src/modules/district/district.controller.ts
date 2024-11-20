@@ -10,10 +10,9 @@ import {
   Headers,
   UseGuards,
 } from '@nestjs/common';
-import { BuildingService } from './building.service';
-
-import { CreateBuildingDto } from './dto/create-building.dto';
-import { UpdateBuildingDto } from './dto/update-building.dto';
+import { DistrictService } from './district.service';
+import { CreateDistrictDto } from './dto/create-district.dto';
+import { UpdateDistrictDto } from './dto/update-district.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { LanguageStatus, UserRole } from '../../shared/types/enums';
 import { MessageService } from '../../i18n/message.service';
@@ -21,24 +20,24 @@ import { IsLoggedIn } from '../../shared/guards/is-loggedin.guard';
 import { SetRoles } from '../auth/set-roles.decorator';
 import { HasRole } from '../../shared/guards/has-roles.guard';
 
-@ApiTags('Building')
-@Controller('building')
-export class BuildingController {
+@ApiTags('District')
+@Controller('district')
+export class DistrictController {
   constructor(
-    private readonly buildingService: BuildingService,
+    private readonly districtService: DistrictService,
     private readonly messageService: MessageService,
   ) {}
 
-  // @UseGuards(IsLoggedIn, HasRole)
+  @UseGuards(IsLoggedIn, HasRole)
   @SetRoles(UserRole.ADMIN)
   @Post()
   async create(
-    @Body() createBuildingDto: CreateBuildingDto,
+    @Body() createDistrictDto: CreateDistrictDto,
     @Headers('accept-language') language: LanguageStatus,
   ) {
     try {
-      const data = await this.buildingService.create(
-        createBuildingDto,
+      const data = await this.districtService.create(
+        createDistrictDto,
         language,
       );
 
@@ -47,9 +46,9 @@ export class BuildingController {
         code: 201,
         data,
         message: this.messageService.getMessage(
-          'building',
+          'district',
           language,
-          'building_created_successfully',
+          'district_created_successfully',
         ),
       };
     } catch (error) {
@@ -59,12 +58,12 @@ export class BuildingController {
 
   @Get()
   async findAll(
-    @Query() findBuildingDto: any,
+    @Query() findDistrictDto: any,
     @Headers('accept-language') language: LanguageStatus,
   ) {
     try {
-      const data = await this.buildingService.findAll(
-        findBuildingDto,
+      const data = await this.districtService.findAll(
+        findDistrictDto,
         language,
       );
       return {
@@ -72,14 +71,12 @@ export class BuildingController {
         code: 200,
         data,
         message: this.messageService.getMessage(
-          'building',
+          'district',
           language,
-          'building_fetched_successfully',
+          'district_fetched_successfully',
         ),
       };
     } catch (error) {
-      console.log(error);
-
       throw error;
     }
   }
@@ -90,17 +87,15 @@ export class BuildingController {
     @Headers('accept-language') language: LanguageStatus,
   ) {
     try {
-      const data = await this.buildingService.findOne(id, language);
-      console.log(data);
-      
+      const data = await this.districtService.findOne(id, language);
       return {
         success: true,
         code: 200,
         data,
         message: this.messageService.getMessage(
-          'building',
+          'district',
           language,
-          'building_fetched_successfully',
+          'district_fetched_successfully',
         ),
       };
     } catch (error) {
@@ -113,18 +108,18 @@ export class BuildingController {
   @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateBuildingDto: UpdateBuildingDto,
+    @Body() updateDistrictDto: UpdateDistrictDto,
     @Headers('accept-language') language: LanguageStatus,
   ) {
     try {
-      await this.buildingService.update(id, updateBuildingDto, language);
+      await this.districtService.update(id, updateDistrictDto, language);
       return {
         success: true,
         code: 204,
         message: this.messageService.getMessage(
-          'building',
+          'district',
           language,
-          'building_updated_successfully',
+          'district_updated_successfully',
         ),
       };
     } catch (error) {
@@ -140,14 +135,14 @@ export class BuildingController {
     @Headers('accept-language') language: LanguageStatus,
   ) {
     try {
-      await this.buildingService.remove(id, language);
+      await this.districtService.remove(id, language);
       return {
         success: true,
         code: 204,
         message: this.messageService.getMessage(
-          'building',
+          'district',
           language,
-          'building_deleted_successfully',
+          'district_deleted_successfully',
         ),
       };
     } catch (error) {

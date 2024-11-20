@@ -1,23 +1,35 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+// import { Region } from '../../region/entities/region.entity';
+import { District } from '../../district/entities/district.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Building {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ nullable: true })
+  @Column()
   region_id: string;
 
-  @Column({ nullable: true })
+  @Column()
+  district_id: string;
+
+  @Column()
   address: string;
 
-  @Column({ nullable: true })
+  @Column()
   floor: number;
 
-  @Column({ nullable: true })
-  entrance_number: string;
+  @Column()
+  entrance_number: number;
 
-  @Column({ nullable: true })
+  @Column()
   operator_id: string;
 
   @Column({ default: false, select: false })
@@ -31,4 +43,12 @@ export class Building {
 
   // @OneToMany(() => Operator, (operator) => operator.district)
   // operators: Operator[];
+
+  @ManyToOne(() => District, (district) => district.buildings)
+  @JoinColumn({ name: 'district_id' })
+  district: District;
+
+  // @ManyToOne(() => Region, (region) => region.buildings)
+  // @JoinColumn({ name: 'region_id' })
+  // region: Region;
 }

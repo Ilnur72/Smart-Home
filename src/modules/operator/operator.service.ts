@@ -1,53 +1,54 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { CreateBuildingDto } from './dto/create-building.dto';
-import { UpdateBuildingDto } from './dto/update-building.dto';
+import { CreateOperatorDto } from './dto/create-operator.dto';
+import { UpdateOperatorDto } from './dto/update-operator.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Building } from './entities/building.entity';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
 import { LanguageStatus } from '../../shared/types/enums';
+import { Operator } from './entities/operator.entity';
+// import { SortOrder } from '../../shared/types/enums';
 
 @Injectable()
-export class BuildingService {
+export class OperatorService {
   constructor(
-    @InjectRepository(Building)
-    private buildingRepository: Repository<Building>,
+    @InjectRepository(Operator)
+    private operatorRepository: Repository<Operator>,
     private readonly messageService: MessageService,
   ) {}
 
-  async create(createBuildingDto: CreateBuildingDto, language: string) {
+  async create(createOperatorDto: CreateOperatorDto, language?: string) {
     try {
-      // const existing = await this.buildingRepository.findOne({
-      //   where: { name: createBuildingDto.name },
-      // });
-      // if (existing)
-      //   throw new HttpException(
-      //     this.messageService.getMessage(
-      //       'building',
-      //       language,
-      //       'already_exist_building',
-      //     ),
-      //     HttpStatus.BAD_REQUEST,
-      //   );
+      const existing = await this.operatorRepository.findOne({
+        where: { login: createOperatorDto.login },
+      });
+      if (existing)
+        throw new HttpException(
+          this.messageService.getMessage(
+            'operator',
+            language,
+            'already_exist_operator',
+          ),
+          HttpStatus.BAD_REQUEST,
+        );
 
-      const newBuilding = this.buildingRepository.create(createBuildingDto);
-      return await this.buildingRepository.save(newBuilding);
+      const newOperator = this.operatorRepository.create(createOperatorDto);
+      return await this.operatorRepository.save(newOperator);
     } catch (error) {
       if (error.status === 400) {
         throw new HttpException(
           this.messageService.getMessage(
-            'building',
+            'operator',
             language,
-            'already_exist_building',
+            'already_exist_operator',
           ),
           HttpStatus.BAD_REQUEST,
         );
       }
       throw new HttpException(
         this.messageService.getMessage(
-          'building',
+          'operator',
           language,
-          'failed_to_create_building',
+          'failed_to_create_operator',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
@@ -55,31 +56,45 @@ export class BuildingService {
   }
 
   async findAll(
-    { search, filters = { is_deleted: false } }: any,
-    language?: LanguageStatus,
+    {
+      page = { limit: 10, offset: 1 },
+      search,
+      filters = { is_deleted: false },
+    }: // sort = { by: 'created_at', order: SortOrder.DESC },
+
+    any,
+    language: LanguageStatus,
   ): Promise<any> {
     try {
-      const existing = this.buildingRepository.createQueryBuilder('building');
+      const existing = this.operatorRepository.createQueryBuilder('operator');
 
       if (search) {
-        existing.where('building.name ILIKE :search ILIKE :search', {
-          search: `%${search}%`,
-        });
+        existing.where(
+          'operator.name ILIKE :search OR operator.surname ILIKE :search',
+          { search: `%${search}%` },
+        );
       }
+      // if (sort.by && sort.order) {
+      //   existing.orderBy(`operator.${sort.by}`, sort.order);
+      // }
       if (filters) {
         existing.andWhere(filters);
       }
       const total = await existing.getCount();
-      const data = await existing.getMany();
+      const data = await existing
+        .skip((page.offset - 1) * page.limit)
+        .take(page.limit)
+        .getMany();
 
-      return { total, data };
+      return { total, data, limit: page.limit, offset: page.offset };
     } catch (error) {
       throw new HttpException(
         this.messageService.getMessage(
-          'building',
+          'operator',
           language,
-          'failed_to_fetch_building_list',
+          'failed_to_fetch_operator_list',
         ),
+
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -87,47 +102,32 @@ export class BuildingService {
 
   async findOne(id: string, language: LanguageStatus): Promise<any> {
     try {
-      const existing = await this.buildingRepository.findOne({
+      const existing = await this.operatorRepository.findOne({
         where: { id, is_deleted: false },
-        relations: ['district', 'district.regions'],
+        relations: ['orders'],
       });
 
       if (!existing) {
         throw new HttpException(
           this.messageService.getMessage(
-            'building',
+            'operator',
             language,
-            'building_not_found',
+            'operator_not_found',
           ),
           HttpStatus.NOT_FOUND,
         );
       }
-      const { address, region_id, district_id, district, ...filteredBuilding } =
-        existing;
 
-      const fullAddress = {
-        street: address,
-        district: district.name,
-        region: district.regions.name,
-      };
-      console.log({
-        ...filteredBuilding,
-        address: fullAddress,
-      });
-
-      return {
-        ...filteredBuilding,
-        address: fullAddress,
-      };
+      return existing;
     } catch (error) {
       if (error.status === 404) {
         throw error;
       }
       throw new HttpException(
         this.messageService.getMessage(
-          'building',
+          'operator',
           language,
-          'failed_to_fetch_building_deatils',
+          'failed_to_fetch_operator_deatils',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
@@ -136,36 +136,36 @@ export class BuildingService {
 
   async update(
     id: string,
-    updateBuildingDto: UpdateBuildingDto,
+    updateOperatorDto: UpdateOperatorDto,
     language: LanguageStatus,
-  ): Promise<Building> {
+  ): Promise<Operator> {
     try {
-      const existing = await this.buildingRepository.findOne({
+      const existing = await this.operatorRepository.findOne({
         where: { id, is_deleted: false },
       });
       if (!existing)
         throw new HttpException(
           this.messageService.getMessage(
-            'building',
+            'operator',
             language,
-            'building_not_found',
+            'operator_not_found',
           ),
           HttpStatus.NOT_FOUND,
         );
-      const updatedBuilding = this.buildingRepository.merge(
+      const updatedOperator = this.operatorRepository.merge(
         existing,
-        updateBuildingDto,
+        updateOperatorDto,
       );
-      return await this.buildingRepository.save(updatedBuilding);
+      return await this.operatorRepository.save(updatedOperator);
     } catch (error) {
       if (error.status === 404) {
         throw error;
       }
       throw new HttpException(
         this.messageService.getMessage(
-          'building',
+          'operator',
           language,
-          'failed_to_update_building',
+          'failed_to_update_operator',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
@@ -174,42 +174,42 @@ export class BuildingService {
 
   async remove(id: string, language: LanguageStatus): Promise<any> {
     try {
-      const existing = await this.buildingRepository.findOne({
+      const existing = await this.operatorRepository.findOne({
         where: { id, is_deleted: false },
       });
       if (!existing) {
         throw new HttpException(
           this.messageService.getMessage(
-            'building',
+            'operator',
             language,
-            'building_not_found',
+            'operator_not_found',
           ),
           HttpStatus.NOT_FOUND,
         );
       }
-      const building = this.buildingRepository.merge(existing, {
+      const operator = this.operatorRepository.merge(existing, {
         is_deleted: true,
         deleted_at: new Date(),
       });
-      await this.buildingRepository.save(building);
+      await this.operatorRepository.save(operator);
     } catch (error) {
       if (error.status === 404) {
         throw error;
       } else if (error.code === '23503') {
         throw new HttpException(
           this.messageService.getMessage(
-            'building',
+            'operator',
             language,
-            'cannot_delete_building_due_to_related_records_in_other_tables',
+            'cannot_delete_operator_due_to_related_records_in_other_tables',
           ),
           HttpStatus.BAD_REQUEST,
         );
       }
       throw new HttpException(
         this.messageService.getMessage(
-          'building',
+          'operator',
           language,
-          'failed_to_delete_building',
+          'failed_to_delete_operator',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );

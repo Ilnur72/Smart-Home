@@ -3,6 +3,16 @@ import { IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator';
 
 export class CreateBuildingDto {
   @ApiProperty()
+  @IsUUID()
+  @IsNotEmpty()
+  region_id: string;
+
+  @ApiProperty()
+  @IsUUID()
+  @IsNotEmpty()
+  district_id: string;
+
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   address: string;
@@ -13,9 +23,9 @@ export class CreateBuildingDto {
   floor: number;
 
   @ApiProperty()
-  @IsUUID()
+  @IsNumber()
   @IsNotEmpty()
-  entrance_id: string;
+  entrance_number: number;
 
   @ApiProperty()
   @IsUUID()

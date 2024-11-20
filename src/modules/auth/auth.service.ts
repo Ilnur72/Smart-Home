@@ -53,7 +53,7 @@ export class AuthService {
   async login(body: LoginDto, language: string): Promise<any> {
     const user = await this.userRepository
       .createQueryBuilder('user')
-      .where({ phone: body.phone, isDeleted: false })
+      .where({ phone: body.phone, is_deleted: false })
       .addSelect('user.password')
       .getOne();
 

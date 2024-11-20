@@ -5,56 +5,61 @@ import {
   NotFoundException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
 import { LanguageStatus } from '../../shared/types/enums';
-import { User } from './entities/user.entity';
+import { OperatorUser } from './entities/operatorUser.entity';
+import { CreateOperatorUserDto } from './dto/create-operatorUser.dto';
+import { UpdateOperatorUserDto } from './dto/update-operatorUser.dto';
 // import { SortOrder } from '../../shared/types/enums';
 
 @Injectable()
-export class UserService {
+export class OperatorUserService {
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    @InjectRepository(OperatorUser)
+    private operatorUserRepository: Repository<OperatorUser>,
     private readonly messageService: MessageService,
   ) {}
 
-  async create(createUserDto: CreateUserDto, language?: string) {
+  async create(
+    createOperatorUserDto: CreateOperatorUserDto,
+    language?: string,
+  ) {
     try {
-      const existing = await this.userRepository.findOne({
-        where: { phone: createUserDto.phone },
+      const existing = await this.operatorUserRepository.findOne({
+        where: { login: createOperatorUserDto.login },
       });
       if (existing)
         throw new HttpException(
           this.messageService.getMessage(
-            'user',
+            'operatorUser',
             language,
-            'already_exist_user',
+            'already_exist_operatorUser',
           ),
           HttpStatus.BAD_REQUEST,
         );
 
-      const newUser = this.userRepository.create(createUserDto);
-      return await this.userRepository.save(newUser);
+      const newOperatorUser = this.operatorUserRepository.create(
+        createOperatorUserDto,
+      );
+      return await this.operatorUserRepository.save(newOperatorUser);
     } catch (error) {
       if (error.status === 400) {
         throw new HttpException(
           this.messageService.getMessage(
-            'user',
+            'operatorUser',
             language,
-            'already_exist_user',
+            'already_exist_operatorUser',
           ),
           HttpStatus.BAD_REQUEST,
         );
       }
       throw new HttpException(
         this.messageService.getMessage(
-          'user',
+          'operatorUser',
           language,
-          'failed_to_create_user',
+          'failed_to_create_operatorUser',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
@@ -72,16 +77,17 @@ export class UserService {
     language: LanguageStatus,
   ): Promise<any> {
     try {
-      const existing = this.userRepository.createQueryBuilder('user');
+      const existing =
+        this.operatorUserRepository.createQueryBuilder('operatorUser');
 
       if (search) {
         existing.where(
-          'user.name ILIKE :search OR user.surname ILIKE :search',
+          'operatorUser.name ILIKE :search OR operatorUser.surname ILIKE :search',
           { search: `%${search}%` },
         );
       }
       // if (sort.by && sort.order) {
-      //   existing.orderBy(`user.${sort.by}`, sort.order);
+      //   existing.orderBy(`operatorUser.${sort.by}`, sort.order);
       // }
       if (filters) {
         existing.andWhere(filters);
@@ -96,9 +102,9 @@ export class UserService {
     } catch (error) {
       throw new HttpException(
         this.messageService.getMessage(
-          'user',
+          'operatorUser',
           language,
-          'failed_to_fetch_user_list',
+          'failed_to_fetch_operatorUser_list',
         ),
 
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -108,14 +114,18 @@ export class UserService {
 
   async findOne(id: string, language: LanguageStatus): Promise<any> {
     try {
-      const existing = await this.userRepository.findOne({
+      const existing = await this.operatorUserRepository.findOne({
         where: { id, is_deleted: false },
         relations: ['orders'],
       });
 
       if (!existing) {
         throw new HttpException(
-          this.messageService.getMessage('user', language, 'user_not_found'),
+          this.messageService.getMessage(
+            'operatorUser',
+            language,
+            'operatorUser_not_found',
+          ),
           HttpStatus.NOT_FOUND,
         );
       }
@@ -127,56 +137,47 @@ export class UserService {
       }
       throw new HttpException(
         this.messageService.getMessage(
-          'user',
+          'operatorUser',
           language,
-          'failed_to_fetch_user_deatils',
+          'failed_to_fetch_operatorUser_deatils',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
 
-  async findOneByPhone(phone?: string): Promise<any> {
-    try {
-      const existing = await this.userRepository.findOne({
-        where: { phone, is_deleted: false },
-      });
-      if (!existing) throw new NotFoundException(`User not found`);
-
-      return existing;
-    } catch (error) {
-      if (error.status === 404) {
-        throw error;
-      }
-      throw new InternalServerErrorException('Failed to fetch user details');
-    }
-  }
-
   async update(
     id: string,
-    updateUserDto: UpdateUserDto,
+    updateOperatorUserDto: UpdateOperatorUserDto,
     language: LanguageStatus,
-  ): Promise<User> {
+  ): Promise<OperatorUser> {
     try {
-      const existing = await this.userRepository.findOne({
+      const existing = await this.operatorUserRepository.findOne({
         where: { id, is_deleted: false },
       });
       if (!existing)
         throw new HttpException(
-          this.messageService.getMessage('user', language, 'user_not_found'),
+          this.messageService.getMessage(
+            'operatorUser',
+            language,
+            'operatorUser_not_found',
+          ),
           HttpStatus.NOT_FOUND,
         );
-      const updatedUser = this.userRepository.merge(existing, updateUserDto);
-      return await this.userRepository.save(updatedUser);
+      const updatedOperatorUser = this.operatorUserRepository.merge(
+        existing,
+        updateOperatorUserDto,
+      );
+      return await this.operatorUserRepository.save(updatedOperatorUser);
     } catch (error) {
       if (error.status === 404) {
         throw error;
       }
       throw new HttpException(
         this.messageService.getMessage(
-          'user',
+          'operatorUser',
           language,
-          'failed_to_update_user',
+          'failed_to_update_operatorUser',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
@@ -185,38 +186,42 @@ export class UserService {
 
   async remove(id: string, language: LanguageStatus): Promise<any> {
     try {
-      const existing = await this.userRepository.findOne({
+      const existing = await this.operatorUserRepository.findOne({
         where: { id, is_deleted: false },
       });
       if (!existing) {
         throw new HttpException(
-          this.messageService.getMessage('user', language, 'user_not_found'),
+          this.messageService.getMessage(
+            'operatorUser',
+            language,
+            'operatorUser_not_found',
+          ),
           HttpStatus.NOT_FOUND,
         );
       }
-      const user = this.userRepository.merge(existing, {
+      const operatorUser = this.operatorUserRepository.merge(existing, {
         is_deleted: true,
         deleted_at: new Date(),
       });
-      await this.userRepository.save(user);
+      await this.operatorUserRepository.save(operatorUser);
     } catch (error) {
       if (error.status === 404) {
         throw error;
       } else if (error.code === '23503') {
         throw new HttpException(
           this.messageService.getMessage(
-            'user',
+            'operatorUser',
             language,
-            'cannot_delete_user_due_to_related_records_in_other_tables',
+            'cannot_delete_operatorUser_due_to_related_records_in_other_tables',
           ),
           HttpStatus.BAD_REQUEST,
         );
       }
       throw new HttpException(
         this.messageService.getMessage(
-          'user',
+          'operatorUser',
           language,
-          'failed_to_delete_user',
+          'failed_to_delete_operatorUser',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );

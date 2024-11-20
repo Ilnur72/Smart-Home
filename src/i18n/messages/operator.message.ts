@@ -1,0 +1,47 @@
+export const operatorMessages = {
+  en: {
+    operator_not_found: 'Operator not found.',
+    failed_to_create_operator: 'Failed to create operator.',
+    already_exist_operator: 'Operator already exists.',
+    failed_to_fetch_operator_list: 'Failed to fetch operator list.',
+    failed_to_fetch_operator_details: 'Failed to fetch operator details.',
+    failed_to_update_operator: 'Failed to update operator.',
+    cannot_delete_operator_due_to_related_records_in_other_tables:
+      'Cannot delete operator due to related records in other tables.',
+    failed_to_delete_operator: 'Failed to delete operator.',
+    operator_created_successfully: 'Operator Created Successfully',
+    operator_fetched_successfully: 'Operator Fetched Successfully',
+    operator_updated_successfully: 'Operator Updated Successfully',
+    operator_deleted_successfully: 'Operator Deleted Successfully',
+  },
+  uz: {
+    operator_not_found: 'Operator topilmadi.',
+    failed_to_create_operator: 'Operatorni yaratishda xatolik.',
+    already_exist_operator: 'Operator allaqachon mavjud.',
+    failed_to_fetch_operator_list: "Operatorlar ro'yxatini olib bo'lmadi.",
+    failed_to_fetch_operator_details: "Operator tafsilotlarini olib bo'lmadi.",
+    failed_to_update_operator: "Operatorni yangilab bo'lmadi.",
+    cannot_delete_operator_due_to_related_records_in_other_tables:
+      'Boshqa jadvallardagi tegishli yozuvlar tufayli operatorni oʻchirib boʻlmaydi.',
+    failed_to_delete_operator: 'Operatorni o‘chirib bo‘lmadi.',
+    operator_created_successfully: 'Operator muvaffaqiyatli yaratildi',
+    operator_fetched_successfully: 'Operator muvaffaqiyatli olindi',
+    operator_updated_successfully: 'Operator muvaffaqiyatli yangilandi',
+    operator_deleted_successfully: 'Operator muvaffaqiyatli o‘chirildi',
+  },
+  ru: {
+    operator_not_found: 'Оператор не найден.',
+    failed_to_create_operator: 'Не удалось создать оператора.',
+    already_exist_operator: 'Оператор уже существует.',
+    failed_to_fetch_operator_list: 'Не удалось получить список операторов.',
+    failed_to_fetch_operator_details: 'Не удалось получить детали оператора.',
+    failed_to_update_operator: 'Не удалось обновить оператора.',
+    cannot_delete_operator_due_to_related_records_in_other_tables:
+      'Невозможно удалить оператора из-за связанных записей в других таблицах.',
+    failed_to_delete_operator: 'Не удалось удалить оператора.',
+    operator_created_successfully: 'Оператор успешно создан',
+    operator_fetched_successfully: 'Оператор успешно получен',
+    operator_updated_successfully: 'Оператор успешно обновлен',
+    operator_deleted_successfully: 'Оператор успешно удален',
+  },
+};

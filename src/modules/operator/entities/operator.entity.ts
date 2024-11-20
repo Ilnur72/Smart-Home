@@ -2,24 +2,18 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from '../../../shared/types/enums';
 
 @Entity()
-export class User {
+export class Operator {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ enum: UserRole, default: UserRole.USER })
+  @Column({ enum: UserRole, default: UserRole.OPERATOR })
   role: UserRole;
 
   @Column()
-  fullname: string;
+  name: string;
 
-  @Column({ nullable: true })
-  apartment_id: string;
-
-  @Column({ unique: true })
-  phone: string;
-
-  @Column({ nullable: true })
-  email: string;
+  @Column()
+  login: string;
 
   @Column({ nullable: true, select: false })
   password: string;

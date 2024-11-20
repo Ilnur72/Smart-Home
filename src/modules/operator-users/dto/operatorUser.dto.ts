@@ -1,31 +1,35 @@
 import { ApiProperty } from '@nestjs/swagger';
+// import { Region } from '../../../modules/region/entities/region.entity';
 
-export class UserDto {
+export class OperatorUserDto {
   @ApiProperty()
-  fullname: string;
-
-  @ApiProperty()
-  phone: string;
+  name: string;
 
   @ApiProperty()
-  apartment_id: string;
+  operator_id: string;
 
   @ApiProperty()
-  email: string;
+  login: string;
+
+  @ApiProperty()
+  password: string;
 
   @ApiProperty()
   created_at: Date;
 }
 
-export class ResponseUserDto {
+export class ResponseOperatorUserDto {
   @ApiProperty({ description: 'Success status of the request' })
   success: true;
 
   @ApiProperty({ description: 'HTTP status code' })
   code: number;
 
-  @ApiProperty({ description: 'Array of user data', type: [UserDto] })
-  data: UserDto[];
+  @ApiProperty({
+    description: 'Array of operatorUser data',
+    type: [OperatorUserDto],
+  })
+  data: OperatorUserDto[];
 
   @ApiProperty({ description: 'Message of the response' })
   message: string;
