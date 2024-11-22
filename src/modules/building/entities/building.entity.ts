@@ -5,7 +5,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -13,9 +12,6 @@ import {
 export class Building {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column()
-  region_id: string;
 
   @Column()
   district_id: string;
@@ -41,14 +37,7 @@ export class Building {
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   deleted_at: Date;
 
-  // @OneToMany(() => Operator, (operator) => operator.district)
-  // operators: Operator[];
-
   @ManyToOne(() => District, (district) => district.buildings)
   @JoinColumn({ name: 'district_id' })
   district: District;
-
-  // @ManyToOne(() => Region, (region) => region.buildings)
-  // @JoinColumn({ name: 'region_id' })
-  // region: Region;
 }

@@ -7,19 +7,21 @@ import {
   Delete,
   Query,
   Put,
-  Headers,
   UseGuards,
+  HttpCode,
 } from '@nestjs/common';
 import { DistrictService } from './district.service';
 import { CreateDistrictDto } from './dto/create-district.dto';
 import { UpdateDistrictDto } from './dto/update-district.dto';
-import { ApiTags } from '@nestjs/swagger';
-import { LanguageStatus, UserRole } from '../../shared/types/enums';
+import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { LanguageDto, UserRole } from '../../shared/types/enums';
 import { MessageService } from '../../i18n/message.service';
 import { IsLoggedIn } from '../../shared/guards/is-loggedin.guard';
 import { SetRoles } from '../auth/set-roles.decorator';
 import { HasRole } from '../../shared/guards/has-roles.guard';
-
+import { ResponseDistrictDto } from './dto/district.dto';
+// import { FindDistrictDto } from './dto/find-district.dto';
+import { Language } from '../../shared/decorators/language.decorator';
 @ApiTags('District')
 @Controller('district')
 export class DistrictController {
@@ -31,9 +33,15 @@ export class DistrictController {
   @UseGuards(IsLoggedIn, HasRole)
   @SetRoles(UserRole.ADMIN)
   @Post()
+  @ApiResponse({
+    status: 201,
+    description: 'District successfully created',
+    type: ResponseDistrictDto,
+  })
+  @HttpCode(201)
   async create(
     @Body() createDistrictDto: CreateDistrictDto,
-    @Headers('accept-language') language: LanguageStatus,
+    @Language() language: LanguageDto,
   ) {
     try {
       const data = await this.districtService.create(
@@ -56,10 +64,16 @@ export class DistrictController {
     }
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'List of Districts',
+    type: ResponseDistrictDto,
+  })
+  @HttpCode(200)
   @Get()
   async findAll(
     @Query() findDistrictDto: any,
-    @Headers('accept-language') language: LanguageStatus,
+    @Language() language: LanguageDto,
   ) {
     try {
       const data = await this.districtService.findAll(
@@ -82,10 +96,14 @@ export class DistrictController {
   }
 
   @Get(':id')
-  async findOne(
-    @Param('id') id: string,
-    @Headers('accept-language') language: LanguageStatus,
-  ) {
+  @SetRoles(UserRole.ADMIN, UserRole.USER)
+  @ApiResponse({
+    status: 200,
+    description: 'Single District details',
+    type: ResponseDistrictDto,
+  })
+  @HttpCode(200)
+  async findOne(@Param('id') id: string, @Language() language: LanguageDto) {
     try {
       const data = await this.districtService.findOne(id, language);
       return {
@@ -106,16 +124,21 @@ export class DistrictController {
   @UseGuards(IsLoggedIn, HasRole)
   @SetRoles(UserRole.ADMIN)
   @Put(':id')
+  @ApiResponse({
+    status: 200,
+    description: 'District successfully updated',
+  })
+  @HttpCode(200)
   async update(
     @Param('id') id: string,
     @Body() updateDistrictDto: UpdateDistrictDto,
-    @Headers('accept-language') language: LanguageStatus,
+    @Language() language: LanguageDto,
   ) {
     try {
       await this.districtService.update(id, updateDistrictDto, language);
       return {
         success: true,
-        code: 204,
+        code: 200,
         message: this.messageService.getMessage(
           'district',
           language,
@@ -130,15 +153,17 @@ export class DistrictController {
   @UseGuards(IsLoggedIn, HasRole)
   @SetRoles(UserRole.ADMIN)
   @Delete(':id')
-  async remove(
-    @Param('id') id: string,
-    @Headers('accept-language') language: LanguageStatus,
-  ) {
+  @ApiResponse({
+    status: 200,
+    description: 'District successfully deleted',
+  })
+  @HttpCode(200)
+  async remove(@Param('id') id: string, @Language() language: LanguageDto) {
     try {
       await this.districtService.remove(id, language);
       return {
         success: true,
-        code: 204,
+        code: 200,
         message: this.messageService.getMessage(
           'district',
           language,

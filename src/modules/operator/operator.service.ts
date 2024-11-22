@@ -4,7 +4,7 @@ import { UpdateOperatorDto } from './dto/update-operator.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
-import { LanguageStatus } from '../../shared/types/enums';
+import { LanguageDto } from '../../shared/types/enums';
 import { Operator } from './entities/operator.entity';
 // import { SortOrder } from '../../shared/types/enums';
 
@@ -63,11 +63,14 @@ export class OperatorService {
     }: // sort = { by: 'created_at', order: SortOrder.DESC },
 
     any,
-    language: LanguageStatus,
+    language: LanguageDto,
   ): Promise<any> {
     try {
-      const existing = this.operatorRepository.createQueryBuilder('operator');
-
+      const existing = this.operatorRepository
+        .createQueryBuilder('operator')
+        .where('operator.is_deleted = :is_deleted', {
+          is_deleted: filters?.is_deleted ?? false,
+        });
       if (search) {
         existing.where(
           'operator.name ILIKE :search OR operator.surname ILIKE :search',
@@ -100,7 +103,7 @@ export class OperatorService {
     }
   }
 
-  async findOne(id: string, language: LanguageStatus): Promise<any> {
+  async findOne(id: string, language: LanguageDto): Promise<any> {
     try {
       const existing = await this.operatorRepository.findOne({
         where: { id, is_deleted: false },
@@ -137,7 +140,7 @@ export class OperatorService {
   async update(
     id: string,
     updateOperatorDto: UpdateOperatorDto,
-    language: LanguageStatus,
+    language: LanguageDto,
   ): Promise<Operator> {
     try {
       const existing = await this.operatorRepository.findOne({
@@ -172,7 +175,7 @@ export class OperatorService {
     }
   }
 
-  async remove(id: string, language: LanguageStatus): Promise<any> {
+  async remove(id: string, language: LanguageDto): Promise<any> {
     try {
       const existing = await this.operatorRepository.findOne({
         where: { id, is_deleted: false },

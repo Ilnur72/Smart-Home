@@ -14,13 +14,16 @@ async function bootstrap() {
   const port = configService.get<number>('port');
 
   const config = new DocumentBuilder()
-    .setTitle('Dropshipping API')
-    .addServer(`https://my-home-production.up.railway.app`)
+    .setTitle('Smart Home API')
+    .addServer(`http://localhost:8080`)
     .setVersion('1.0')
+
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api-docs', app, document);
+  SwaggerModule.setup('api-docs', app, document, {
+    swaggerOptions: { docExpansion: 'none' },
+  });
 
   app.useGlobalFilters(new AllExceptionsFilter());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));

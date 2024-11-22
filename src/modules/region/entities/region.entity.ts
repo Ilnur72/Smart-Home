@@ -7,7 +7,7 @@ export class Region {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, select: false })
   region_id: string;
 
   @Column()
@@ -19,9 +19,6 @@ export class Region {
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 
-  // @OneToMany(() => Building, (building) => building.region)
-  // buildings: Building[];
-
-  @OneToMany(() => District, (district) => district.regions)
+  @OneToMany(() => District, (district) => district.region)
   district: District[];
 }

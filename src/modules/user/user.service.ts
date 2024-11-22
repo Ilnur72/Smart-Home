@@ -10,8 +10,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
-import { LanguageStatus } from '../../shared/types/enums';
+import { LanguageDto, SortOrder } from '../../shared/types/enums';
 import { User } from './entities/user.entity';
+import { FindUserDto } from './dto/find-user.dto';
 // import { SortOrder } from '../../shared/types/enums';
 
 @Injectable()
@@ -66,23 +67,26 @@ export class UserService {
       page = { limit: 10, offset: 1 },
       search,
       filters = { is_deleted: false },
-    }: // sort = { by: 'created_at', order: SortOrder.DESC },
+      sort = { by: 'created_at', order: SortOrder.DESC },
+    }: FindUserDto,
 
-    any,
-    language: LanguageStatus,
+    language: LanguageDto,
   ): Promise<any> {
     try {
-      const existing = this.userRepository.createQueryBuilder('user');
+      const existing = this.userRepository
+        .createQueryBuilder('user')
+        .where('user.is_deleted = :is_deleted', {
+          is_deleted: filters?.is_deleted ?? false,
+        });
 
       if (search) {
-        existing.where(
-          'user.name ILIKE :search OR user.surname ILIKE :search',
-          { search: `%${search}%` },
-        );
+        existing.where('user.fullname ILIKE :search', {
+          search: `%${search}%`,
+        });
       }
-      // if (sort.by && sort.order) {
-      //   existing.orderBy(`user.${sort.by}`, sort.order);
-      // }
+      if (sort.by && sort.order) {
+        existing.orderBy(`user.${sort.by}`, sort.order);
+      }
       if (filters) {
         existing.andWhere(filters);
       }
@@ -106,7 +110,7 @@ export class UserService {
     }
   }
 
-  async findOne(id: string, language: LanguageStatus): Promise<any> {
+  async findOne(id: string, language: LanguageDto): Promise<any> {
     try {
       const existing = await this.userRepository.findOne({
         where: { id, is_deleted: false },
@@ -155,7 +159,7 @@ export class UserService {
   async update(
     id: string,
     updateUserDto: UpdateUserDto,
-    language: LanguageStatus,
+    language: LanguageDto,
   ): Promise<User> {
     try {
       const existing = await this.userRepository.findOne({
@@ -183,7 +187,7 @@ export class UserService {
     }
   }
 
-  async remove(id: string, language: LanguageStatus): Promise<any> {
+  async remove(id: string, language: LanguageDto): Promise<any> {
     try {
       const existing = await this.userRepository.findOne({
         where: { id, is_deleted: false },

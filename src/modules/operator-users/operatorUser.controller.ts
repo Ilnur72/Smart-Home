@@ -7,7 +7,6 @@ import {
   Delete,
   Query,
   Put,
-  Headers,
   UseGuards,
   Inject,
 } from '@nestjs/common';
@@ -16,17 +15,18 @@ import { OperatorUserService } from './operatorUser.service';
 import { CreateOperatorUserDto } from './dto/create-operatorUser.dto';
 import { UpdateOperatorUserDto } from './dto/update-operatorUser.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { LanguageStatus } from '../../shared/types/enums';
+import { LanguageDto } from '../../shared/types/enums';
 import { MessageService } from '../../i18n/message.service';
 import { IsLoggedIn } from '../../shared/guards/is-loggedin.guard';
 import { REQUEST } from '@nestjs/core';
 // import { SetRoles } from '../auth/set-roles.decorator';
 import { HasRole } from '../../shared/guards/has-roles.guard';
+import { Language } from '../../shared/decorators/language.decorator';
 
 // @SetRoles(OperatorUserRole.ADMIN)
-@UseGuards(IsLoggedIn, HasRole)
+// @UseGuards(IsLoggedIn, HasRole)
 @ApiTags('OperatorUser')
-@Controller('operator')
+@Controller('operator-user')
 export class OperatorUserController {
   constructor(
     private readonly operatorService: OperatorUserService,
@@ -37,7 +37,7 @@ export class OperatorUserController {
   @Post()
   async create(
     @Body() createOperatorUserDto: CreateOperatorUserDto,
-    @Headers('accept-language') language: LanguageStatus,
+    @Language() language: LanguageDto,
   ) {
     try {
       const data = await this.operatorService.create(
@@ -63,7 +63,7 @@ export class OperatorUserController {
   @Get()
   async findAll(
     @Query() findOperatorUserDto: any,
-    @Headers('accept-language') language: LanguageStatus,
+    @Language() language: LanguageDto,
   ) {
     try {
       const data = await this.operatorService.findAll(
@@ -87,7 +87,7 @@ export class OperatorUserController {
 
   // @SetRoles(OperatorUserRole.ADMIN, OperatorUserRole.USER)
   @Get('current')
-  async findMe(@Headers('accept-language') language: LanguageStatus) {
+  async findMe(@Language() language: LanguageDto) {
     try {
       const data = await this.operatorService.findOne(
         this.request['operator'].id,
@@ -109,10 +109,7 @@ export class OperatorUserController {
   }
 
   @Get(':id')
-  async findOne(
-    @Param('id') id: string,
-    @Headers('accept-language') language: LanguageStatus,
-  ) {
+  async findOne(@Param('id') id: string, @Language() language: LanguageDto) {
     try {
       const data = await this.operatorService.findOne(id, language);
       return {
@@ -135,13 +132,13 @@ export class OperatorUserController {
   async update(
     @Param('id') id: string,
     @Body() updateOperatorUserDto: UpdateOperatorUserDto,
-    @Headers('accept-language') language: LanguageStatus,
+    @Language() language: LanguageDto,
   ) {
     try {
       await this.operatorService.update(id, updateOperatorUserDto, language);
       return {
         success: true,
-        code: 204,
+        code: 200,
         message: this.messageService.getMessage(
           'operator',
           language,
@@ -155,15 +152,12 @@ export class OperatorUserController {
 
   // @SetRoles(OperatorUserRole.ADMIN, OperatorUserRole.USER)
   @Delete(':id')
-  async remove(
-    @Param('id') id: string,
-    @Headers('accept-language') language: LanguageStatus,
-  ) {
+  async remove(@Param('id') id: string, @Language() language: LanguageDto) {
     try {
       await this.operatorService.remove(id, language);
       return {
         success: true,
-        code: 204,
+        code: 200,
         message: this.messageService.getMessage(
           'operator',
           language,

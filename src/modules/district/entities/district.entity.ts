@@ -1,6 +1,5 @@
 import { Building } from '../../building/entities/building.entity';
 import { Region } from '../../region/entities/region.entity';
-import { User } from '../../user/entities/user.entity';
 import {
   Column,
   Entity,
@@ -15,7 +14,7 @@ export class District {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, select: false })
   district_id: string;
 
   @Column({ nullable: true })
@@ -35,5 +34,5 @@ export class District {
 
   @ManyToOne(() => Region, (region) => region.district)
   @JoinColumn({ name: 'region_id' })
-  regions: Region;
+  region: Region;
 }

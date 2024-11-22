@@ -7,7 +7,6 @@ import {
   Delete,
   Query,
   Put,
-  Headers,
   UseGuards,
   Inject,
 } from '@nestjs/common';
@@ -16,12 +15,14 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { LanguageStatus } from '../../shared/types/enums';
+import { LanguageDto } from '../../shared/types/enums';
 import { MessageService } from '../../i18n/message.service';
 import { IsLoggedIn } from '../../shared/guards/is-loggedin.guard';
 import { REQUEST } from '@nestjs/core';
 // import { SetRoles } from '../auth/set-roles.decorator';
 import { HasRole } from '../../shared/guards/has-roles.guard';
+import { Language } from '../../shared/decorators/language.decorator';
+import { FindUserDto } from './dto/find-user.dto';
 
 // @SetRoles(UserRole.ADMIN)
 @UseGuards(IsLoggedIn, HasRole)
@@ -37,7 +38,7 @@ export class UserController {
   @Post()
   async create(
     @Body() createUserDto: CreateUserDto,
-    @Headers('accept-language') language: LanguageStatus,
+    @Language() language: LanguageDto,
   ) {
     try {
       const data = await this.userService.create(createUserDto, language);
@@ -59,8 +60,8 @@ export class UserController {
 
   @Get()
   async findAll(
-    @Query() findUserDto: any,
-    @Headers('accept-language') language: LanguageStatus,
+    @Query() findUserDto: FindUserDto,
+    @Language() language: LanguageDto,
   ) {
     try {
       const data = await this.userService.findAll(findUserDto, language);
@@ -81,7 +82,7 @@ export class UserController {
 
   // @SetRoles(UserRole.ADMIN, UserRole.USER)
   @Get('current')
-  async findMe(@Headers('accept-language') language: LanguageStatus) {
+  async findMe(@Language() language: LanguageDto) {
     try {
       const data = await this.userService.findOne(
         this.request['user'].id,
@@ -103,10 +104,7 @@ export class UserController {
   }
 
   @Get(':id')
-  async findOne(
-    @Param('id') id: string,
-    @Headers('accept-language') language: LanguageStatus,
-  ) {
+  async findOne(@Param('id') id: string, @Language() language: LanguageDto) {
     try {
       const data = await this.userService.findOne(id, language);
       return {
@@ -129,13 +127,13 @@ export class UserController {
   async update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
-    @Headers('accept-language') language: LanguageStatus,
+    @Language() language: LanguageDto,
   ) {
     try {
       await this.userService.update(id, updateUserDto, language);
       return {
         success: true,
-        code: 204,
+        code: 200,
         message: this.messageService.getMessage(
           'user',
           language,
@@ -149,15 +147,12 @@ export class UserController {
 
   // @SetRoles(UserRole.ADMIN, UserRole.USER)
   @Delete(':id')
-  async remove(
-    @Param('id') id: string,
-    @Headers('accept-language') language: LanguageStatus,
-  ) {
+  async remove(@Param('id') id: string, @Language() language: LanguageDto) {
     try {
       await this.userService.remove(id, language);
       return {
         success: true,
-        code: 204,
+        code: 200,
         message: this.messageService.getMessage(
           'user',
           language,

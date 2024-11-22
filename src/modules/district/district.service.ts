@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { District } from './entities/district.entity';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
-import { LanguageStatus } from '../../shared/types/enums';
+import { LanguageDto } from '../../shared/types/enums';
 
 @Injectable()
 export class DistrictService {
@@ -55,27 +55,17 @@ export class DistrictService {
     }
   }
 
-  async findAll(
-    {
-      search,
-      filters = { is_deleted: false },
-    }: // sort = { by: 'createdAt', order: SortOrder.DESC },
-
-    any,
-    language: LanguageStatus,
-  ): Promise<any> {
+  async findAll({ search, filters }: any, language: LanguageDto): Promise<any> {
     try {
-      const existing = this.districtRepository.createQueryBuilder('district');
-
+      const existing = this.districtRepository
+        .createQueryBuilder('district')
+        .where('district.is_deleted = :is_deleted', { is_deleted: false });
       if (search) {
-        existing.where(
-          'district.name ILIKE :search OR district.surname ILIKE :search',
-          { search: `%${search}%` },
-        );
+        existing.where('district.name ILIKE :search', {
+          search: `%${search}%`,
+        });
       }
-      // if (sort.by && sort.order) {
-      //   existing.orderBy(`district.${sort.by}`, sort.order);
-      // }
+
       if (filters) {
         existing.andWhere(filters);
       }
@@ -96,7 +86,7 @@ export class DistrictService {
     }
   }
 
-  async findOne(id: string, language: LanguageStatus): Promise<any> {
+  async findOne(id: string, language: LanguageDto): Promise<any> {
     try {
       const existing = await this.districtRepository.findOne({
         where: { id, is_deleted: false },
@@ -133,7 +123,7 @@ export class DistrictService {
   async update(
     id: string,
     updateDistrictDto: UpdateDistrictDto,
-    language: LanguageStatus,
+    language: LanguageDto,
   ): Promise<District> {
     try {
       const existing = await this.districtRepository.findOne({
@@ -168,7 +158,7 @@ export class DistrictService {
     }
   }
 
-  async remove(id: string, language: LanguageStatus): Promise<any> {
+  async remove(id: string, language: LanguageDto): Promise<any> {
     try {
       const existing = await this.districtRepository.findOne({
         where: { id, is_deleted: false },

@@ -7,23 +7,34 @@ import {
   Delete,
   Query,
   Put,
-  Headers,
   UseGuards,
+  HttpCode,
+  Headers,
 } from '@nestjs/common';
 import { RegionService } from './region.service';
 
 import { CreateRegionDto } from './dto/create-region.dto';
 import { UpdateRegionDto } from './dto/update-region.dto';
-import { ApiTags } from '@nestjs/swagger';
-import { LanguageStatus, UserRole } from '../../shared/types/enums';
+import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { LanguageDto, UserRole } from '../../shared/types/enums';
 import { MessageService } from '../../i18n/message.service';
 import { IsLoggedIn } from '../../shared/guards/is-loggedin.guard';
 import { SetRoles } from '../auth/set-roles.decorator';
 import { HasRole } from '../../shared/guards/has-roles.guard';
 import { DistrictService } from '../district/district.service';
+import { RegionDto, ResponseRegionDto } from './dto/region.dto';
+import { FindRegionDto } from './dto/find-region.dto';
+import { Language } from '../../shared/decorators/language.decorator';
+import { DistrictDto } from '../district/dto/district.dto';
 
 @ApiTags('Region')
 @Controller('region')
+@ApiTags('District')
+// @ApiHeader({
+//   name: 'accept-language',
+//   required: false,
+//   description: 'Language code (UZ, RU, EN). Defaults to EN if not provided',
+// })
 export class RegionController {
   constructor(
     private readonly regionService: RegionService,
@@ -34,9 +45,15 @@ export class RegionController {
   @UseGuards(IsLoggedIn, HasRole)
   @SetRoles(UserRole.ADMIN)
   @Post()
+  @ApiResponse({
+    status: 201,
+    description: 'Region successfully created',
+    type: ResponseRegionDto,
+  })
+  @HttpCode(201)
   async create(
     @Body() createRegionDto: CreateRegionDto,
-    @Headers('accept-language') language: LanguageStatus,
+    @Language() language: LanguageDto,
   ) {
     try {
       const data = await this.regionService.create(createRegionDto, language);
@@ -56,13 +73,20 @@ export class RegionController {
     }
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'List of Regions',
+    type: ResponseRegionDto,
+  })
+  @HttpCode(200)
   @Get()
   async findAll(
-    @Query() findRegionDto: any,
-    @Headers('accept-language') language: LanguageStatus,
+    @Query() findRegionDto: FindRegionDto,
+    // @Language() language: LanguageDto,
+    @Headers('accept-language') language: LanguageDto,
   ) {
     try {
-      let data;
+      let data: RegionDto[] | DistrictDto[];
       if (findRegionDto.region_id) {
         data = await this.districtService.findAll(
           {
@@ -82,17 +106,21 @@ export class RegionController {
         ),
       };
     } catch (error) {
-      console.log(error);
+      // console.log(error);
 
       throw error;
     }
   }
 
   @Get(':id')
-  async findOne(
-    @Param('id') id: string,
-    @Headers('accept-language') language: LanguageStatus,
-  ) {
+  @SetRoles(UserRole.ADMIN, UserRole.USER)
+  @ApiResponse({
+    status: 200,
+    description: 'Single Region details',
+    type: ResponseRegionDto,
+  })
+  @HttpCode(200)
+  async findOne(@Param('id') id: string, @Language() language: LanguageDto) {
     try {
       const data = await this.regionService.findOne(id, language);
       return {
@@ -113,16 +141,21 @@ export class RegionController {
   @UseGuards(IsLoggedIn, HasRole)
   @SetRoles(UserRole.ADMIN)
   @Put(':id')
+  @ApiResponse({
+    status: 200,
+    description: 'Region successfully updated',
+  })
+  @HttpCode(200)
   async update(
     @Param('id') id: string,
     @Body() updateRegionDto: UpdateRegionDto,
-    @Headers('accept-language') language: LanguageStatus,
+    @Language() language: LanguageDto,
   ) {
     try {
       await this.regionService.update(id, updateRegionDto, language);
       return {
         success: true,
-        code: 204,
+        code: 200,
         message: this.messageService.getMessage(
           'region',
           language,
@@ -137,15 +170,17 @@ export class RegionController {
   @UseGuards(IsLoggedIn, HasRole)
   @SetRoles(UserRole.ADMIN)
   @Delete(':id')
-  async remove(
-    @Param('id') id: string,
-    @Headers('accept-language') language: LanguageStatus,
-  ) {
+  @ApiResponse({
+    status: 200,
+    description: 'Region successfully deleted',
+  })
+  @HttpCode(200)
+  async remove(@Param('id') id: string, @Language() language: LanguageDto) {
     try {
       await this.regionService.remove(id, language);
       return {
         success: true,
-        code: 204,
+        code: 200,
         message: this.messageService.getMessage(
           'region',
           language,

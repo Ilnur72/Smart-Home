@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Region } from './entities/region.entity';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
-import { LanguageStatus } from '../../shared/types/enums';
+import { LanguageDto } from '../../shared/types/enums';
 
 @Injectable()
 export class RegionService {
@@ -54,24 +54,19 @@ export class RegionService {
     }
   }
 
-  async findAll(
-    { region_id, filters = { is_deleted: false } }: any,
-    language?: LanguageStatus,
-  ): Promise<any> {
+  async findAll({ filters }: any, language?: LanguageDto): Promise<any> {
     try {
-      const existing = this.regionRepository.createQueryBuilder('region');
-      console.log(region_id);
+      const existing = this.regionRepository
+        .createQueryBuilder('region')
+        .where('region.is_deleted = :is_deleted', {
+          is_deleted: filters?.is_deleted ?? false,
+        });
 
-      // if (region_id) {
-      //   // const region = existing.
-      //   const districts = await this.districtRepository.find({where: {region_id: region_id}});
-      //   return dis
-      // }
       if (filters) {
         existing.andWhere(filters);
       }
       existing.orderBy(
-        `CASE WHEN "region"."name" = 'Qoraqalpog''iston Resp.' THEN 1 ELSE 2 END`,
+        `CASE WHEN "region"."name" = 'Toshkent shahar' THEN 1 ELSE 2 END`,
       );
       const total = await existing.getCount();
       const data = await existing.getMany();
@@ -89,7 +84,7 @@ export class RegionService {
     }
   }
 
-  async findOne(id: string, language: LanguageStatus): Promise<any> {
+  async findOne(id: string, language: LanguageDto): Promise<any> {
     try {
       const existing = await this.regionRepository.findOne({
         where: { id, is_deleted: false },
@@ -125,7 +120,7 @@ export class RegionService {
   async update(
     id: string,
     updateRegionDto: UpdateRegionDto,
-    language: LanguageStatus,
+    language: LanguageDto,
   ): Promise<Region> {
     try {
       const existing = await this.regionRepository.findOne({
@@ -160,7 +155,7 @@ export class RegionService {
     }
   }
 
-  async remove(id: string, language: LanguageStatus): Promise<any> {
+  async remove(id: string, language: LanguageDto): Promise<any> {
     try {
       const existing = await this.regionRepository.findOne({
         where: { id, is_deleted: false },

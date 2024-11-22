@@ -1,14 +1,8 @@
-import {
-  Injectable,
-  HttpException,
-  HttpStatus,
-  NotFoundException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
-import { LanguageStatus } from '../../shared/types/enums';
+import { LanguageDto } from '../../shared/types/enums';
 import { OperatorUser } from './entities/operatorUser.entity';
 import { CreateOperatorUserDto } from './dto/create-operatorUser.dto';
 import { UpdateOperatorUserDto } from './dto/update-operatorUser.dto';
@@ -74,11 +68,14 @@ export class OperatorUserService {
     }: // sort = { by: 'created_at', order: SortOrder.DESC },
 
     any,
-    language: LanguageStatus,
+    language: LanguageDto,
   ): Promise<any> {
     try {
-      const existing =
-        this.operatorUserRepository.createQueryBuilder('operatorUser');
+      const existing = this.operatorUserRepository
+        .createQueryBuilder('operatorUser')
+        .where('operatorUser.is_deleted = :is_deleted', {
+          is_deleted: filters?.is_deleted ?? false,
+        });
 
       if (search) {
         existing.where(
@@ -112,7 +109,7 @@ export class OperatorUserService {
     }
   }
 
-  async findOne(id: string, language: LanguageStatus): Promise<any> {
+  async findOne(id: string, language: LanguageDto): Promise<any> {
     try {
       const existing = await this.operatorUserRepository.findOne({
         where: { id, is_deleted: false },
@@ -149,7 +146,7 @@ export class OperatorUserService {
   async update(
     id: string,
     updateOperatorUserDto: UpdateOperatorUserDto,
-    language: LanguageStatus,
+    language: LanguageDto,
   ): Promise<OperatorUser> {
     try {
       const existing = await this.operatorUserRepository.findOne({
@@ -184,7 +181,7 @@ export class OperatorUserService {
     }
   }
 
-  async remove(id: string, language: LanguageStatus): Promise<any> {
+  async remove(id: string, language: LanguageDto): Promise<any> {
     try {
       const existing = await this.operatorUserRepository.findOne({
         where: { id, is_deleted: false },

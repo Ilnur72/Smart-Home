@@ -5,11 +5,6 @@ export class CreateBuildingDto {
   @ApiProperty()
   @IsUUID()
   @IsNotEmpty()
-  region_id: string;
-
-  @ApiProperty()
-  @IsUUID()
-  @IsNotEmpty()
   district_id: string;
 
   @ApiProperty()

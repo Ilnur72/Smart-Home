@@ -5,7 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Building } from './entities/building.entity';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
-import { LanguageStatus } from '../../shared/types/enums';
+import { LanguageDto } from '../../shared/types/enums';
+import { FindBuildingDto } from './dto/find-building.dto';
 
 @Injectable()
 export class BuildingService {
@@ -55,24 +56,55 @@ export class BuildingService {
   }
 
   async findAll(
-    { search, filters = { is_deleted: false } }: any,
-    language?: LanguageStatus,
+    { search, filters, page = { offset: 1, limit: 10 }, sort }: FindBuildingDto,
+    language?: LanguageDto,
   ): Promise<any> {
     try {
-      const existing = this.buildingRepository.createQueryBuilder('building');
+      const existing = this.buildingRepository
+        .createQueryBuilder('building')
+        .leftJoinAndSelect('building.district', 'district')
+        .leftJoinAndSelect('district.region', 'region')
+        .where('building.is_deleted = :is_deleted', {
+          is_deleted: filters?.is_deleted ?? false,
+        });
 
       if (search) {
-        existing.where('building.name ILIKE :search ILIKE :search', {
+        existing.where('building.address ILIKE :search', {
           search: `%${search}%`,
         });
       }
       if (filters) {
-        existing.andWhere(filters);
+        if (filters.region_id)
+          existing.andWhere('region.id = :region_id', {
+            region_id: filters.region_id,
+          });
+        else existing.andWhere(filters);
       }
-      const total = await existing.getCount();
-      const data = await existing.getMany();
 
-      return { total, data };
+      if (sort?.by && sort?.order) {
+        existing.orderBy(`building.${sort.by}`, sort.order);
+      }
+
+      const total = await existing.getCount();
+      const data = await existing
+        .skip((page.offset - 1) * page.limit)
+        .take(page.limit)
+        .getMany();
+
+      return {
+        total,
+        data: data.map((building) => {
+          const { address, district, ...filteredBuilding } = building;
+          return {
+            ...filteredBuilding,
+            address: {
+              street: address,
+              district: district.name,
+              region: district.region.name,
+            },
+          };
+        }),
+      };
     } catch (error) {
       throw new HttpException(
         this.messageService.getMessage(
@@ -85,11 +117,11 @@ export class BuildingService {
     }
   }
 
-  async findOne(id: string, language: LanguageStatus): Promise<any> {
+  async findOne(id: string, language: LanguageDto): Promise<any> {
     try {
       const existing = await this.buildingRepository.findOne({
         where: { id, is_deleted: false },
-        relations: ['district', 'district.regions'],
+        relations: ['district', 'district.region'],
       });
 
       if (!existing) {
@@ -102,13 +134,12 @@ export class BuildingService {
           HttpStatus.NOT_FOUND,
         );
       }
-      const { address, region_id, district_id, district, ...filteredBuilding } =
-        existing;
+      const { address, district, ...filteredBuilding } = existing;
 
       const fullAddress = {
         street: address,
         district: district.name,
-        region: district.regions.name,
+        region: district.region.name,
       };
       console.log({
         ...filteredBuilding,
@@ -137,7 +168,7 @@ export class BuildingService {
   async update(
     id: string,
     updateBuildingDto: UpdateBuildingDto,
-    language: LanguageStatus,
+    language: LanguageDto,
   ): Promise<Building> {
     try {
       const existing = await this.buildingRepository.findOne({
@@ -172,7 +203,7 @@ export class BuildingService {
     }
   }
 
-  async remove(id: string, language: LanguageStatus): Promise<any> {
+  async remove(id: string, language: LanguageDto): Promise<any> {
     try {
       const existing = await this.buildingRepository.findOne({
         where: { id, is_deleted: false },
