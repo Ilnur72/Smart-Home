@@ -22,9 +22,10 @@ import { REQUEST } from '@nestjs/core';
 // import { SetRoles } from '../auth/set-roles.decorator';
 import { HasRole } from '../../shared/guards/has-roles.guard';
 import { Language } from '../../shared/decorators/language.decorator';
+import { FindOperatorDto } from './dto/find-operator.dto';
 
 // @SetRoles(OperatorRole.ADMIN)
-@UseGuards(IsLoggedIn, HasRole)
+// @UseGuards(IsLoggedIn, HasRole)
 @ApiTags('Operator')
 @Controller('operator')
 export class OperatorController {
@@ -62,7 +63,7 @@ export class OperatorController {
 
   @Get()
   async findAll(
-    @Query() findOperatorDto: any,
+    @Query() findOperatorDto: FindOperatorDto,
     @Language() language: LanguageDto,
   ) {
     try {

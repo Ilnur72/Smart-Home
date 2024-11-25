@@ -4,7 +4,7 @@ export const districtMessages = {
     failed_to_create_district: 'Failed to create district.',
     already_exist_district: 'District already exists.',
     failed_to_fetch_district_list: 'Failed to fetch district list.',
-    failed_to_fetch_district_deatils: 'Failed to fetch district details.',
+    failed_to_fetch_district_details: 'Failed to fetch district details.',
     failed_to_update_district: 'Failed to update district.',
     cannot_delete_district_due_to_related_records_in_other_tables:
       'Cannot delete district due to related records in other tables.',
@@ -19,7 +19,7 @@ export const districtMessages = {
     failed_to_create_district: 'Tuman yaratishda xatolik.',
     already_exist_district: 'Tuman allaqachon mavjud.',
     failed_to_fetch_district_list: "Tumanlar ro'yxatini olib bo'lmadi.",
-    failed_to_fetch_district_deatils: "Tuman tafsilotlarini olib bo'lmadi.",
+    failed_to_fetch_district_details: "Tuman tafsilotlarini olib bo'lmadi.",
     failed_to_update_district: "Tumanni yangilab bo'lmadi.",
     cannot_delete_district_due_to_related_records_in_other_tables:
       'Boshqa jadvallardagi tegishli yozuvlar tufayli tumannni oʻchirib boʻlmaydi.',
@@ -34,7 +34,7 @@ export const districtMessages = {
     failed_to_create_district: "Rayon jaratıp bo'lmadi.",
     already_exist_district: 'Ámeldegi kategoriya.',
     failed_to_fetch_district_list: 'Rayonlar dizimin alıw áwmetsiz tawsıldı.',
-    failed_to_fetch_district_deatils:
+    failed_to_fetch_district_details:
       'Rayon maǵlıwmatların alıw áwmetsiz tawsıldı.',
     failed_to_update_district: "Rayondi jańalap bo'lmadi.",
     cannot_delete_district_due_to_related_records_in_other_tables:
@@ -50,7 +50,7 @@ export const districtMessages = {
     failed_to_create_district: 'Ошибка при создании района.',
     already_exist_district: 'Район уже существует.',
     failed_to_fetch_district_list: 'Не удалось получить список районов.',
-    failed_to_fetch_district_deatils: 'Не удалось получить сведения о округе.',
+    failed_to_fetch_district_details: 'Не удалось получить сведения о округе.',
     failed_to_update_district: 'Не удалось обновить район.',
     cannot_delete_district_due_to_related_records_in_other_tables:
       'Невозможно удалить округ из-за связанных записей в других таблицах.',

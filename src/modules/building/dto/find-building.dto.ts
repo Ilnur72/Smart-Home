@@ -11,7 +11,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { TransformBoolean } from 'src/shared/decorators/transform-boolean.decorator';
 
-// ?q=first_name&page[offset]=0&page[limit]=10&sort[by]=first_name&sort[order]=asc
+// ?search=first_name&page[offset]=0&page[limit]=10&sort[by]=first_name&sort[order]=asc
 export class SortBuildingDto {
   @ApiProperty({
     description: 'Sort by field: created_at or floor',

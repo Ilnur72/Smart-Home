@@ -4,12 +4,12 @@ import { buildingMessages } from './messages/building.message';
 import { authMessages } from './messages/auth.message';
 import { districtMessages } from './messages/district.message';
 import { regionMessages } from './messages/region.message';
-// import { officeMessages } from './messages/office.message';
 import { operatorUserMessages } from './messages/operatorUser.message';
-// import { categoryMessages } from './messages/category.message';
-// import { postMessages } from './messages/post.message';
-// import { itemMessages } from './messages/item.message';
-// import { orderMessages } from './messages/order.message';
+import { operatorMessages } from './messages/operator.message';
+import { apartmentMessages } from './messages/apartment.message';
+import { intercomMessages } from './messages/intercom.message';
+import { cameraMessages } from './messages/camera.message';
+import { entranceMessages } from './messages/entrance.message';
 @Injectable()
 export class MessageService {
   private messages = {
@@ -19,11 +19,11 @@ export class MessageService {
     district: districtMessages,
     region: regionMessages,
     operatorUser: operatorUserMessages,
-    // category: categoryMessages,
-    // office: officeMessages,
-    // post: postMessages,
-    // item: itemMessages,
-    // order: orderMessages,
+    operator: operatorMessages,
+    apartment: apartmentMessages,
+    intercom: intercomMessages,
+    camera: cameraMessages,
+    entrance: entranceMessages,
   };
   getMessage(module: string, language: string, key: string): string {
     return (

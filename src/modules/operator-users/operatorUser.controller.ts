@@ -22,6 +22,7 @@ import { REQUEST } from '@nestjs/core';
 // import { SetRoles } from '../auth/set-roles.decorator';
 import { HasRole } from '../../shared/guards/has-roles.guard';
 import { Language } from '../../shared/decorators/language.decorator';
+import { FindOperatorUserDto } from './dto/find-operatorUser.dto';
 
 // @SetRoles(OperatorUserRole.ADMIN)
 // @UseGuards(IsLoggedIn, HasRole)
@@ -62,7 +63,7 @@ export class OperatorUserController {
 
   @Get()
   async findAll(
-    @Query() findOperatorUserDto: any,
+    @Query() findOperatorUserDto: FindOperatorUserDto,
     @Language() language: LanguageDto,
   ) {
     try {

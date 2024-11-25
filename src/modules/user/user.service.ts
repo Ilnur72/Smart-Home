@@ -133,7 +133,7 @@ export class UserService {
         this.messageService.getMessage(
           'user',
           language,
-          'failed_to_fetch_user_deatils',
+          'failed_to_fetch_user_details',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );

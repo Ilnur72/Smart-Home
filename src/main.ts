@@ -5,6 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AllExceptionsFilter } from './shared/utils/http-exception.filter';
 import { ValidationPipe } from '@nestjs/common';
+import { TimezoneInterceptor } from './shared/interceptors/timezone.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -12,6 +13,7 @@ async function bootstrap() {
   });
   const configService = app.get(ConfigService);
   const port = configService.get<number>('port');
+  app.useGlobalInterceptors(new TimezoneInterceptor());
 
   const config = new DocumentBuilder()
     .setTitle('Smart Home API')

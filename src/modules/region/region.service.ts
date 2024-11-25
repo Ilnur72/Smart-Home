@@ -110,7 +110,7 @@ export class RegionService {
         this.messageService.getMessage(
           'region',
           language,
-          'failed_to_fetch_region_deatils',
+          'failed_to_fetch_region_details',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );

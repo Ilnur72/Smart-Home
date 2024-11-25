@@ -4,7 +4,7 @@ export const regionMessages = {
     failed_to_create_region: 'Failed to create region.',
     already_exist_region: 'Region already exists.',
     failed_to_fetch_region_list: 'Failed to fetch region list.',
-    failed_to_fetch_region_deatils: 'Failed to fetch region details.',
+    failed_to_fetch_region_details: 'Failed to fetch region details.',
     failed_to_update_region: 'Failed to update region.',
     cannot_delete_region_due_to_related_records_in_other_tables:
       'Cannot delete region due to related records in other tables.',
@@ -19,7 +19,7 @@ export const regionMessages = {
     failed_to_create_region: 'Regionni yaratishda xatolik.',
     already_exist_region: 'Region allaqachon mavjud.',
     failed_to_fetch_region_list: "Regionlar ro'yxatini olib bo'lmadi.",
-    failed_to_fetch_region_deatils: "Region tafsilotlarini olib bo'lmadi.",
+    failed_to_fetch_region_details: "Region tafsilotlarini olib bo'lmadi.",
     failed_to_update_region: "Regionni yangilab bo'lmadi.",
     cannot_delete_region_due_to_related_records_in_other_tables:
       'Boshqa jadvallardagi tegishli yozuvlar tufayli regionni oʻchirib boʻlmaydi.',
@@ -34,7 +34,7 @@ export const regionMessages = {
     failed_to_create_region: "Region jaratıp bo'lmadi.",
     already_exist_region: 'Ámeldegi region.',
     failed_to_fetch_region_list: 'Regionlar dizimin alıw áwmetsiz tawsıldı.',
-    failed_to_fetch_region_deatils:
+    failed_to_fetch_region_details:
       'Region maǵlıwmatların alıw áwmetsiz tawsıldı.',
     failed_to_update_region: "Regionni jańalap bo'lmadi.",
     cannot_delete_region_due_to_related_records_in_other_tables:
@@ -50,7 +50,7 @@ export const regionMessages = {
     failed_to_create_region: 'Ошибка при создании региона.',
     already_exist_region: 'Регион уже существует.',
     failed_to_fetch_region_list: 'Не удалось получить список регионов.',
-    failed_to_fetch_region_deatils: 'Не удалось получить детали региона.',
+    failed_to_fetch_region_details: 'Не удалось получить детали региона.',
     failed_to_update_region: 'Не удалось обновить регион.',
     cannot_delete_region_due_to_related_records_in_other_tables:
       'Невозможно удалить регион из-за связанных записей в других таблицах.',

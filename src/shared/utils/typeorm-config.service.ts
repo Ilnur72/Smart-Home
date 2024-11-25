@@ -18,6 +18,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       database: this.configService.get(ENV.DB_NAME),
       autoLoadEntities: true,
       synchronize: this.configService.get(ENV.NODE_ENV) !== NodeEnv.PRODUCTION,
+      timezone: '+05:00',
     } as TypeOrmModuleOptions;
   }
 }

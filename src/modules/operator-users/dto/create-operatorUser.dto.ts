@@ -9,11 +9,6 @@ export class CreateOperatorUserDto {
   name: string;
 
   @ApiProperty()
-  @IsEnum(UserRole)
-  @IsNotEmpty()
-  role: UserRole;
-
-  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   login: string;

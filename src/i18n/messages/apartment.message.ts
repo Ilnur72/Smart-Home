@@ -1,0 +1,47 @@
+export const apartmentMessages = {
+  en: {
+    apartment_not_found: 'Apartment not found.',
+    failed_to_create_apartment: 'Failed to create apartment.',
+    already_exist_apartment: 'Apartment already exists.',
+    failed_to_fetch_apartment_list: 'Failed to fetch apartment list.',
+    failed_to_fetch_apartment_details: 'Failed to fetch apartment details.',
+    failed_to_update_apartment: 'Failed to update apartment.',
+    cannot_delete_apartment_due_to_related_records_in_other_tables:
+      'Cannot delete apartment due to related records in other tables.',
+    failed_to_delete_apartment: 'Failed to delete apartment.',
+    apartment_created_successfully: 'Apartment Created Successfully',
+    apartment_fetched_successfully: 'Apartment Fetched Successfully',
+    apartment_updated_successfully: 'Apartment Updated Successfully',
+    apartment_deleted_successfully: 'Apartment Deleted Successfully',
+  },
+  uz: {
+    apartment_not_found: 'Kvartira topilmadi.',
+    failed_to_create_apartment: 'Kvartirani yaratishda xatolik.',
+    already_exist_apartment: 'Kvartira allaqachon mavjud.',
+    failed_to_fetch_apartment_list: "Kvartiralar ro'yxatini olib bo'lmadi.",
+    failed_to_fetch_apartment_details: "Kvartira tafsilotlarini olib bo'lmadi.",
+    failed_to_update_apartment: "Kvartirani yangilab bo'lmadi.",
+    cannot_delete_apartment_due_to_related_records_in_other_tables:
+      'Boshqa jadvallardagi tegishli yozuvlar tufayli kvartirani oʻchirib boʻlmaydi.',
+    failed_to_delete_apartment: 'Kvartirani o‘chirib bo‘lmadi.',
+    apartment_created_successfully: 'Kvartira muvaffaqiyatli yaratildi',
+    apartment_fetched_successfully: 'Kvartira muvaffaqiyatli olindi',
+    apartment_updated_successfully: 'Kvartira muvaffaqiyatli yangilandi',
+    apartment_deleted_successfully: 'Kvartira muvaffaqiyatli o‘chirildi',
+  },
+  ru: {
+    apartment_not_found: 'Квартира не найдена.',
+    failed_to_create_apartment: 'Ошибка при создании Квартиры.',
+    already_exist_apartment: 'Квартира уже существует.',
+    failed_to_fetch_apartment_list: 'Не удалось получить список Квартир.',
+    failed_to_fetch_apartment_details: 'Не удалось получить детали Квартиры.',
+    failed_to_update_apartment: 'Не удалось обновить Квартиру.',
+    cannot_delete_apartment_due_to_related_records_in_other_tables:
+      'Невозможно удалить Квартиру из-за связанных записей в других таблицах.',
+    failed_to_delete_apartment: 'Не удалось удалить Квартиру.',
+    apartment_created_successfully: 'Квартира успешно создана.',
+    apartment_fetched_successfully: 'Квартира успешно получена.',
+    apartment_updated_successfully: 'Квартира успешно обновлена.',
+    apartment_deleted_successfully: 'Квартира успешно удалена.',
+  },
+};

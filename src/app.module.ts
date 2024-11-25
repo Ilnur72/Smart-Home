@@ -8,6 +8,11 @@ import { DistrictModule } from './modules/district/district.module';
 import { SeedModule } from './db/seeds/seed.module';
 import { OperatorModule } from './modules/operator/operator.module';
 import { OperatorUserModule } from './modules/operator-users/operatorUser.module';
+import { SystemUserModule } from './modules/system-users/systemUser.module';
+import { ApartmentModule } from './modules/apartment/apartment.module';
+import { IntercomModule } from './modules/intercom/intercom.module';
+import { CameraModule } from './modules/camera/camera.module';
+import { EntranceModule } from './modules/entrance/entrance.module';
 
 @Module({
   imports: [
@@ -20,6 +25,11 @@ import { OperatorUserModule } from './modules/operator-users/operatorUser.module
     SeedModule,
     OperatorUserModule,
     OperatorModule,
+    SystemUserModule,
+    ApartmentModule,
+    IntercomModule,
+    CameraModule,
+    EntranceModule,
   ],
 })
 export class AppModule {}

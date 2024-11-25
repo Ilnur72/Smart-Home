@@ -4,8 +4,9 @@ import { UpdateOperatorDto } from './dto/update-operator.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
-import { LanguageDto } from '../../shared/types/enums';
+import { LanguageDto, UserRole } from '../../shared/types/enums';
 import { Operator } from './entities/operator.entity';
+import { FindUserDto } from '../user/dto/find-user.dto';
 // import { SortOrder } from '../../shared/types/enums';
 
 @Injectable()
@@ -30,7 +31,6 @@ export class OperatorService {
           ),
           HttpStatus.BAD_REQUEST,
         );
-
       const newOperator = this.operatorRepository.create(createOperatorDto);
       return await this.operatorRepository.save(newOperator);
     } catch (error) {
@@ -56,13 +56,7 @@ export class OperatorService {
   }
 
   async findAll(
-    {
-      page = { limit: 10, offset: 1 },
-      search,
-      filters = { is_deleted: false },
-    }: // sort = { by: 'created_at', order: SortOrder.DESC },
-
-    any,
+    { page = { limit: 10, offset: 1 }, search, filters }: FindUserDto,
     language: LanguageDto,
   ): Promise<any> {
     try {
@@ -73,13 +67,10 @@ export class OperatorService {
         });
       if (search) {
         existing.where(
-          'operator.name ILIKE :search OR operator.surname ILIKE :search',
+          'operator.name ILIKE :search OR operator.login ILIKE :search',
           { search: `%${search}%` },
         );
       }
-      // if (sort.by && sort.order) {
-      //   existing.orderBy(`operator.${sort.by}`, sort.order);
-      // }
       if (filters) {
         existing.andWhere(filters);
       }
@@ -107,7 +98,7 @@ export class OperatorService {
     try {
       const existing = await this.operatorRepository.findOne({
         where: { id, is_deleted: false },
-        relations: ['orders'],
+        // relations: ['operator'],
       });
 
       if (!existing) {
@@ -130,7 +121,7 @@ export class OperatorService {
         this.messageService.getMessage(
           'operator',
           language,
-          'failed_to_fetch_operator_deatils',
+          'failed_to_fetch_operator_details',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );

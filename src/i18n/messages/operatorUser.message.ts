@@ -4,7 +4,7 @@ export const operatorUserMessages = {
     failed_to_create_operatorUser: 'Failed to create operator user.',
     already_exist_operatorUser: 'Operator user already exists.',
     failed_to_fetch_operatorUser_list: 'Failed to fetch operator user list.',
-    failed_to_fetch_operatorUser_deatils:
+    failed_to_fetch_operatorUser_details:
       'Failed to fetch operator user details.',
     failed_to_update_operatorUser: 'Failed to update operator user.',
     cannot_delete_operatorUser_due_to_related_records_in_other_tables:
@@ -22,7 +22,7 @@ export const operatorUserMessages = {
     already_exist_operatorUser: 'Operator foydalanuvchisi allaqachon mavjud.',
     failed_to_fetch_operatorUser_list:
       "Operator foydalanuvchilari ro'yxatini olib bo'lmadi.",
-    failed_to_fetch_operatorUser_deatils:
+    failed_to_fetch_operatorUser_details:
       "Operator foydalanuvchisi tafsilotlarini olib bo'lmadi.",
     failed_to_update_operatorUser:
       "Operator foydalanuvchisini yangilab bo'lmadi.",
@@ -46,7 +46,7 @@ export const operatorUserMessages = {
     already_exist_operatorUser: 'Оператор пользователь уже существует.',
     failed_to_fetch_operatorUser_list:
       'Не удалось получить список операторов пользователей.',
-    failed_to_fetch_operatorUser_deatils:
+    failed_to_fetch_operatorUser_details:
       'Не удалось получить детали оператора пользователя.',
     failed_to_update_operatorUser:
       'Не удалось обновить оператора пользователя.',

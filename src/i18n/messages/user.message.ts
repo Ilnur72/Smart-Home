@@ -4,7 +4,7 @@ export const userMessages = {
     failed_to_create_user: 'Failed to create user.',
     already_exist_user: 'User already exists.',
     failed_to_fetch_user_list: 'Failed to fetch user list.',
-    failed_to_fetch_user_deatils: 'Failed to fetch user details.',
+    failed_to_fetch_user_details: 'Failed to fetch user details.',
     failed_to_update_user: 'Failed to update user.',
     cannot_delete_user_due_to_related_records_in_other_tables:
       'Cannot delete user due to related records in other tables.',
@@ -19,7 +19,7 @@ export const userMessages = {
     failed_to_create_user: 'Foydalanuvchini yaratishda xatolik.',
     already_exist_user: 'Foydalanuvchi allaqachon mavjud.',
     failed_to_fetch_user_list: "Foydalanuvchilar ro'yxatini olib bo'lmadi.",
-    failed_to_fetch_user_deatils: "Foydalanuvchi tafsilotlarini olib bo'lmadi.",
+    failed_to_fetch_user_details: "Foydalanuvchi tafsilotlarini olib bo'lmadi.",
     failed_to_update_user: "Foydalanuvchini yangilab bo'lmadi.",
     cannot_delete_user_due_to_related_records_in_other_tables:
       'Boshqa jadvallardagi tegishli yozuvlar tufayli foydalanuvchini oʻchirib boʻlmaydi.',
@@ -35,7 +35,7 @@ export const userMessages = {
     already_exist_user: ' Ámeldegi paydalanıwshı.',
     failed_to_fetch_user_list:
       ' Paydalanıwshılar dizimin alıw áwmetsiz tawsıldı.',
-    failed_to_fetch_user_deatils:
+    failed_to_fetch_user_details:
       ' Paydalanıwshı maǵlıwmatların alıw áwmetsiz tawsıldı.',
     failed_to_update_user: "Paydalanıwshın jańalap bo'lmadi.",
     cannot_delete_user_due_to_related_records_in_other_tables:
@@ -51,7 +51,7 @@ export const userMessages = {
     failed_to_create_user: 'Не удалось создать пользователя.',
     already_exist_user: 'Пользователь уже существует.',
     failed_to_fetch_user_list: 'Не удалось получить список пользователей.',
-    failed_to_fetch_user_deatils: 'Не удалось получить данные пользователя.',
+    failed_to_fetch_user_details: 'Не удалось получить данные пользователя.',
     failed_to_update_user: 'Не удалось обновить пользователя.',
     cannot_delete_user_due_to_related_records_in_other_tables:
       'Невозможно удалить пользователя из-за связанных записей в других таблицах.',

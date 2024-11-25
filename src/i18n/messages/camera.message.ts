@@ -1,0 +1,47 @@
+export const cameraMessages = {
+  en: {
+    camera_not_found: 'Camera not found.',
+    failed_to_create_camera: 'Failed to create camera.',
+    already_exist_camera: 'Camera already exists.',
+    failed_to_fetch_camera_list: 'Failed to fetch camera list.',
+    failed_to_fetch_camera_details: 'Failed to fetch camera details.',
+    failed_to_update_camera: 'Failed to update camera.',
+    cannot_delete_camera_due_to_related_records_in_other_tables:
+      'Cannot delete camera due to related records in other tables.',
+    failed_to_delete_camera: 'Failed to delete camera.',
+    camera_created_successfully: 'Camera Created Successfully',
+    camera_fetched_successfully: 'Camera Fetched Successfully',
+    camera_updated_successfully: 'Camera Updated Successfully',
+    camera_deleted_successfully: 'Camera Deleted Successfully',
+  },
+  uz: {
+    camera_not_found: 'Kamera topilmadi.',
+    failed_to_create_camera: 'Kamera yaratishda xatolik.',
+    already_exist_camera: 'Kamera allaqachon mavjud.',
+    failed_to_fetch_camera_list: "Kameralar ro'yxatini olib bo'lmadi.",
+    failed_to_fetch_camera_details: "Kamera tafsilotlarini olib bo'lmadi.",
+    failed_to_update_camera: "Kamerani yangilab bo'lmadi.",
+    cannot_delete_camera_due_to_related_records_in_other_tables:
+      "Boshqa jadvallardagi tegishli yozuvlar tufayli kamerani o'chirib bo'lmaydi.",
+    failed_to_delete_camera: "Kamerani o'chirib bo'lmadi.",
+    camera_created_successfully: 'Kamera muvaffaqiyatli yaratildi',
+    camera_fetched_successfully: 'Kamera muvaffaqiyatli olindi',
+    camera_updated_successfully: 'Kamera muvaffaqiyatli yangilandi',
+    camera_deleted_successfully: "Kamera muvaffaqiyatli o'chirildi",
+  },
+  ru: {
+    camera_not_found: 'Камера не найдена.',
+    failed_to_create_camera: 'Ошибка при создании камеры.',
+    already_exist_camera: 'Камера уже существует.',
+    failed_to_fetch_camera_list: 'Не удалось получить список камер.',
+    failed_to_fetch_camera_details: 'Не удалось получить детали камеры.',
+    failed_to_update_camera: 'Не удалось обновить камеру.',
+    cannot_delete_camera_due_to_related_records_in_other_tables:
+      'Невозможно удалить камеру из-за связанных записей в других таблицах.',
+    failed_to_delete_camera: 'Не удалось удалить камеру.',
+    camera_created_successfully: 'Камера успешно создана',
+    camera_fetched_successfully: 'Камера успешно получена',
+    camera_updated_successfully: 'Камера успешно обновлена',
+    camera_deleted_successfully: 'Камера успешно удалена',
+  },
+};

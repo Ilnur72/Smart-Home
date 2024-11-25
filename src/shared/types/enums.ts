@@ -23,3 +23,15 @@ export enum UserRole {
   USER = 'USER',
   OPERATOR = 'OPERATOR',
 }
+
+export enum IntercomStatus {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+  MAINTENANCE = 'maintenance',
+}
+
+export enum CameraStatus {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+  MAINTENANCE = 'maintenance',
+}

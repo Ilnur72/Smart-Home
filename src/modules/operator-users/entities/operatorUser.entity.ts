@@ -1,11 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { BaseEntity } from '../../../shared/entities/base.entity';
 import { UserRole } from '../../../shared/types/enums';
+import { Operator } from 'src/modules/operator/entities/operator.entity';
 
 @Entity()
-export class OperatorUser {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class OperatorUser extends BaseEntity {
   @Column()
   operator_id: string;
 
@@ -21,16 +20,7 @@ export class OperatorUser {
   @Column({ nullable: true, select: false })
   password: string;
 
-  @Column({ default: false, select: false })
-  is_deleted: boolean;
-
-  @Column({ default: () => 'CURRENT_TIMESTAMP' })
-  created_at: Date;
-
-  @Column({ default: () => 'CURRENT_TIMESTAMP' })
-  deleted_at: Date;
-
-  // @ManyToOne(() => Region, (region) => region.users)
-  // @JoinColumn({ name: 'regionId' })
-  // region: Region;
+  @ManyToOne(() => Operator, (operator) => operator.operator_users)
+  @JoinColumn({ name: 'operator_id' })
+  operator: Operator;
 }

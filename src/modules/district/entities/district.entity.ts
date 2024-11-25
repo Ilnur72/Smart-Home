@@ -1,19 +1,10 @@
 import { Building } from '../../building/entities/building.entity';
 import { Region } from '../../region/entities/region.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { BaseEntity } from '../../../shared/entities/base.entity';
 
 @Entity()
-export class District {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class District extends BaseEntity {
   @Column({ nullable: true, select: false })
   district_id: string;
 
@@ -22,12 +13,6 @@ export class District {
 
   @Column()
   name: string;
-
-  @Column({ default: false, select: false })
-  is_deleted: boolean;
-
-  @Column({ default: () => 'CURRENT_TIMESTAMP' })
-  created_at: Date;
 
   @OneToMany(() => Building, (building) => building.district)
   buildings: Building[];

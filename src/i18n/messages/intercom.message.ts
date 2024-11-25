@@ -1,0 +1,47 @@
+export const intercomMessages = {
+  en: {
+    intercom_not_found: 'Intercom not found.',
+    failed_to_create_intercom: 'Failed to create intercom.',
+    already_exist_intercom: 'Intercom already exists.',
+    failed_to_fetch_intercom_list: 'Failed to fetch intercom list.',
+    failed_to_fetch_intercom_details: 'Failed to fetch intercom details.',
+    failed_to_update_intercom: 'Failed to update intercom.',
+    cannot_delete_intercom_due_to_related_records_in_other_tables:
+      'Cannot delete intercom due to related records in other tables.',
+    failed_to_delete_intercom: 'Failed to delete intercom.',
+    intercom_created_successfully: 'Intercom Created Successfully',
+    intercom_fetched_successfully: 'Intercom Fetched Successfully',
+    intercom_updated_successfully: 'Intercom Updated Successfully',
+    intercom_deleted_successfully: 'Intercom Deleted Successfully',
+  },
+  uz: {
+    intercom_not_found: 'Domofon topilmadi.',
+    failed_to_create_intercom: 'Domofon yaratishda xatolik.',
+    already_exist_intercom: 'Domofon allaqachon mavjud.',
+    failed_to_fetch_intercom_list: "Domofonlar ro'yxatini olib bo'lmadi.",
+    failed_to_fetch_intercom_details: "Domofon tafsilotlarini olib bo'lmadi.",
+    failed_to_update_intercom: "Domofonni yangilab bo'lmadi.",
+    cannot_delete_intercom_due_to_related_records_in_other_tables:
+      "Boshqa jadvallardagi tegishli yozuvlar tufayli domofonni o'chirib bo'lmaydi.",
+    failed_to_delete_intercom: "Domofonni o'chirib bo'lmadi.",
+    intercom_created_successfully: 'Domofon muvaffaqiyatli yaratildi',
+    intercom_fetched_successfully: 'Domofon muvaffaqiyatli olindi',
+    intercom_updated_successfully: 'Domofon muvaffaqiyatli yangilandi',
+    intercom_deleted_successfully: "Domofon muvaffaqiyatli o'chirildi",
+  },
+  ru: {
+    intercom_not_found: 'Домофон не найден.',
+    failed_to_create_intercom: 'Ошибка при создании домофона.',
+    already_exist_intercom: 'Домофон уже существует.',
+    failed_to_fetch_intercom_list: 'Не удалось получить список домофонов.',
+    failed_to_fetch_intercom_details: 'Не удалось получить детали домофона.',
+    failed_to_update_intercom: 'Не удалось обновить домофон.',
+    cannot_delete_intercom_due_to_related_records_in_other_tables:
+      'Невозможно удалить домофон из-за связанных записей в других таблицах.',
+    failed_to_delete_intercom: 'Не удалось удалить домофон.',
+    intercom_created_successfully: 'Домофон успешно создан',
+    intercom_fetched_successfully: 'Домофон успешно получен',
+    intercom_updated_successfully: 'Домофон успешно обновлен',
+    intercom_deleted_successfully: 'Домофон успешно удален',
+  },
+};

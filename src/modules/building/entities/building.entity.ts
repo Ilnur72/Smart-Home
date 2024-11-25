@@ -1,18 +1,12 @@
-// import { Region } from '../../region/entities/region.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { BaseEntity } from '../../../shared/entities/base.entity';
+import { Operator } from 'src/modules/operator/entities/operator.entity';
 import { District } from '../../district/entities/district.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Camera } from 'src/modules/camera/entities/camera.entity';
+import { Entrance } from 'src/modules/entrance/entities/entrance.entity';
 
 @Entity()
-export class Building {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Building extends BaseEntity {
   @Column()
   district_id: string;
 
@@ -28,16 +22,17 @@ export class Building {
   @Column()
   operator_id: string;
 
-  @Column({ default: false, select: false })
-  is_deleted: boolean;
-
-  @Column({ default: () => 'CURRENT_TIMESTAMP' })
-  created_at: Date;
-
-  @Column({ default: () => 'CURRENT_TIMESTAMP' })
-  deleted_at: Date;
-
   @ManyToOne(() => District, (district) => district.buildings)
   @JoinColumn({ name: 'district_id' })
   district: District;
+
+  @ManyToOne(() => Operator, (operator) => operator.buildings)
+  @JoinColumn({ name: 'operator_id' })
+  operator: Operator;
+
+  @OneToMany(() => Entrance, (entrance) => entrance.buildings)
+  entrances: Entrance[];
+
+  @OneToMany(() => Camera, (camera) => camera.buildings)
+  cameras: Camera[];
 }

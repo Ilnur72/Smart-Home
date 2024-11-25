@@ -158,7 +158,7 @@ export class BuildingService {
         this.messageService.getMessage(
           'building',
           language,
-          'failed_to_fetch_building_deatils',
+          'failed_to_fetch_building_details',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );

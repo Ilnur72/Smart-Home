@@ -26,7 +26,7 @@ export class ResponseOperatorUserDto {
   code: number;
 
   @ApiProperty({
-    description: 'Array of operatorUser data',
+    description: 'Array of operator user data',
     type: [OperatorUserDto],
   })
   data: OperatorUserDto[];

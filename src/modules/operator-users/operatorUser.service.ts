@@ -6,6 +6,7 @@ import { LanguageDto } from '../../shared/types/enums';
 import { OperatorUser } from './entities/operatorUser.entity';
 import { CreateOperatorUserDto } from './dto/create-operatorUser.dto';
 import { UpdateOperatorUserDto } from './dto/update-operatorUser.dto';
+import { FindOperatorUserDto } from './dto/find-operatorUser.dto';
 // import { SortOrder } from '../../shared/types/enums';
 
 @Injectable()
@@ -61,31 +62,22 @@ export class OperatorUserService {
   }
 
   async findAll(
-    {
-      page = { limit: 10, offset: 1 },
-      search,
-      filters = { is_deleted: false },
-    }: // sort = { by: 'created_at', order: SortOrder.DESC },
-
-    any,
+    { page = { limit: 10, offset: 1 }, search, filters }: FindOperatorUserDto,
     language: LanguageDto,
   ): Promise<any> {
     try {
       const existing = this.operatorUserRepository
-        .createQueryBuilder('operatorUser')
-        .where('operatorUser.is_deleted = :is_deleted', {
+        .createQueryBuilder('operator_user')
+        .where('operator_user.is_deleted = :is_deleted', {
           is_deleted: filters?.is_deleted ?? false,
         });
 
       if (search) {
         existing.where(
-          'operatorUser.name ILIKE :search OR operatorUser.surname ILIKE :search',
+          'operator_user.name ILIKE :search OR operator_user.login ILIKE :search',
           { search: `%${search}%` },
         );
       }
-      // if (sort.by && sort.order) {
-      //   existing.orderBy(`operatorUser.${sort.by}`, sort.order);
-      // }
       if (filters) {
         existing.andWhere(filters);
       }
@@ -113,7 +105,7 @@ export class OperatorUserService {
     try {
       const existing = await this.operatorUserRepository.findOne({
         where: { id, is_deleted: false },
-        relations: ['orders'],
+        relations: ['operator'],
       });
 
       if (!existing) {
@@ -136,7 +128,7 @@ export class OperatorUserService {
         this.messageService.getMessage(
           'operatorUser',
           language,
-          'failed_to_fetch_operatorUser_deatils',
+          'failed_to_fetch_operatorUser_details',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );

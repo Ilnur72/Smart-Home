@@ -113,7 +113,7 @@ export class DistrictService {
         this.messageService.getMessage(
           'district',
           language,
-          'failed_to_fetch_district_deatils',
+          'failed_to_fetch_district_details',
         ),
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
