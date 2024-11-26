@@ -15,7 +15,7 @@ export class CreateApartmentDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  apartments_number: number;
+  apartments_count: number;
 
   @ApiProperty()
   @IsNotEmpty()

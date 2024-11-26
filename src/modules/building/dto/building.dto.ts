@@ -8,7 +8,10 @@ export class BuildingDto {
   floor: number;
 
   @ApiProperty()
-  entrance_number: number;
+  entrance_count: number;
+
+  @ApiProperty()
+  apartments_count: number;
 
   @ApiProperty()
   operator_id: string;

@@ -9,11 +9,14 @@ export class Entrance extends BaseEntity {
   @Column()
   building_id: string;
 
-  @Column()
+  @Column({ nullable: true })
   intercom_id: string;
 
   @Column()
-  entrance_number: number;
+  apartments_count: number;
+
+  @Column('text', { array: true, nullable: true })
+  camera_ids: string[];
 
   @ManyToOne(() => Building, (building) => building.entrances)
   @JoinColumn({ name: 'building_id' })
@@ -23,6 +26,9 @@ export class Entrance extends BaseEntity {
   @JoinColumn({ name: 'intercom_id' })
   intercom: Intercom;
 
-  @OneToMany(() => Apartment, (apartment) => apartment.entrance)
+  @OneToMany(() => Apartment, (apartment) => apartment.entrance, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   apartments: Apartment[];
 }

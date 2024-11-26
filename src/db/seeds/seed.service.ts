@@ -2,12 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import axios from 'axios';
-import { User } from '../../modules/user/entities/user.entity';
+// import { User } from '../../modules/user/entities/user.entity';
 import { UserRole } from '../../shared/types/enums';
 import { hash } from 'bcryptjs';
 import { Region } from '../../modules/region/entities/region.entity';
 import { District } from '../../modules/district/entities/district.entity';
-import { RegionService } from '../../modules/region/region.service';
+// import { RegionService } from '../../modules/region/region.service';
+import { SystemUser } from '../../modules/system-users/entities/systemUser.entity';
 
 interface RegionsInterface {
   id: string;
@@ -21,37 +22,26 @@ export class SeedService {
     private readonly regionRepository: Repository<Region>,
     @InjectRepository(District)
     private readonly districtRepository: Repository<District>,
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-    private readonly regionService: RegionService,
+    @InjectRepository(SystemUser)
+    private readonly systemUserRepository: Repository<SystemUser>,
   ) {}
 
   async seed() {
-    await this.seedRegions();
-    // await this.seedAdmin();
+    // await this.seedRegions();
+    await this.seedAdmin();
   }
 
   private async seedAdmin() {
-    const { data: region } = await this.regionService.findAll({ search: '' });
-    const district = await this.districtRepository
-      .createQueryBuilder('district')
-      .where('district.name ILIKE :search', {
-        search: `%Nukus shahar%`,
-      })
-      .getMany();
     const hashedPassword: string = await hash(process.env.ADMIN_PASSWORD, 10);
 
     const admin = {
+      login: process.env.ADMIN_LOGIN,
       role: UserRole.ADMIN,
-      surname: 'admin',
       name: 'admin',
-      phone: process.env.ADMIN_PHONE,
       password: hashedPassword,
-      regionId: region[0]?.id,
-      districtId: district[0]?.id,
     };
-    const newUser = this.userRepository.create(admin);
-    return await this.userRepository.save(newUser);
+    const newUser = this.systemUserRepository.create(admin);
+    return await this.systemUserRepository.save(newUser);
   }
 
   private async seedRegions() {

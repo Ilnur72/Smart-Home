@@ -20,7 +20,12 @@ export class CreateBuildingDto {
   @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
-  entrance_number: number;
+  entrance_count: number;
+
+  @ApiProperty()
+  @IsNumber()
+  @IsNotEmpty()
+  apartments_count: number;
 
   @ApiProperty()
   @IsUUID()

@@ -6,9 +6,6 @@ export class SystemUserDto {
   name: string;
 
   @ApiProperty()
-  operator_id: string;
-
-  @ApiProperty()
   login: string;
 
   @ApiProperty()

@@ -1,9 +1,8 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../../shared/entities/base.entity';
 import { UserRole } from '../../../shared/types/enums';
-import { OperatorUser } from 'src/modules/operator-users/entities/operatorUser.entity';
-import { Building } from 'src/modules/building/entities/building.entity';
-import { SystemUser } from 'src/modules/system-users/entities/systemUser.entity';
+import { OperatorUser } from '../../operator-users/entities/operatorUser.entity';
+import { Building } from '../../building/entities/building.entity';
 
 @Entity()
 export class Operator extends BaseEntity {
@@ -21,9 +20,6 @@ export class Operator extends BaseEntity {
 
   @OneToMany(() => OperatorUser, (operatorUser) => operatorUser.operator)
   operator_users: OperatorUser[];
-
-  @OneToMany(() => SystemUser, (systemUser) => systemUser.operator)
-  system_users: SystemUser[];
 
   @OneToMany(() => Building, (building) => building.operator)
   buildings: Building[];

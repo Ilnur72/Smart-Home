@@ -2,11 +2,12 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
-import { Entrance } from './entities/entrance.entity';
 import { CreateEntranceDto } from './dto/create-entrance.dto';
 import { UpdateEntranceDto } from './dto/update-entrance.dto';
 import { FindEntranceDto } from './dto/find-entrance.dto';
 import { LanguageDto } from 'src/shared/types/enums';
+import { Entrance } from './entities/entrance.entity';
+import { ApartmentService } from '../apartment/apartment.service';
 
 @Injectable()
 export class EntranceService {
@@ -14,10 +15,17 @@ export class EntranceService {
     @InjectRepository(Entrance)
     private entranceRepository: Repository<Entrance>,
     private readonly messageService: MessageService,
+    private apartmentService: ApartmentService,
   ) {}
 
   async create(createEntranceDto: CreateEntranceDto, language?: LanguageDto) {
     try {
+      // for (let i = 0; i < createEntranceDto.apartments_count; i++) {
+      //   const apartment = this.apartmentService.create({
+      //     apartments_count:
+      //   })
+
+      // }
       const newEntrance = this.entranceRepository.create(createEntranceDto);
       return await this.entranceRepository.save(newEntrance);
     } catch (error) {

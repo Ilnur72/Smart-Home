@@ -1,9 +1,9 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../../shared/entities/base.entity';
-import { Operator } from 'src/modules/operator/entities/operator.entity';
+import { Operator } from '../../operator/entities/operator.entity';
 import { District } from '../../district/entities/district.entity';
-import { Camera } from 'src/modules/camera/entities/camera.entity';
-import { Entrance } from 'src/modules/entrance/entities/entrance.entity';
+import { Camera } from '../../camera/entities/camera.entity';
+import { Entrance } from '../../entrance/entities/entrance.entity';
 
 @Entity()
 export class Building extends BaseEntity {
@@ -17,7 +17,10 @@ export class Building extends BaseEntity {
   floor: number;
 
   @Column()
-  entrance_number: number;
+  entrance_count: number;
+
+  @Column()
+  apartments_count: number;
 
   @Column()
   operator_id: string;
@@ -30,7 +33,10 @@ export class Building extends BaseEntity {
   @JoinColumn({ name: 'operator_id' })
   operator: Operator;
 
-  @OneToMany(() => Entrance, (entrance) => entrance.buildings)
+  @OneToMany(() => Entrance, (entrance) => entrance.buildings, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   entrances: Entrance[];
 
   @OneToMany(() => Camera, (camera) => camera.buildings)

@@ -8,7 +8,7 @@ export class ApartmentDto {
   intercom_id: string;
 
   @ApiProperty()
-  apartments_number: number;
+  apartments_count: number;
 
   @ApiProperty()
   number: number;

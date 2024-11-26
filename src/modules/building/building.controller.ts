@@ -22,7 +22,7 @@ import { SetRoles } from '../auth/set-roles.decorator';
 import { HasRole } from '../../shared/guards/has-roles.guard';
 import { FindBuildingDto } from './dto/find-building.dto';
 import { ResponseBuildingDto } from './dto/building.dto';
-import { Language } from 'src/shared/decorators/language.decorator';
+import { Language } from '../../shared/decorators/language.decorator';
 
 @ApiTags('Building')
 @Controller('building')

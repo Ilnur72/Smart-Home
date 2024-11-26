@@ -8,7 +8,7 @@ export class EntranceDto {
   intercom_id: string;
 
   @ApiProperty()
-  apartment_number: number;
+  apartments_count: number;
 
   @ApiProperty()
   camera_ids: string[];

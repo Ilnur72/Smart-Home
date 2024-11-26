@@ -16,18 +16,18 @@ export class CreateEntranceDto {
 
   @ApiProperty()
   @IsUUID()
-  @IsNotEmpty()
-  intercom_id: string;
+  @IsOptional()
+  intercom_id?: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  apartment_number: number;
+  apartments_count: number;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  number: number;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // number: number;
 
   @ApiProperty({ type: [String], required: false })
   @IsOptional()

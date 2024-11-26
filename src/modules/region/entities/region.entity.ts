@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../../shared/entities/base.entity';
-import { District } from '../../../modules/district/entities/district.entity';
+import { District } from '../../district/entities/district.entity';
 
 @Entity()
 export class Region extends BaseEntity {

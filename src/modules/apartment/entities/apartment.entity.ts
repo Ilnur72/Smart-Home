@@ -1,20 +1,18 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../../../shared/entities/base.entity';
-import { Entrance } from 'src/modules/entrance/entities/entrance.entity';
-import { Intercom } from 'src/modules/intercom/entities/intercom.entity';
-// import { Entrance } from '../../entrance/entities/entrance.entity';
-// import { Intercom } from '../../intercom/entities/intercom.entity';
+import { Entrance } from '../../entrance/entities/entrance.entity';
+import { Intercom } from '../../intercom/entities/intercom.entity';
 
 @Entity('apartment')
 export class Apartment extends BaseEntity {
   @Column()
   entrance_id: string;
 
-  @Column()
+  @Column({ nullable: true })
   intercom_id: string;
 
   // @Column()
-  // apartments_number: number;
+  // apartments_count: number;
 
   @Column()
   number: number;
