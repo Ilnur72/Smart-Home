@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CameraService } from './camera.service';
 import { CameraController } from './camera.controller';
 import { Camera } from './entities/camera.entity';
-import { MessageService } from 'src/i18n/message.service';
+import { MessageService } from '../../i18n/message.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Camera])],

@@ -6,8 +6,8 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { TransformBoolean } from 'src/shared/decorators/transform-boolean.decorator';
-import { OffsetPaginationDto } from 'src/shared/dto/offset-pagination.dto';
+import { TransformBoolean } from '../../../shared/decorators/transform-boolean.decorator';
+import { OffsetPaginationDto } from '../../../shared/dto/offset-pagination.dto';
 
 export class FitlerSystemUserDto {
   @ApiProperty({ description: 'Filter by deletion status', type: 'boolean' })

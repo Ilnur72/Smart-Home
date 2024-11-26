@@ -16,13 +16,13 @@ import { UpdateApartmentDto } from './dto/update-apartment.dto';
 import { FindApartmentDto } from './dto/find-apartment.dto';
 import { LanguageDto, UserRole } from '../../shared/types/enums';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Language } from 'src/shared/decorators/language.decorator';
+import { Language } from '../../shared/decorators/language.decorator';
 import { SetRoles } from '../auth/set-roles.decorator';
-import { IsLoggedIn } from 'src/shared/guards/is-loggedin.guard';
-import { HasRole } from 'src/shared/guards/has-roles.guard';
+import { IsLoggedIn } from '../../shared/guards/is-loggedin.guard';
+import { HasRole } from '../../shared/guards/has-roles.guard';
 import { ResponseApartmentDto } from './dto/apartment.dto';
-import { MessageService } from 'src/i18n/message.service';
-
+import { MessageService } from '../../i18n/message.service';
+const { OPERATOR_USER, ADMIN, OPERATOR, USER } = UserRole;
 @ApiTags('Apartment')
 @Controller('apartment')
 export class ApartmentController {
@@ -32,7 +32,7 @@ export class ApartmentController {
   ) {}
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(ADMIN, OPERATOR, OPERATOR_USER)
   @Post()
   @ApiResponse({
     status: 201,
@@ -96,7 +96,7 @@ export class ApartmentController {
   }
 
   @Get(':id')
-  @SetRoles(UserRole.ADMIN, UserRole.USER)
+  @SetRoles(ADMIN, USER)
   @ApiResponse({
     status: 200,
     description: 'Single Apartment details',
@@ -122,7 +122,7 @@ export class ApartmentController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(ADMIN)
   @Put(':id')
   @ApiResponse({
     status: 200,
@@ -151,7 +151,7 @@ export class ApartmentController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(ADMIN)
   @Delete(':id')
   @ApiResponse({
     status: 200,

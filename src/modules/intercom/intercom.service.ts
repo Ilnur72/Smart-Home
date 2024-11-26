@@ -6,7 +6,7 @@ import { Intercom } from './entities/intercom.entity';
 import { CreateIntercomDto } from './dto/create-intercom.dto';
 import { UpdateIntercomDto } from './dto/update-intercom.dto';
 import { FindIntercomDto } from './dto/find-intercom.dto';
-import { LanguageDto } from 'src/shared/types/enums';
+import { LanguageDto } from '../../shared/types/enums';
 
 @Injectable()
 export class IntercomService {

@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { UserRole } from 'src/shared/types/enums';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateOperatorDto {
   @ApiProperty()

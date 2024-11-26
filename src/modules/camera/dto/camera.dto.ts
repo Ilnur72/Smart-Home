@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Camera } from '../entities/camera.entity';
-import { CameraStatus } from 'src/shared/types/enums';
+import { CameraStatus } from '../../../shared/types/enums';
 
 export class CameraDto {
   @ApiProperty()

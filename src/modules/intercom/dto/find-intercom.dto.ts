@@ -7,8 +7,8 @@ import {
   IsEnum,
   ValidateNested,
 } from 'class-validator';
-import { TransformBoolean } from 'src/shared/decorators/transform-boolean.decorator';
-import { OffsetPaginationDto } from 'src/shared/dto/offset-pagination.dto';
+import { TransformBoolean } from '../../../shared/decorators/transform-boolean.decorator';
+import { OffsetPaginationDto } from '../../../shared/dto/offset-pagination.dto';
 import { IntercomStatus } from '../../../shared/types/enums';
 
 export class FilterIntercomDto {

@@ -9,7 +9,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { TransformBoolean } from 'src/shared/decorators/transform-boolean.decorator';
+import { TransformBoolean } from '../../../shared/decorators/transform-boolean.decorator';
 
 // ?q=first_name&page[offset]=0&page[limit]=10&sort[by]=first_name&sort[order]=asc
 export class SortUserDto {

@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApartmentService } from './apartment.service';
 import { ApartmentController } from './apartment.controller';
 import { Apartment } from './entities/apartment.entity';
-import { MessageService } from 'src/i18n/message.service';
+import { MessageService } from '../../i18n/message.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Apartment])],

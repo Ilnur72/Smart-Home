@@ -6,7 +6,7 @@ import { Camera } from './entities/camera.entity';
 import { CreateCameraDto } from './dto/create-camera.dto';
 import { UpdateCameraDto } from './dto/update-camera.dto';
 import { FindCameraDto } from './dto/find-camera.dto';
-import { LanguageDto } from 'src/shared/types/enums';
+import { LanguageDto } from '../../shared/types/enums';
 
 @Injectable()
 export class CameraService {

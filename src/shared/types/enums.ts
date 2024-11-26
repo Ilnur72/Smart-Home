@@ -22,6 +22,7 @@ export enum UserRole {
   ADMIN = 'ADMIN',
   USER = 'USER',
   OPERATOR = 'OPERATOR',
+  OPERATOR_USER = 'OPERATOR_USER',
 }
 
 export enum IntercomStatus {

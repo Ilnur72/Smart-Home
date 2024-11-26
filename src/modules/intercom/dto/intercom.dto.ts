@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Intercom } from '../entities/intercom.entity';
-import { IntercomStatus } from 'src/shared/types/enums';
+import { IntercomStatus } from '../../../shared/types/enums';
 
 export class IntercomDto {
   @ApiProperty()

@@ -16,12 +16,12 @@ import { UpdateCameraDto } from './dto/update-camera.dto';
 import { FindCameraDto } from './dto/find-camera.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LanguageDto, UserRole } from '../../shared/types/enums';
-import { Language } from 'src/shared/decorators/language.decorator';
+import { Language } from '../../shared/decorators/language.decorator';
 import { SetRoles } from '../auth/set-roles.decorator';
-import { IsLoggedIn } from 'src/shared/guards/is-loggedin.guard';
-import { HasRole } from 'src/shared/guards/has-roles.guard';
+import { IsLoggedIn } from '../../shared/guards/is-loggedin.guard';
+import { HasRole } from '../../shared/guards/has-roles.guard';
 import { ResponseCameraDto } from './dto/camera.dto';
-import { MessageService } from 'src/i18n/message.service';
+import { MessageService } from '../../i18n/message.service';
 
 @ApiTags('Camera')
 @Controller('camera')

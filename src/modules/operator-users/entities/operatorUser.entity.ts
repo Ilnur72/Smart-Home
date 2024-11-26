@@ -1,14 +1,14 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../../../shared/entities/base.entity';
 import { UserRole } from '../../../shared/types/enums';
-import { Operator } from 'src/modules/operator/entities/operator.entity';
+import { Operator } from '../../operator/entities/operator.entity';
 
 @Entity()
 export class OperatorUser extends BaseEntity {
   @Column()
   operator_id: string;
 
-  @Column({ enum: UserRole, default: UserRole.OPERATOR })
+  @Column({ enum: UserRole, default: UserRole.OPERATOR_USER })
   role: UserRole;
 
   @Column()

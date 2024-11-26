@@ -6,7 +6,7 @@ import { Apartment } from './entities/apartment.entity';
 import { CreateApartmentDto } from './dto/create-apartment.dto';
 import { UpdateApartmentDto } from './dto/update-apartment.dto';
 import { FindApartmentDto } from './dto/find-apartment.dto';
-import { LanguageDto } from 'src/shared/types/enums';
+import { LanguageDto } from '../../shared/types/enums';
 
 @Injectable()
 export class ApartmentService {

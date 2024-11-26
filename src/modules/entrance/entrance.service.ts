@@ -5,7 +5,7 @@ import { MessageService } from '../../i18n/message.service';
 import { CreateEntranceDto } from './dto/create-entrance.dto';
 import { UpdateEntranceDto } from './dto/update-entrance.dto';
 import { FindEntranceDto } from './dto/find-entrance.dto';
-import { LanguageDto } from 'src/shared/types/enums';
+import { LanguageDto } from '../../shared/types/enums';
 import { Entrance } from './entities/entrance.entity';
 import { ApartmentService } from '../apartment/apartment.service';
 
