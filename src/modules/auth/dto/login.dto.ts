@@ -7,7 +7,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export class LoginDto {
+export class LoginUserDto {
   @ApiProperty({ default: '998901234567' })
   @IsString()
   @IsNotEmpty()
@@ -15,8 +15,18 @@ export class LoginDto {
   phone: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   password?: string;
+}
+
+export class LoginStaffDto {
+  @IsString()
+  @IsNotEmpty()
+  login: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
 }
 
 export class VerifyDto {
