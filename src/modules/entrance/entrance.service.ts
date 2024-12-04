@@ -120,10 +120,12 @@ export class EntranceService {
 
   async findOne(id: string, language?: LanguageDto) {
     try {
-      const entrance = await this.entranceRepository.findOne({
-        where: { id },
-        relations: ['apartments'],
-      });
+      const entrance = await this.entranceRepository
+        .createQueryBuilder('entrance')
+        .leftJoinAndSelect('entrance.apartments', 'apartment')
+        .where('entrance.id = :id', { id })
+        .orderBy('apartment.number', 'ASC')
+        .getOne();
 
       if (!entrance) {
         throw new HttpException(

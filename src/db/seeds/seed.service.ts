@@ -27,7 +27,7 @@ export class SeedService {
   ) {}
 
   async seed() {
-    // await this.seedRegions();
+    await this.seedRegions();
     await this.seedAdmin();
   }
 
@@ -39,7 +39,7 @@ export class SeedService {
     const user = await this.systemUserRepository.findOneBy({
       login: process.env.SYSTEM_ADMIN_LOGIN,
     });
-    await this.systemUserRepository.delete(user.id);
+    if (user) await this.systemUserRepository.delete(user.id);
     const admin = {
       login: process.env.SYSTEM_ADMIN_LOGIN,
       role: UserRole.SYSTEM_ADMIN,
