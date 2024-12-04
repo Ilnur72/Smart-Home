@@ -8,6 +8,9 @@ export class Intercom extends BaseEntity {
   @Column()
   model: string;
 
+  @Column()
+  url: string;
+
   @Column({
     type: 'enum',
     enum: IntercomStatus,

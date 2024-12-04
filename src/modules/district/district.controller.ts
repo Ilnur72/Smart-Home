@@ -31,7 +31,7 @@ export class DistrictController {
   ) {}
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(UserRole.SYSTEM_ADMIN)
   @Post()
   @ApiResponse({
     status: 201,
@@ -96,7 +96,7 @@ export class DistrictController {
   }
 
   @Get(':id')
-  @SetRoles(UserRole.ADMIN, UserRole.USER)
+  @SetRoles(UserRole.SYSTEM_ADMIN, UserRole.USER)
   @ApiResponse({
     status: 200,
     description: 'Single District details',
@@ -122,7 +122,7 @@ export class DistrictController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(UserRole.SYSTEM_ADMIN)
   @Put(':id')
   @ApiResponse({
     status: 200,
@@ -151,7 +151,7 @@ export class DistrictController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(UserRole.SYSTEM_ADMIN)
   @Delete(':id')
   @ApiResponse({
     status: 200,

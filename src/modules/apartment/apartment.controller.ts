@@ -22,7 +22,7 @@ import { IsLoggedIn } from '../../shared/guards/is-loggedin.guard';
 import { HasRole } from '../../shared/guards/has-roles.guard';
 import { ResponseApartmentDto } from './dto/apartment.dto';
 import { MessageService } from '../../i18n/message.service';
-const { OPERATOR_USER, ADMIN, OPERATOR, USER } = UserRole;
+const { OPERATOR_USER, SYSTEM_ADMIN, OPERATOR, USER } = UserRole;
 @ApiTags('Apartment')
 @Controller('apartment')
 export class ApartmentController {
@@ -32,7 +32,7 @@ export class ApartmentController {
   ) {}
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(ADMIN, OPERATOR, OPERATOR_USER)
+  @SetRoles(SYSTEM_ADMIN, OPERATOR, OPERATOR_USER)
   @Post()
   @ApiResponse({
     status: 201,
@@ -96,7 +96,7 @@ export class ApartmentController {
   }
 
   @Get(':id')
-  @SetRoles(ADMIN, USER)
+  @SetRoles(SYSTEM_ADMIN, USER)
   @ApiResponse({
     status: 200,
     description: 'Single Apartment details',
@@ -122,7 +122,7 @@ export class ApartmentController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(ADMIN)
+  @SetRoles(SYSTEM_ADMIN)
   @Put(':id')
   @ApiResponse({
     status: 200,
@@ -151,7 +151,7 @@ export class ApartmentController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(ADMIN)
+  @SetRoles(SYSTEM_ADMIN)
   @Delete(':id')
   @ApiResponse({
     status: 200,

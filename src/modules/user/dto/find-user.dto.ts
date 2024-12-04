@@ -16,31 +16,44 @@ export class SortUserDto {
   @ApiProperty({
     description: 'Sort by field: created_at or fullname',
     enum: ['created_at', 'fullname'],
+    required: false,
   })
   @IsOptional()
   @IsEnum(['created_at', 'fullname'])
   by?: string;
 
-  @ApiProperty({ description: 'Sort order: asc or desc', enum: SortOrder })
+  @ApiProperty({
+    description: 'Sort order: asc or desc',
+    enum: SortOrder,
+    required: false,
+  })
   @IsOptional()
   @IsEnum(SortOrder)
   order?: SortOrder;
 }
 
 export class FilterUserDto {
-  @ApiProperty({ description: 'Filter by deletion status', type: 'boolean' })
+  @ApiProperty({
+    description: 'Filter by deletion status',
+    type: 'boolean',
+    required: false,
+  })
   @IsOptional()
   @IsBoolean()
   @TransformBoolean()
   is_deleted?: boolean;
 
-  @ApiProperty({ description: 'Filter by role', type: 'string' })
+  @ApiProperty({
+    description: 'Filter by role',
+    type: 'string',
+    required: false,
+  })
   @IsOptional()
   role?: string;
 }
 
 export class FindUserDto {
-  @ApiProperty({ description: 'Search term' })
+  @ApiProperty({ description: 'Search term', required: false })
   @IsOptional()
   @IsString()
   search?: string;
@@ -48,18 +61,27 @@ export class FindUserDto {
   @ApiProperty({
     description: 'Pagination parameters: limit and offset',
     title: 'Pagination',
+    required: false,
   })
   @ValidateNested()
   @Type(() => OffsetPaginationDto)
   page?: OffsetPaginationDto;
 
-  @ApiProperty({ description: 'Sorting parameters', type: SortUserDto })
+  @ApiProperty({
+    description: 'Sorting parameters',
+    type: SortUserDto,
+    required: false,
+  })
   @IsOptional()
   @ValidateNested()
   @Type(() => SortUserDto)
   sort?: SortUserDto;
 
-  @ApiProperty({ description: 'Filtering parameters', type: FilterUserDto })
+  @ApiProperty({
+    description: 'Filtering parameters',
+    type: FilterUserDto,
+    required: false,
+  })
   @IsOptional()
   @ValidateNested()
   @Type(() => FilterUserDto)

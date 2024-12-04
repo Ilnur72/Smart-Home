@@ -11,15 +11,19 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: true,
   });
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
   const configService = app.get(ConfigService);
   const port = configService.get<number>('port');
   app.useGlobalInterceptors(new TimezoneInterceptor());
 
   const config = new DocumentBuilder()
     .setTitle('Smart Home API')
-    .addServer(`http://localhost:8080`)
+    .addServer(`http://localhost:8070`)
     .setVersion('1.0')
-
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

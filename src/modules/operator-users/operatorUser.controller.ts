@@ -24,7 +24,7 @@ import { HasRole } from '../../shared/guards/has-roles.guard';
 import { Language } from '../../shared/decorators/language.decorator';
 import { FindOperatorUserDto } from './dto/find-operatorUser.dto';
 
-// @SetRoles(OperatorUserRole.ADMIN)
+// @SetRoles(OperatorUserRole.SYSTEM_ADMIN)
 // @UseGuards(IsLoggedIn, HasRole)
 @ApiTags('OperatorUser')
 @Controller('operator-user')
@@ -86,7 +86,7 @@ export class OperatorUserController {
     }
   }
 
-  // @SetRoles(OperatorUserRole.ADMIN, OperatorUserRole.USER)
+  // @SetRoles(OperatorUserRole.SYSTEM_ADMIN, OperatorUserRole.USER)
   @Get('current')
   async findMe(@Language() language: LanguageDto) {
     try {
@@ -128,7 +128,7 @@ export class OperatorUserController {
     }
   }
 
-  // @SetRoles(OperatorUserRole.ADMIN, OperatorUserRole.USER)
+  // @SetRoles(OperatorUserRole.SYSTEM_ADMIN, OperatorUserRole.USER)
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -151,7 +151,7 @@ export class OperatorUserController {
     }
   }
 
-  // @SetRoles(OperatorUserRole.ADMIN, OperatorUserRole.USER)
+  // @SetRoles(OperatorUserRole.SYSTEM_ADMIN, OperatorUserRole.USER)
   @Delete(':id')
   async remove(@Param('id') id: string, @Language() language: LanguageDto) {
     try {

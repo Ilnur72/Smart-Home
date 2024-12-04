@@ -1,8 +1,9 @@
 import { Global, Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import configService from '../config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from '../utils/typeorm-config.service';
+import { JwtModule } from '@nestjs/jwt';
 
 @Global()
 @Module({
@@ -10,6 +11,16 @@ import { TypeOrmConfigService } from '../utils/typeorm-config.service';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configService],
+    }),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get('jwt_secret'),
+        signOptions: {
+          expiresIn: configService.get('jwt_expiration', '24h'),
+        },
+      }),
+      inject: [ConfigService],
     }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,

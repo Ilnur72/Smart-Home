@@ -10,7 +10,11 @@ import { TransformBoolean } from '../../../shared/decorators/transform-boolean.d
 import { OffsetPaginationDto } from '../../../shared/dto/offset-pagination.dto';
 
 export class FitlerSystemUserDto {
-  @ApiProperty({ description: 'Filter by deletion status', type: 'boolean' })
+  @ApiProperty({
+    description: 'Filter by deletion status',
+    type: 'boolean',
+    required: false,
+  })
   @IsOptional()
   @IsBoolean()
   @TransformBoolean()
@@ -18,7 +22,7 @@ export class FitlerSystemUserDto {
 }
 
 export class FindSystemUserDto {
-  @ApiProperty({ description: 'Search term' })
+  @ApiProperty({ description: 'Search term', required: false })
   @IsOptional()
   @IsString()
   search?: string;
@@ -26,6 +30,7 @@ export class FindSystemUserDto {
   @ApiProperty({
     description: 'Pagination parameters: limit and offset',
     title: 'Pagination',
+    required: false,
   })
   @ValidateNested()
   @Type(() => OffsetPaginationDto)
@@ -34,6 +39,7 @@ export class FindSystemUserDto {
   @ApiProperty({
     description: 'Filtering parameters',
     type: FitlerSystemUserDto,
+    required: false,
   })
   @IsOptional()
   @ValidateNested()

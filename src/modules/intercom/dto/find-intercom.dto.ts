@@ -28,6 +28,7 @@ export class FindIntercomDto {
   @ApiProperty({
     description: 'Pagination parameters',
     type: OffsetPaginationDto,
+    required: false,
   })
   @ValidateNested()
   @Type(() => OffsetPaginationDto)
@@ -41,6 +42,7 @@ export class FindIntercomDto {
   @ApiProperty({
     description: 'Filter parameters',
     type: FilterIntercomDto,
+    required: false,
   })
   @IsOptional()
   @ValidateNested()

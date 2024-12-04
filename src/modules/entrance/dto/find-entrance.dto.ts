@@ -31,6 +31,7 @@ export class FindEntranceDto {
   @ApiProperty({
     description: 'Pagination parameters',
     type: OffsetPaginationDto,
+    required: false,
   })
   @ValidateNested()
   @Type(() => OffsetPaginationDto)
@@ -44,6 +45,7 @@ export class FindEntranceDto {
   @ApiProperty({
     description: 'Filter parameters',
     type: FilterEntranceDto,
+    required: false,
   })
   @IsOptional()
   @ValidateNested()

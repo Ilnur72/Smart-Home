@@ -10,6 +10,7 @@ import { UserModule } from '../user/user.module';
 import { Operator } from '../operator/entities/operator.entity';
 import { SystemUser } from '../system-users/entities/systemUser.entity';
 import { OperatorUser } from '../operator-users/entities/operatorUser.entity';
+import { BaseUser } from '../../shared/entities/base-staff.entity';
 // import { EskizService } from '../eskiz/eskiz.service';
 // import { EskizModule } from '../eskiz/eskiz.module';
 // import { Eskiz } from '../eskiz/entities/eskiz.entity';
@@ -17,7 +18,13 @@ import { OperatorUser } from '../operator-users/entities/operatorUser.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Operator, OperatorUser, SystemUser]),
+    TypeOrmModule.forFeature([
+      User,
+      Operator,
+      OperatorUser,
+      SystemUser,
+      BaseUser,
+    ]),
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,

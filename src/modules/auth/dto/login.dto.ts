@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 
 export class LoginUserDto {
-  @ApiProperty({ default: '998901234567' })
+  @ApiProperty({ default: '+998901234567' })
   @IsString()
   @IsNotEmpty()
   @IsPhoneNumber('UZ')

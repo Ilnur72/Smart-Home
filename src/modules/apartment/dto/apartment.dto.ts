@@ -11,7 +11,7 @@ export class ApartmentDto {
   apartments_count: number;
 
   @ApiProperty()
-  number: number;
+  number: string;
 }
 
 export class ResponseApartmentDto {

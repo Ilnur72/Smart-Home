@@ -18,17 +18,43 @@ export class EntranceService {
     private apartmentService: ApartmentService,
   ) {}
 
-  async create(createEntranceDto: CreateEntranceDto, language?: LanguageDto) {
+  async create(createEntranceDto: CreateEntranceDto[], language?: LanguageDto) {
     try {
-      // for (let i = 0; i < createEntranceDto.apartments_count; i++) {
-      //   const apartment = this.apartmentService.create({
-      //     apartments_count:
-      //   })
+      const savedEntrances: Entrance[] = [];
+      console.log(createEntranceDto);
+      for (const entrance of createEntranceDto) {
+        const {
+          first_apartment_number,
+          last_apartment_number,
+          ...entranceData
+        } = entrance;
+        console.log(entranceData);
+        const newEntrance = this.entranceRepository.create(entranceData);
+        const savedEntrance = await this.entranceRepository.save(newEntrance);
 
-      // }
-      const newEntrance = this.entranceRepository.create(createEntranceDto);
-      return await this.entranceRepository.save(newEntrance);
+        const step = Math.ceil(
+          (+last_apartment_number - +first_apartment_number + 1) /
+            entrance.apartments_count,
+        );
+        console.log(step, 'step');
+        const apartmentPromises = Array.from(
+          { length: entrance.apartments_count },
+          (_, index) => {
+            const apartmentNumber = first_apartment_number + index * step;
+            return this.apartmentService.create({
+              number: apartmentNumber.toString(),
+              entrance_id: savedEntrance.id,
+            });
+          },
+        );
+
+        await Promise.all(apartmentPromises);
+        savedEntrances.push(savedEntrance);
+      }
+
+      return savedEntrances;
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         this.messageService.getMessage(
           'entrance',
@@ -96,7 +122,7 @@ export class EntranceService {
     try {
       const entrance = await this.entranceRepository.findOne({
         where: { id },
-        relations: ['building', 'intercom'],
+        relations: ['apartments'],
       });
 
       if (!entrance) {
@@ -148,6 +174,13 @@ export class EntranceService {
 
   async remove(id: string, language?: LanguageDto) {
     try {
+      const apartment = await this.apartmentService.findAll({
+        filters: { entrance_id: id },
+      });
+      await this,
+        this.apartmentService.updateMultiple(
+          apartment.data.map((item) => item.id),
+        );
       const entrance = await this.findOne(id, language);
       entrance.is_deleted = true;
       entrance.deleted_at = new Date();

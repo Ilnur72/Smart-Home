@@ -24,8 +24,11 @@ import { FindBuildingDto } from './dto/find-building.dto';
 import { ResponseBuildingDto } from './dto/building.dto';
 import { Language } from '../../shared/decorators/language.decorator';
 
+const { OPERATOR, OPERATOR_USER, SYSTEM_ADMIN } = UserRole;
+
 @ApiTags('Building')
 @Controller('building')
+@SetRoles(SYSTEM_ADMIN)
 export class BuildingController {
   constructor(
     private readonly buildingService: BuildingService,
@@ -33,7 +36,7 @@ export class BuildingController {
   ) {}
 
   // @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(OPERATOR)
   @Post()
   @ApiResponse({
     status: 201,
@@ -66,7 +69,7 @@ export class BuildingController {
     }
   }
 
-  // @SetRoles(UserRole.ADMIN, UserRole.USER)
+  @SetRoles(SYSTEM_ADMIN, OPERATOR, OPERATOR_USER)
   @ApiResponse({
     status: 200,
     description: 'List of Buildings',
@@ -99,7 +102,7 @@ export class BuildingController {
   }
 
   @Get(':id')
-  @SetRoles(UserRole.ADMIN, UserRole.USER)
+  @SetRoles(SYSTEM_ADMIN, OPERATOR, OPERATOR_USER)
   @ApiResponse({
     status: 200,
     description: 'Single Building details',
@@ -125,7 +128,7 @@ export class BuildingController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(SYSTEM_ADMIN, OPERATOR)
   @Put(':id')
   @ApiResponse({
     status: 200,
@@ -154,7 +157,7 @@ export class BuildingController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(SYSTEM_ADMIN, OPERATOR)
   @Delete(':id')
   @ApiResponse({
     status: 200,

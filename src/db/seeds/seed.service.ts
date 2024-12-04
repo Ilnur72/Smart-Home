@@ -32,11 +32,17 @@ export class SeedService {
   }
 
   private async seedAdmin() {
-    const hashedPassword: string = await hash(process.env.ADMIN_PASSWORD, 10);
-
+    const hashedPassword: string = await hash(
+      process.env.SYSTEM_ADMIN_PASSWORD,
+      10,
+    );
+    const user = await this.systemUserRepository.findOneBy({
+      login: process.env.SYSTEM_ADMIN_LOGIN,
+    });
+    await this.systemUserRepository.delete(user.id);
     const admin = {
-      login: process.env.ADMIN_LOGIN,
-      role: UserRole.ADMIN,
+      login: process.env.SYSTEM_ADMIN_LOGIN,
+      role: UserRole.SYSTEM_ADMIN,
       name: 'admin',
       password: hashedPassword,
     };

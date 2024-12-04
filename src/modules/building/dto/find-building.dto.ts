@@ -16,44 +16,66 @@ export class SortBuildingDto {
   @ApiProperty({
     description: 'Sort by field: created_at or floor',
     enum: ['created_at', 'floor'],
+    required: false,
   })
   @IsOptional()
   @IsEnum(['created_at', 'floor'])
   by?: string;
 
-  @ApiProperty({ description: 'Sort order: asc or desc', enum: SortOrder })
+  @ApiProperty({
+    required: false,
+    description: 'Sort order: asc or desc',
+    enum: SortOrder,
+  })
   @IsOptional()
   @IsEnum(SortOrder)
   order?: SortOrder;
 }
 
 export class FilterBuildingDto {
-  @ApiProperty({ description: 'Filter by deletion status', type: 'boolean' })
+  @ApiProperty({
+    required: false,
+    description: 'Filter by deletion status',
+    type: 'boolean',
+  })
   @IsOptional()
   @IsBoolean()
   @TransformBoolean()
   is_deleted?: boolean;
 
-  @ApiProperty({ description: 'Filter by region', type: 'string' })
+  @ApiProperty({
+    required: false,
+    description: 'Filter by region',
+    type: 'string',
+  })
   @IsOptional()
   region_id?: string;
 
-  @ApiProperty({ description: 'Filter by district', type: 'string' })
+  @ApiProperty({
+    required: false,
+    description: 'Filter by district',
+    type: 'string',
+  })
   @IsOptional()
   district_id?: string;
 
-  @ApiProperty({ description: 'Filter by number of floor', type: 'number' })
+  @ApiProperty({
+    required: false,
+    description: 'Filter by number of floor',
+    type: 'number',
+  })
   @IsOptional()
   floor?: string;
 }
 
 export class FindBuildingDto {
-  @ApiProperty({ description: 'Search term' })
+  @ApiProperty({ required: false, description: 'Search term' })
   @IsOptional()
   @IsString()
   search?: string;
 
   @ApiProperty({
+    required: false,
     description: 'Pagination parameters: limit and offset',
     title: 'Pagination',
   })
@@ -61,13 +83,21 @@ export class FindBuildingDto {
   @Type(() => OffsetPaginationDto)
   page?: OffsetPaginationDto;
 
-  @ApiProperty({ description: 'Sorting parameters', type: SortBuildingDto })
+  @ApiProperty({
+    required: false,
+    description: 'Sorting parameters',
+    type: SortBuildingDto,
+  })
   @IsOptional()
   @ValidateNested()
   @Type(() => SortBuildingDto)
   sort?: SortBuildingDto;
 
-  @ApiProperty({ description: 'Filtering parameters', type: FilterBuildingDto })
+  @ApiProperty({
+    required: false,
+    description: 'Filtering parameters',
+    type: FilterBuildingDto,
+  })
   @IsOptional()
   @ValidateNested()
   @Type(() => FilterBuildingDto)

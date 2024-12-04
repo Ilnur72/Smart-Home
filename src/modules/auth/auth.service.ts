@@ -13,6 +13,7 @@ import { compare } from 'bcryptjs';
 import { SystemUser } from '../system-users/entities/systemUser.entity';
 import { Operator } from '../operator/entities/operator.entity';
 import { OperatorUser } from '../operator-users/entities/operatorUser.entity';
+import { BaseUser } from '../../shared/entities/base-staff.entity';
 
 @Injectable()
 export class AuthService {
@@ -25,12 +26,14 @@ export class AuthService {
     // private readonly eskizService: EskizService,
     private readonly messageService: MessageService,
     private jwtService: JwtService,
-    @InjectRepository(SystemUser)
-    private systemUserRepository: Repository<SystemUser>,
-    @InjectRepository(Operator)
-    private operatorRepository: Repository<Operator>,
-    @InjectRepository(OperatorUser)
-    private operatorUserRepository: Repository<OperatorUser>,
+    // @InjectRepository(SystemUser)
+    // private systemUserRepository: Repository<SystemUser>,
+    // @InjectRepository(Operator)
+    // private operatorRepository: Repository<Operator>,
+    // @InjectRepository(OperatorUser)
+    // private operatorUserRepository: Repository<OperatorUser>,
+    @InjectRepository(BaseUser)
+    private baseUserRepository: Repository<BaseUser>,
   ) {}
 
   // async validateUser(body: LoginUserDto) {
@@ -81,7 +84,7 @@ export class AuthService {
       );
     }
 
-    const token = this.generateToken(user.id, user.role);
+    const token = this.generateToken(user.id, user.role, user.fullname);
     return token;
     // }
 
@@ -114,52 +117,32 @@ export class AuthService {
   // }
 
   async staffLogin(body: LoginStaffDto, language: string) {
-    const [systemUser, operator, operatorUser] = await Promise.all([
-      this.systemUserRepository
-        .createQueryBuilder('system_user')
-        .where({ login: body.login, is_deleted: false })
-        .addSelect('system_user.password')
-        .getOne(),
-
-      this.operatorRepository
-        .createQueryBuilder('operator')
-        .where({ login: body.login, is_deleted: false })
-        .addSelect('operator.password')
-        .getOne(),
-
-      this.operatorUserRepository
-        .createQueryBuilder('operator_user')
-        .where({ login: body.login, is_deleted: false })
-        .addSelect('operator_user.password')
-        .getOne(),
-    ]);
-
-    const user = systemUser || operator || operatorUser;
-    if (!user) {
+    const staff = await this.baseUserRepository
+      .createQueryBuilder('staff')
+      .where({ login: body.login, is_deleted: false })
+      .addSelect(['staff.password', 'staff.role'])
+      .getOne();
+    console.log(staff);
+    if (!staff) {
       throw new HttpException(
         this.messageService.getMessage('auth', language, 'user_not_found'),
         HttpStatus.NOT_FOUND,
       );
     }
 
-    const match = await compare(body.password, user.password);
+    const match = await compare(body.password, staff.password);
+
     if (!match) {
       throw new HttpException(
         this.messageService.getMessage('auth', language, 'invalid_credentials'),
         HttpStatus.BAD_REQUEST,
       );
     }
-
-    let role = 'USER';
-    if (systemUser) role = 'SYSTEM_USER';
-    else if (operator) role = 'OPERATOR';
-    else if (operatorUser) role = 'OPERATOR_USER';
-
-    return this.generateToken(user.id, role);
+    return this.generateToken(staff.id, staff.role, staff.name);
   }
 
-  private generateToken(id: string, role: string) {
-    const token = this.jwtService.sign({ id, role });
+  private generateToken(id: string, role: string, fullname: string) {
+    const token = this.jwtService.sign({ user: { id, role, fullname } });
     return { token };
   }
 }

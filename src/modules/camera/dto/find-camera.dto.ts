@@ -33,6 +33,7 @@ export class FindCameraDto {
   @ApiProperty({
     description: 'Pagination parameters',
     type: OffsetPaginationDto,
+    required: false,
   })
   @ValidateNested()
   @Type(() => OffsetPaginationDto)
@@ -46,6 +47,7 @@ export class FindCameraDto {
   @ApiProperty({
     description: 'Filter parameters',
     type: FilterCameraDto,
+    required: false,
   })
   @IsOptional()
   @ValidateNested()

@@ -29,6 +29,16 @@ export class CreateEntranceDto {
   // @IsNumber()
   // number: number;
 
+  @ApiProperty()
+  @IsOptional()
+  @IsNumber()
+  first_apartment_number?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsNumber()
+  last_apartment_number?: number;
+
   @ApiProperty({ type: [String], required: false })
   @IsOptional()
   @IsArray()

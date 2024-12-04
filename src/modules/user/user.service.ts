@@ -13,6 +13,7 @@ import { MessageService } from '../../i18n/message.service';
 import { LanguageDto, SortOrder } from '../../shared/types/enums';
 import { User } from './entities/user.entity';
 import { FindUserDto } from './dto/find-user.dto';
+import { hash } from 'bcryptjs';
 // import { SortOrder } from '../../shared/types/enums';
 
 @Injectable()
@@ -37,7 +38,8 @@ export class UserService {
           ),
           HttpStatus.BAD_REQUEST,
         );
-
+      const hashedPassword: string = await hash(createUserDto.password, 10);
+      createUserDto.password = hashedPassword;
       const newUser = this.userRepository.create(createUserDto);
       return await this.userRepository.save(newUser);
     } catch (error) {

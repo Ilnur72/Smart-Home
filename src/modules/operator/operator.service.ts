@@ -7,6 +7,7 @@ import { MessageService } from '../../i18n/message.service';
 import { LanguageDto, UserRole } from '../../shared/types/enums';
 import { Operator } from './entities/operator.entity';
 import { FindUserDto } from '../user/dto/find-user.dto';
+import { hash } from 'bcryptjs';
 // import { SortOrder } from '../../shared/types/enums';
 
 @Injectable()
@@ -31,6 +32,9 @@ export class OperatorService {
           ),
           HttpStatus.BAD_REQUEST,
         );
+
+      const hashedPassword: string = await hash(createOperatorDto.password, 10);
+      createOperatorDto.password = hashedPassword;
       const newOperator = this.operatorRepository.create(createOperatorDto);
       return await this.operatorRepository.save(newOperator);
     } catch (error) {

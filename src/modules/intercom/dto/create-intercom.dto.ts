@@ -8,6 +8,11 @@ export class CreateIntercomDto {
   @IsString()
   model: string;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  url: string;
+
   @ApiProperty({ enum: IntercomStatus })
   @IsNotEmpty()
   @IsEnum(IntercomStatus)

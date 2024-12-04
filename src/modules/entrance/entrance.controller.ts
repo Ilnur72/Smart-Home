@@ -23,6 +23,8 @@ import { HasRole } from '../../shared/guards/has-roles.guard';
 import { ResponseEntranceDto } from './dto/entrance.dto';
 import { MessageService } from '../../i18n/message.service';
 
+const { OPERATOR, OPERATOR_USER, SYSTEM_ADMIN } = UserRole;
+
 @ApiTags('Entrance')
 @Controller('entrance')
 export class EntranceController {
@@ -32,7 +34,7 @@ export class EntranceController {
   ) {}
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(SYSTEM_ADMIN, OPERATOR)
   @Post()
   @ApiResponse({
     status: 201,
@@ -41,7 +43,7 @@ export class EntranceController {
   })
   @HttpCode(201)
   async create(
-    @Body() createEntranceDto: CreateEntranceDto,
+    @Body() createEntranceDto: CreateEntranceDto[],
     @Language() language: LanguageDto,
   ) {
     try {
@@ -60,10 +62,12 @@ export class EntranceController {
         ),
       };
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
 
+  @SetRoles(SYSTEM_ADMIN, OPERATOR, OPERATOR_USER)
   @ApiResponse({
     status: 200,
     description: 'List of Entrances',
@@ -96,7 +100,7 @@ export class EntranceController {
   }
 
   @Get(':id')
-  @SetRoles(UserRole.ADMIN, UserRole.USER)
+  @SetRoles(SYSTEM_ADMIN, OPERATOR, OPERATOR_USER)
   @ApiResponse({
     status: 200,
     description: 'Single Entrance details',
@@ -122,7 +126,7 @@ export class EntranceController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(SYSTEM_ADMIN, OPERATOR)
   @Put(':id')
   @ApiResponse({
     status: 200,
@@ -151,7 +155,7 @@ export class EntranceController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(SYSTEM_ADMIN, OPERATOR)
   @Delete(':id')
   @ApiResponse({
     status: 200,

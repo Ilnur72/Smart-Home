@@ -32,7 +32,7 @@ export class CameraController {
   ) {}
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(UserRole.SYSTEM_ADMIN)
   @Post()
   @ApiResponse({
     status: 201,
@@ -90,7 +90,7 @@ export class CameraController {
   }
 
   @Get(':id')
-  @SetRoles(UserRole.ADMIN, UserRole.USER)
+  @SetRoles(UserRole.SYSTEM_ADMIN, UserRole.USER)
   @ApiResponse({
     status: 200,
     description: 'Single Camera details',
@@ -116,7 +116,7 @@ export class CameraController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(UserRole.SYSTEM_ADMIN)
   @Put(':id')
   @ApiResponse({
     status: 200,
@@ -145,7 +145,7 @@ export class CameraController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(UserRole.SYSTEM_ADMIN)
   @Delete(':id')
   @ApiResponse({
     status: 200,

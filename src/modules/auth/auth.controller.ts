@@ -1,9 +1,11 @@
-import { Body, Controller, Headers, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto, LoginStaffDto } from './dto/login.dto';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { MessageService } from '../../i18n/message.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { LanguageDto } from 'src/shared/types/enums';
+import { Language } from 'src/shared/decorators/language.decorator';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -20,7 +22,7 @@ export class AuthController {
   @Post('register')
   async register(
     @Body() body: CreateUserDto,
-    @Headers('accept-language') language: string,
+    @Language() language: LanguageDto,
   ) {
     try {
       await this.authService.register(body, language);
@@ -39,10 +41,7 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(
-    @Body() body: LoginUserDto,
-    @Headers('accept-language') language: string,
-  ) {
+  async login(@Body() body: LoginUserDto, @Language() language: LanguageDto) {
     try {
       const data = await this.authService.login(body, language);
       return {
@@ -63,7 +62,7 @@ export class AuthController {
   @Post('login-staff')
   async staffLogin(
     @Body() body: LoginStaffDto,
-    @Headers('accept-language') language: string,
+    @Language() language: LanguageDto,
   ) {
     try {
       const data = await this.authService.staffLogin(body, language);
@@ -85,7 +84,7 @@ export class AuthController {
   // @Post('verify')
   // async verify(
   //   @Body() body: VerifyDto,
-  //   @Headers('accept-language') language: string,
+  // @Language() language: LanguageDto,
   // ) {
   //   try {
   //     const data = await this.authService.verify(

@@ -3,11 +3,26 @@ import {
   IsNotEmpty,
   IsString,
   IsUUID,
-  IsObject,
   IsEnum,
   IsIP,
+  IsNumber,
+  IsNotEmptyObject,
+  ValidateNested,
 } from 'class-validator';
 import { CameraStatus } from '../../../shared/types/enums';
+import { Type } from 'class-transformer';
+
+class LocationDto {
+  @ApiProperty()
+  @IsNumber()
+  @IsNotEmpty()
+  latitude: number;
+
+  @ApiProperty()
+  @IsNumber()
+  @IsNotEmpty()
+  longitude: number;
+}
 
 export class CreateCameraDto {
   @ApiProperty()
@@ -22,8 +37,10 @@ export class CreateCameraDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsObject()
-  location: Record<string, any>;
+  @IsNotEmptyObject()
+  @ValidateNested()
+  @Type(() => LocationDto)
+  location: LocationDto;
 
   @ApiProperty()
   @IsNotEmpty()

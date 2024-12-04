@@ -9,13 +9,13 @@ export class Apartment extends BaseEntity {
   entrance_id: string;
 
   @Column({ nullable: true })
-  intercom_id: string;
+  intercom_id?: string;
 
   // @Column()
   // apartments_count: number;
 
   @Column()
-  number: number;
+  number: string;
 
   @ManyToOne(() => Entrance, (entrance) => entrance.apartments)
   @JoinColumn({ name: 'entrance_id' })

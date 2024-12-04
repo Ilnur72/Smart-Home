@@ -7,10 +7,6 @@ import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
 import { LanguageDto } from '../../shared/types/enums';
 import { FindBuildingDto } from './dto/find-building.dto';
-import { EntranceService } from '../entrance/entrance.service';
-import { ApartmentService } from '../apartment/apartment.service';
-import { Entrance } from '../entrance/entities/entrance.entity';
-import { Apartment } from '../apartment/entities/apartment.entity';
 
 @Injectable()
 export class BuildingService {
@@ -18,27 +14,11 @@ export class BuildingService {
     @InjectRepository(Building)
     private buildingRepository: Repository<Building>,
     private readonly messageService: MessageService,
-    private readonly entranceService: EntranceService,
-    private readonly apartmentService: ApartmentService,
   ) {}
 
   async create(createBuildingDto: CreateBuildingDto, language: LanguageDto) {
     try {
-      const apartmentsPerEntrance = Math.ceil(
-        createBuildingDto.apartments_count / createBuildingDto.entrance_count,
-      );
-
-      const entrances = this.generateEntrances(
-        createBuildingDto.entrance_count,
-        apartmentsPerEntrance,
-        createBuildingDto.floor,
-      );
-
-      const newBuilding = this.buildingRepository.create({
-        ...createBuildingDto,
-        entrances: entrances,
-      });
-
+      const newBuilding = this.buildingRepository.create(createBuildingDto);
       const result = await this.buildingRepository.save(newBuilding);
       console.log(newBuilding);
 
@@ -63,44 +43,6 @@ export class BuildingService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-  }
-
-  private generateEntrances(
-    entranceCount: number,
-    apartmentsPerEntrance: number,
-    floorCount: number,
-  ): Entrance[] {
-    const entrances: Entrance[] = [];
-
-    for (let i = 1; i <= entranceCount; i++) {
-      const apartments: Apartment[] = [];
-      const apartmentsPerFloor = Math.ceil(apartmentsPerEntrance / floorCount);
-
-      // Har bir qavat uchun apartment'larni yaratish
-      for (let floor = 1; floor <= floorCount; floor++) {
-        for (let j = 1; j <= apartmentsPerFloor; j++) {
-          // Agar yaratilgan apartment'lar soni kerakli sondan oshib ketmasa
-          if (apartments.length < apartmentsPerEntrance) {
-            const apartmentNumber =
-              (i - 1) * apartmentsPerEntrance +
-              (floor - 1) * apartmentsPerFloor +
-              j;
-            apartments.push({
-              number: apartmentNumber,
-              // floor: floor,
-            } as Apartment);
-          }
-        }
-      }
-
-      entrances.push({
-        apartments_count: i,
-        // floor: floorCount,
-        apartments: apartments,
-      } as Entrance);
-    }
-
-    return entrances;
   }
 
   async findAll(
@@ -169,7 +111,7 @@ export class BuildingService {
     try {
       const existing = await this.buildingRepository.findOne({
         where: { id, is_deleted: false },
-        relations: ['district', 'district.region'],
+        relations: ['district', 'district.region', 'entrances'],
       });
 
       if (!existing) {

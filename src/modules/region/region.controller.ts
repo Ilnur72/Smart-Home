@@ -29,7 +29,7 @@ import { DistrictDto } from '../district/dto/district.dto';
 
 @ApiTags('Region')
 @Controller('region')
-@ApiTags('District')
+@ApiTags('Region')
 // @ApiHeader({
 //   name: 'accept-language',
 //   required: false,
@@ -43,7 +43,7 @@ export class RegionController {
   ) {}
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(UserRole.SYSTEM_ADMIN)
   @Post()
   @ApiResponse({
     status: 201,
@@ -83,7 +83,7 @@ export class RegionController {
   async findAll(
     @Query() findRegionDto: FindRegionDto,
     // @Language() language: LanguageDto,
-    @Headers('accept-language') language: LanguageDto,
+    @Language() language: LanguageDto,
   ) {
     try {
       let data: RegionDto[] | DistrictDto[];
@@ -113,7 +113,7 @@ export class RegionController {
   }
 
   @Get(':id')
-  @SetRoles(UserRole.ADMIN, UserRole.USER)
+  @SetRoles(UserRole.SYSTEM_ADMIN, UserRole.USER)
   @ApiResponse({
     status: 200,
     description: 'Single Region details',
@@ -139,7 +139,7 @@ export class RegionController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(UserRole.SYSTEM_ADMIN)
   @Put(':id')
   @ApiResponse({
     status: 200,
@@ -168,7 +168,7 @@ export class RegionController {
   }
 
   @UseGuards(IsLoggedIn, HasRole)
-  @SetRoles(UserRole.ADMIN)
+  @SetRoles(UserRole.SYSTEM_ADMIN)
   @Delete(':id')
   @ApiResponse({
     status: 200,

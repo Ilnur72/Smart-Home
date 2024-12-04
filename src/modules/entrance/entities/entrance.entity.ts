@@ -9,11 +9,17 @@ export class Entrance extends BaseEntity {
   @Column()
   building_id: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'uuid', nullable: true })
   intercom_id: string;
 
-  @Column()
+  @Column({ type: 'int', nullable: false })
   apartments_count: number;
+
+  @Column({ type: 'int', nullable: true })
+  first_apartment_number?: number;
+
+  @Column({ type: 'int', nullable: true })
+  last_apartment_number?: number;
 
   @Column('text', { array: true, nullable: true })
   camera_ids: string[];

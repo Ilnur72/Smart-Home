@@ -19,7 +19,7 @@ export class LanguageStatusDto {
   language: LanguageDto;
 }
 export enum UserRole {
-  ADMIN = 'ADMIN',
+  SYSTEM_ADMIN = 'SYSTEM_ADMIN',
   USER = 'USER',
   OPERATOR = 'OPERATOR',
   OPERATOR_USER = 'OPERATOR_USER',

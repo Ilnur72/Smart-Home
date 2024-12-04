@@ -24,7 +24,6 @@ import { HasRole } from '../../shared/guards/has-roles.guard';
 import { Language } from '../../shared/decorators/language.decorator';
 import { FindUserDto } from './dto/find-user.dto';
 
-// @SetRoles(UserRole.ADMIN)
 @UseGuards(IsLoggedIn, HasRole)
 @ApiTags('User')
 @Controller('user')
@@ -80,7 +79,6 @@ export class UserController {
     }
   }
 
-  // @SetRoles(UserRole.ADMIN, UserRole.USER)
   @Get('current')
   async findMe(@Language() language: LanguageDto) {
     try {
@@ -122,15 +120,19 @@ export class UserController {
     }
   }
 
-  // @SetRoles(UserRole.ADMIN, UserRole.USER)
-  @Put(':id')
+  // @SetRoles(UserRole.SYSTEM_ADMIN, UserRole.USER)
+  @Put()
   async update(
-    @Param('id') id: string,
+    // @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
     @Language() language: LanguageDto,
   ) {
     try {
-      await this.userService.update(id, updateUserDto, language);
+      await this.userService.update(
+        this.request['user'].id,
+        updateUserDto,
+        language,
+      );
       return {
         success: true,
         code: 200,
@@ -145,11 +147,11 @@ export class UserController {
     }
   }
 
-  // @SetRoles(UserRole.ADMIN, UserRole.USER)
-  @Delete(':id')
-  async remove(@Param('id') id: string, @Language() language: LanguageDto) {
+  // @SetRoles(UserRole.SYSTEM_ADMIN, UserRole.USER)
+  @Delete()
+  async remove(@Language() language: LanguageDto) {
     try {
-      await this.userService.remove(id, language);
+      await this.userService.remove(this.request['user'].id, language);
       return {
         success: true,
         code: 200,

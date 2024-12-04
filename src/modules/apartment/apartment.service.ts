@@ -147,6 +147,15 @@ export class ApartmentService {
     }
   }
 
+  async updateMultiple(ids: string[]) {
+    try {
+      await this.apartmentRepository.update(ids, { is_deleted: true });
+      return { message: 'Apartment updated successfully' };
+    } catch (error) {
+      throw new Error('Failed to update elements');
+    }
+  }
+
   async remove(id: string, language?: LanguageDto) {
     try {
       const apartment = await this.findOne(id, language);

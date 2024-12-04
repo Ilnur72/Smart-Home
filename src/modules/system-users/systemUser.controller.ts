@@ -24,7 +24,7 @@ import { Language } from '../../shared/decorators/language.decorator';
 import { FindSystemUserDto } from './dto/find-systemUser.dto';
 import { UpdateSystemUserDto } from './dto/update-systemUser.dto';
 
-// @SetRoles(SystemUserRole.ADMIN)
+// @SetRoles(SystemUserRole.SYSTEM_ADMIN)
 // @UseGuards(IsLoggedIn, HasRole)
 @ApiTags('SystemUser')
 @Controller('system-user')
@@ -86,7 +86,7 @@ export class SystemUserController {
     }
   }
 
-  // @SetRoles(SystemUserRole.ADMIN, SystemUserRole.USER)
+  // @SetRoles(SystemUserRole.SYSTEM_ADMIN, SystemUserRole.USER)
   @Get('current')
   async findMe(@Language() language: LanguageDto) {
     try {
@@ -128,7 +128,7 @@ export class SystemUserController {
     }
   }
 
-  // @SetRoles(SystemUserRole.ADMIN, SystemUserRole.USER)
+  // @SetRoles(SystemUserRole.SYSTEM_ADMIN, SystemUserRole.USER)
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -151,7 +151,7 @@ export class SystemUserController {
     }
   }
 
-  // @SetRoles(SystemUserRole.ADMIN, SystemUserRole.USER)
+  // @SetRoles(SystemUserRole.SYSTEM_ADMIN, SystemUserRole.USER)
   @Delete(':id')
   async remove(@Param('id') id: string, @Language() language: LanguageDto) {
     try {

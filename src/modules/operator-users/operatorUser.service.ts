@@ -7,6 +7,7 @@ import { OperatorUser } from './entities/operatorUser.entity';
 import { CreateOperatorUserDto } from './dto/create-operatorUser.dto';
 import { UpdateOperatorUserDto } from './dto/update-operatorUser.dto';
 import { FindOperatorUserDto } from './dto/find-operatorUser.dto';
+import { hash } from 'bcryptjs';
 // import { SortOrder } from '../../shared/types/enums';
 
 @Injectable()
@@ -34,7 +35,11 @@ export class OperatorUserService {
           ),
           HttpStatus.BAD_REQUEST,
         );
-
+      const hashedPassword: string = await hash(
+        createOperatorUserDto.password,
+        10,
+      );
+      createOperatorUserDto.password = hashedPassword;
       const newOperatorUser = this.operatorUserRepository.create(
         createOperatorUserDto,
       );

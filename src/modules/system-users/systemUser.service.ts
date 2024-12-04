@@ -7,6 +7,7 @@ import { MessageService } from '../../i18n/message.service';
 import { LanguageDto, UserRole } from '../../shared/types/enums';
 import { SystemUser } from './entities/systemUser.entity';
 import { FindUserDto } from '../user/dto/find-user.dto';
+import { hash } from 'bcryptjs';
 // import { SortOrder } from '../../shared/types/enums';
 
 @Injectable()
@@ -31,6 +32,11 @@ export class SystemUserService {
           ),
           HttpStatus.BAD_REQUEST,
         );
+      const hashedPassword: string = await hash(
+        process.env.SYSTEM_ADMIN_PASSWORD,
+        10,
+      );
+      createSystemUserDto.password = hashedPassword;
       const newSystemUser =
         this.systemUserRepository.create(createSystemUserDto);
       return await this.systemUserRepository.save(newSystemUser);
