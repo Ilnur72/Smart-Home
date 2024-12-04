@@ -35,7 +35,10 @@ export class OperatorService {
 
       const hashedPassword: string = await hash(createOperatorDto.password, 10);
       createOperatorDto.password = hashedPassword;
-      const newOperator = this.operatorRepository.create(createOperatorDto);
+      const newOperator = this.operatorRepository.create({
+        ...createOperatorDto,
+        role: UserRole.OPERATOR,
+      });
       return await this.operatorRepository.save(newOperator);
     } catch (error) {
       if (error.status === 400) {

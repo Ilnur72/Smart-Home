@@ -4,8 +4,8 @@ import { LoginUserDto, LoginStaffDto } from './dto/login.dto';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { MessageService } from '../../i18n/message.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { LanguageDto } from 'src/shared/types/enums';
-import { Language } from 'src/shared/decorators/language.decorator';
+import { LanguageDto } from '../../shared/types/enums';
+import { Language } from '../../shared/decorators/language.decorator';
 
 @ApiTags('Authentication')
 @Controller('auth')

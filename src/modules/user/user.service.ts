@@ -10,7 +10,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
-import { LanguageDto, SortOrder } from '../../shared/types/enums';
+import { LanguageDto, SortOrder, UserRole } from '../../shared/types/enums';
 import { User } from './entities/user.entity';
 import { FindUserDto } from './dto/find-user.dto';
 import { hash } from 'bcryptjs';
@@ -40,7 +40,10 @@ export class UserService {
         );
       const hashedPassword: string = await hash(createUserDto.password, 10);
       createUserDto.password = hashedPassword;
-      const newUser = this.userRepository.create(createUserDto);
+      const newUser = this.userRepository.create({
+        ...createUserDto,
+        role: UserRole.USER,
+      });
       return await this.userRepository.save(newUser);
     } catch (error) {
       if (error.status === 400) {

@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
-import { LanguageDto } from '../../shared/types/enums';
+import { LanguageDto, UserRole } from '../../shared/types/enums';
 import { OperatorUser } from './entities/operatorUser.entity';
 import { CreateOperatorUserDto } from './dto/create-operatorUser.dto';
 import { UpdateOperatorUserDto } from './dto/update-operatorUser.dto';
@@ -40,9 +40,10 @@ export class OperatorUserService {
         10,
       );
       createOperatorUserDto.password = hashedPassword;
-      const newOperatorUser = this.operatorUserRepository.create(
-        createOperatorUserDto,
-      );
+      const newOperatorUser = this.operatorUserRepository.create({
+        ...createOperatorUserDto,
+        role: UserRole.OPERATOR_USER,
+      });
       return await this.operatorUserRepository.save(newOperatorUser);
     } catch (error) {
       if (error.status === 400) {

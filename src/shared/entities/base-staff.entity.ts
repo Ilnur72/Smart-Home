@@ -15,7 +15,7 @@ export class BaseUser {
   @Column({ unique: true })
   login: string;
 
-  @Column({ unique: true })
+  @Column()
   role: UserRole;
 
   @Column({ select: false })

@@ -10,9 +10,6 @@ import { MessageService } from '../../i18n/message.service';
 // import { EskizService } from '../eskiz/eskiz.service';
 // import { UserRole } from '../../shared/types/enums';
 import { compare } from 'bcryptjs';
-import { SystemUser } from '../system-users/entities/systemUser.entity';
-import { Operator } from '../operator/entities/operator.entity';
-import { OperatorUser } from '../operator-users/entities/operatorUser.entity';
 import { BaseUser } from '../../shared/entities/base-staff.entity';
 
 @Injectable()
