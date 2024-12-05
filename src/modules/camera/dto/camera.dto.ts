@@ -14,6 +14,9 @@ export class CameraDto {
   @ApiProperty()
   ip_address: string;
 
+  @ApiProperty()
+  stream_link: string;
+
   @ApiProperty({ enum: CameraStatus })
   status: CameraStatus;
 }

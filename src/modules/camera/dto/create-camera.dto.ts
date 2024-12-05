@@ -47,6 +47,11 @@ export class CreateCameraDto {
   @IsIP()
   ip_address: string;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  stream_link: string;
+
   @ApiProperty({ enum: CameraStatus })
   @IsNotEmpty()
   @IsEnum(CameraStatus)

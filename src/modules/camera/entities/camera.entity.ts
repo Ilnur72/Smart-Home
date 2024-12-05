@@ -17,6 +17,9 @@ export class Camera extends BaseEntity {
   @Column()
   ip_address: string;
 
+  @Column()
+  stream_link: string;
+
   @Column({
     type: 'enum',
     enum: CameraStatus,
