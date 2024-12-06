@@ -17,7 +17,7 @@ export class Camera extends BaseEntity {
   @Column()
   ip_address: string;
 
-  @Column()
+  @Column({ nullable: true })
   stream_link: string;
 
   @Column({
