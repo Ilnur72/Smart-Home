@@ -9,6 +9,8 @@ export const intercomMessages = {
     cannot_delete_intercom_due_to_related_records_in_other_tables:
       'Cannot delete intercom due to related records in other tables.',
     failed_to_delete_intercom: 'Failed to delete intercom.',
+    failed_to_open_door: 'Failed to open the door.',
+    door_opened_successfully: 'The door was opened successfully.',
     intercom_created_successfully: 'Intercom Created Successfully',
     intercom_fetched_successfully: 'Intercom Fetched Successfully',
     intercom_updated_successfully: 'Intercom Updated Successfully',
@@ -24,6 +26,8 @@ export const intercomMessages = {
     cannot_delete_intercom_due_to_related_records_in_other_tables:
       "Boshqa jadvallardagi tegishli yozuvlar tufayli domofonni o'chirib bo'lmaydi.",
     failed_to_delete_intercom: "Domofonni o'chirib bo'lmadi.",
+    failed_to_open_door: 'Eshikni ochishda xatolik yuz berdi.',
+    door_opened_successfully: 'Eshik muvaffaqiyatli ochildi.',
     intercom_created_successfully: 'Domofon muvaffaqiyatli yaratildi',
     intercom_fetched_successfully: 'Domofon muvaffaqiyatli olindi',
     intercom_updated_successfully: 'Domofon muvaffaqiyatli yangilandi',
@@ -39,6 +43,8 @@ export const intercomMessages = {
     cannot_delete_intercom_due_to_related_records_in_other_tables:
       'Невозможно удалить домофон из-за связанных записей в других таблицах.',
     failed_to_delete_intercom: 'Не удалось удалить домофон.',
+    failed_to_open_door: 'Не удалось открыть дверь.',
+    door_opened_successfully: 'Дверь успешно открыта.',
     intercom_created_successfully: 'Домофон успешно создан',
     intercom_fetched_successfully: 'Домофон успешно получен',
     intercom_updated_successfully: 'Домофон успешно обновлен',

@@ -11,6 +11,15 @@ export class Intercom extends BaseEntity {
   @Column()
   url: string;
 
+  @Column({ nullable: true })
+  ip: string;
+
+  @Column({ nullable: true })
+  username: string;
+
+  @Column({ nullable: true })
+  password: string;
+
   @Column({
     type: 'enum',
     enum: IntercomStatus,

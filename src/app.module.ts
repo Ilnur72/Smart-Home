@@ -13,7 +13,6 @@ import { ApartmentModule } from './modules/apartment/apartment.module';
 import { IntercomModule } from './modules/intercom/intercom.module';
 import { CameraModule } from './modules/camera/camera.module';
 import { EntranceModule } from './modules/entrance/entrance.module';
-import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -32,6 +31,5 @@ import { AppController } from './app.controller';
     CameraModule,
     EntranceModule,
   ],
-  controllers: [AppController],
 })
 export class AppModule {}

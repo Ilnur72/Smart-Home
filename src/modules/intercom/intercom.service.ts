@@ -7,6 +7,7 @@ import { CreateIntercomDto } from './dto/create-intercom.dto';
 import { UpdateIntercomDto } from './dto/update-intercom.dto';
 import { FindIntercomDto } from './dto/find-intercom.dto';
 import { LanguageDto } from '../../shared/types/enums';
+import httpClient from 'urllib';
 
 @Injectable()
 export class IntercomService {
@@ -15,6 +16,39 @@ export class IntercomService {
     private intercomRepository: Repository<Intercom>,
     private readonly messageService: MessageService,
   ) {}
+
+  controlDoor(id?: string, language?: LanguageDto) {
+    try {
+      const data = `<RemoteControlDoor version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">
+    <doorNo min="1" max="1"></doorNo>
+    <cmd>open</cmd>
+  </RemoteControlDoor>`;
+      const url =
+        'https://172.25.25.96/ISAPI/AccessControl/RemoteControl/door/1';
+      const options = {
+        method: 'PUT',
+        rejectUnauthorized: false,
+        digestAuth: 'admin:12345678a',
+        content: data,
+        headers: {
+          'Content-Type': 'application/xml',
+        },
+      };
+      const result = httpClient.request(url, options);
+      console.log(result);
+
+      return 'opened';
+    } catch (error) {
+      throw new HttpException(
+        this.messageService.getMessage(
+          'intercom',
+          language,
+          'failed_to_open_door',
+        ),
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 
   async create(createIntercomDto: CreateIntercomDto, language?: LanguageDto) {
     try {
