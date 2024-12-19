@@ -21,7 +21,7 @@ export class SystemUserService {
   async create(createSystemUserDto: CreateSystemUserDto, language?: string) {
     try {
       const existing = await this.systemUserRepository.findOne({
-        where: { login: createSystemUserDto.login },
+        where: { email: createSystemUserDto.email },
       });
       if (existing)
         throw new HttpException(
@@ -74,7 +74,7 @@ export class SystemUserService {
         });
       if (search) {
         existing.where(
-          'systemUser.name ILIKE :search OR systemUser.login ILIKE :search',
+          'systemUser.name ILIKE :search OR systemUser.email ILIKE :search',
           { search: `%${search}%` },
         );
       }

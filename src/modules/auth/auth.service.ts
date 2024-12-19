@@ -116,7 +116,7 @@ export class AuthService {
   async staffLogin(body: LoginStaffDto, language: string) {
     const staff = await this.baseUserRepository
       .createQueryBuilder('staff')
-      .where({ login: body.login, is_deleted: false })
+      .where({ email: body.email, is_deleted: false })
       .addSelect(['staff.password', 'staff.role'])
       .getOne();
     console.log(staff);

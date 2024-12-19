@@ -10,7 +10,7 @@ export class CreateOperatorUserDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  login: string;
+  email: string;
 
   @ApiProperty()
   @IsString()

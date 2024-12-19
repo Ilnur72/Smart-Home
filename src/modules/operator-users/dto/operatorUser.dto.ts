@@ -9,7 +9,7 @@ export class OperatorUserDto {
   operator_id: string;
 
   @ApiProperty()
-  login: string;
+  email: string;
 
   @ApiProperty()
   password: string;

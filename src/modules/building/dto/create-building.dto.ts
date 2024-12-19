@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class CreateBuildingDto {
   @ApiProperty()
@@ -11,6 +17,11 @@ export class CreateBuildingDto {
   @IsString()
   @IsNotEmpty()
   address: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  location?: string;
 
   @ApiProperty()
   @IsNumber()
@@ -29,6 +40,6 @@ export class CreateBuildingDto {
 
   @ApiProperty()
   @IsUUID()
-  @IsNotEmpty()
-  operator_id: string;
+  @IsOptional()
+  operator_id?: string;
 }

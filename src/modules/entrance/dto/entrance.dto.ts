@@ -14,7 +14,7 @@ export class EntranceDto {
   camera_ids: string[];
 
   @ApiProperty()
-  number: number;
+  name: number;
 }
 
 export class ResponseEntranceDto {

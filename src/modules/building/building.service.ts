@@ -54,6 +54,7 @@ export class BuildingService {
         .createQueryBuilder('building')
         .leftJoinAndSelect('building.district', 'district')
         .leftJoinAndSelect('district.region', 'region')
+        .leftJoinAndSelect('building.operator', 'operator')
         .where('building.is_deleted = :is_deleted', {
           is_deleted: filters?.is_deleted ?? false,
         });
@@ -80,11 +81,10 @@ export class BuildingService {
         .skip((page.offset - 1) * page.limit)
         .take(page.limit)
         .getMany();
-
       return {
         total,
         data: data.map((building) => {
-          const { address, district, ...filteredBuilding } = building;
+          const { address, district, operator, ...filteredBuilding } = building;
           return {
             ...filteredBuilding,
             address: {
@@ -92,6 +92,7 @@ export class BuildingService {
               district: district.name,
               region: district.region.name,
             },
+            operator_name: operator ? operator.name : null,
           };
         }),
       };

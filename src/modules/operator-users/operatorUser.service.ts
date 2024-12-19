@@ -24,7 +24,7 @@ export class OperatorUserService {
   ) {
     try {
       const existing = await this.operatorUserRepository.findOne({
-        where: { login: createOperatorUserDto.login },
+        where: { email: createOperatorUserDto.email },
       });
       if (existing)
         throw new HttpException(
@@ -80,7 +80,7 @@ export class OperatorUserService {
 
       if (search) {
         existing.where(
-          'operator_user.name ILIKE :search OR operator_user.login ILIKE :search',
+          'operator_user.name ILIKE :search OR operator_user.email ILIKE :search',
           { search: `%${search}%` },
         );
       }

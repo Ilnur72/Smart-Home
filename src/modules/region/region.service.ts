@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { CreateRegionDto } from './dto/create-region.dto';
 import { UpdateRegionDto } from './dto/update-region.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,6 +6,9 @@ import { Region } from './entities/region.entity';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
 import { LanguageDto } from '../../shared/types/enums';
+import { createHash } from 'crypto';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class RegionService {
@@ -13,6 +16,8 @@ export class RegionService {
     @InjectRepository(Region)
     private regionRepository: Repository<Region>,
     private readonly messageService: MessageService,
+    @Inject(CACHE_MANAGER)
+    private cacheManager: Cache,
   ) {}
 
   async create(createRegionDto: CreateRegionDto, language: string) {
@@ -71,7 +76,7 @@ export class RegionService {
       const total = await existing.getCount();
       const data = await existing.getMany();
 
-      return { total, data };
+      return { total, region: data };
     } catch (error) {
       throw new HttpException(
         this.messageService.getMessage(
@@ -86,6 +91,11 @@ export class RegionService {
 
   async findOne(id: string, language: LanguageDto): Promise<any> {
     try {
+      const cacheKey = createHash('md5')
+        .update(JSON.stringify(id))
+        .digest('hex');
+      const cachedValue = await this.cacheManager.get(cacheKey);
+      if (cachedValue) return cachedValue;
       const existing = await this.regionRepository.findOne({
         where: { id, is_deleted: false },
         relations: ['district'],
@@ -101,6 +111,7 @@ export class RegionService {
           HttpStatus.NOT_FOUND,
         );
       }
+      await this.cacheManager.set(cacheKey, existing, 3600 * 24 * 30);
       return existing;
     } catch (error) {
       if (error.status === 404) {

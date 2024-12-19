@@ -1,4 +1,11 @@
-import { Entity, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 import { BaseEntity } from '../../../shared/entities/base.entity';
 import { Building } from '../../building/entities/building.entity';
 import { Intercom } from '../../intercom/entities/intercom.entity';
@@ -8,6 +15,9 @@ import { Apartment } from '../../apartment/entities/apartment.entity';
 export class Entrance extends BaseEntity {
   @Column()
   building_id: string;
+
+  @Column()
+  name: string;
 
   @Column({ type: 'uuid', nullable: true })
   intercom_id: string;
@@ -24,11 +34,22 @@ export class Entrance extends BaseEntity {
   @Column('text', { array: true, nullable: true })
   camera_ids: string[];
 
+  @Column({ nullable: true })
+  intercom_ip: string;
+
+  @Column({ nullable: true })
+  intercom_login: string;
+
+  @Column({ nullable: true })
+  intercom_password: string;
+
   @ManyToOne(() => Building, (building) => building.entrances)
   @JoinColumn({ name: 'building_id' })
   buildings: Building;
 
-  @ManyToOne(() => Intercom, (intercom) => intercom.entrances)
+  @OneToOne(() => Intercom, (intercom) => intercom.entrance, {
+    nullable: true,
+  })
   @JoinColumn({ name: 'intercom_id' })
   intercom: Intercom;
 

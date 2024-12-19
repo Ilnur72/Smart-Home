@@ -16,14 +16,17 @@ export class Building extends BaseEntity {
   @Column()
   floor: number;
 
-  @Column()
+  @Column({ nullable: true })
   entrance_count: number;
 
-  @Column()
+  @Column({ nullable: true })
   apartments_count: number;
 
-  @Column()
+  @Column({ nullable: true })
   operator_id: string;
+
+  @Column({ nullable: true })
+  location: string;
 
   @ManyToOne(() => District, (district) => district.buildings)
   @JoinColumn({ name: 'district_id' })

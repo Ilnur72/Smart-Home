@@ -9,7 +9,6 @@ import {
   Put,
   UseGuards,
   HttpCode,
-  Headers,
 } from '@nestjs/common';
 import { RegionService } from './region.service';
 
@@ -99,11 +98,11 @@ export class RegionController {
         success: true,
         code: 200,
         data,
-        message: this.messageService.getMessage(
-          'region',
-          language,
-          'region_fetched_successfully',
-        ),
+        // message: this.messageService.getMessage(
+        //   'region',
+        //   language,
+        //   'region_fetched_successfully',
+        // ),
       };
     } catch (error) {
       // console.log(error);

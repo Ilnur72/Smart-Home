@@ -1,7 +1,7 @@
 export const authMessages = {
   uz: {
     // Login xabarlari
-    invalid_credentials: "Login yoki parol noto'g'ri",
+    invalid_credentials: "Email yoki parol noto'g'ri",
     user_not_found: 'Foydalanuvchi topilmadi',
     account_blocked: 'Akkount bloklangan',
     login_success: 'Tizimga muvaffaqiyatli kirdingiz',
@@ -19,7 +19,7 @@ export const authMessages = {
   },
   ru: {
     // Login сообщения
-    invalid_credentials: 'Неверный логин или пароль',
+    invalid_credentials: 'Неверный электронная почта или пароль',
     user_not_found: 'Пользователь не найден',
     account_blocked: 'Аккаунт заблокирован',
     login_success: 'Вы успешно вошли в систему',
@@ -37,7 +37,7 @@ export const authMessages = {
   },
   en: {
     // Login messages
-    invalid_credentials: 'Invalid login or password',
+    invalid_credentials: 'Invalid email or password',
     user_not_found: 'User not found',
     account_blocked: 'Account is blocked',
     login_success: 'Successfully logged in',

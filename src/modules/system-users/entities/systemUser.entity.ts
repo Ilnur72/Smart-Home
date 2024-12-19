@@ -12,7 +12,7 @@ export class SystemUser extends BaseUser {
   role: UserRole;
 
   // @Column({ unique: true })
-  // login: string;
+  // email: string;
 
   // @Column({ nullable: true, select: false })
   // password: string;

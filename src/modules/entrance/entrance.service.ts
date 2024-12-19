@@ -21,7 +21,6 @@ export class EntranceService {
   async create(createEntranceDto: CreateEntranceDto[], language?: LanguageDto) {
     try {
       const savedEntrances: Entrance[] = [];
-      console.log(createEntranceDto);
       for (const entrance of createEntranceDto) {
         const {
           first_apartment_number,
@@ -54,7 +53,6 @@ export class EntranceService {
 
       return savedEntrances;
     } catch (error) {
-      console.log(error);
       throw new HttpException(
         this.messageService.getMessage(
           'entrance',
@@ -73,7 +71,10 @@ export class EntranceService {
         search,
         filters,
       } = findEntranceDto;
-      const existing = this.entranceRepository.createQueryBuilder('entrance');
+      const existing = await this.entranceRepository
+        .createQueryBuilder('entrance')
+        .leftJoinAndSelect('entrance.intercom', 'intercom')
+        .where('entrance.is_deleted = :is_deleted', { is_deleted: false });
 
       if (search) {
         existing.where('entrance.number::text ILIKE :search', {
@@ -83,11 +84,11 @@ export class EntranceService {
 
       if (filters) {
         existing.andWhere(filters);
-        // if (filters.building_id) {
-        //   existing.andWhere('entrance.building_id = :building_id', {
-        //     building_id: filters.building_id,
-        //   });
-        // }
+        if (filters.building_id) {
+          existing.andWhere('entrance.building_id = :building_id', {
+            building_id: filters.building_id,
+          });
+        }
         // if (filters.intercom_id) {
         //   existing.andWhere('entrance.intercom_id = :intercom_id', {
         //     intercom_id: filters.intercom_id,
@@ -105,7 +106,7 @@ export class EntranceService {
         .take(page.limit)
         .getManyAndCount();
 
-      return { items, count };
+      return { entrance: items, total: count };
     } catch (error) {
       throw new HttpException(
         this.messageService.getMessage(

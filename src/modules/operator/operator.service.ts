@@ -21,7 +21,7 @@ export class OperatorService {
   async create(createOperatorDto: CreateOperatorDto, language?: string) {
     try {
       const existing = await this.operatorRepository.findOne({
-        where: { login: createOperatorDto.login },
+        where: { email: createOperatorDto.email },
       });
       if (existing)
         throw new HttpException(
@@ -74,7 +74,7 @@ export class OperatorService {
         });
       if (search) {
         existing.where(
-          'operator.name ILIKE :search OR operator.login ILIKE :search',
+          'operator.name ILIKE :search OR operator.email ILIKE :search',
           { search: `%${search}%` },
         );
       }

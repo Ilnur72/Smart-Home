@@ -6,7 +6,7 @@ export class SystemUserDto {
   name: string;
 
   @ApiProperty()
-  login: string;
+  email: string;
 
   @ApiProperty()
   password: string;

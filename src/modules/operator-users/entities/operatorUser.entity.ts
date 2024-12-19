@@ -26,7 +26,7 @@ export class OperatorUser extends BaseUser {
 //   name: string;
 
 //   @Column()
-//   login: string;
+//   email: string;
 
 //   @Column({ nullable: true, select: false })
 //   password: string;

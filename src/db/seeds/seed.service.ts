@@ -2,12 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import axios from 'axios';
-// import { User } from '../../modules/user/entities/user.entity';
 import { UserRole } from '../../shared/types/enums';
 import { hash } from 'bcryptjs';
 import { Region } from '../../modules/region/entities/region.entity';
 import { District } from '../../modules/district/entities/district.entity';
-// import { RegionService } from '../../modules/region/region.service';
 import { SystemUser } from '../../modules/system-users/entities/systemUser.entity';
 
 interface RegionsInterface {
@@ -37,11 +35,11 @@ export class SeedService {
       10,
     );
     const user = await this.systemUserRepository.findOneBy({
-      login: process.env.SYSTEM_ADMIN_LOGIN,
+      email: process.env.SYSTEM_ADMIN_EMAIL,
     });
     if (user) await this.systemUserRepository.delete(user.id);
     const admin = {
-      login: process.env.SYSTEM_ADMIN_LOGIN,
+      email: process.env.SYSTEM_ADMIN_EMAIL,
       role: UserRole.SYSTEM_ADMIN,
       name: 'admin',
       password: hashedPassword,

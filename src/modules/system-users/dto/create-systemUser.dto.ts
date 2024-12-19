@@ -7,7 +7,7 @@ export class CreateSystemUserDto {
 
   @IsNotEmpty()
   @IsString()
-  login: string;
+  email: string;
 
   @IsNotEmpty()
   @IsString()

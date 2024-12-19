@@ -13,7 +13,7 @@ export class BaseUser {
   id: string;
 
   @Column({ unique: true })
-  login: string;
+  email: string;
 
   @Column()
   role: UserRole;

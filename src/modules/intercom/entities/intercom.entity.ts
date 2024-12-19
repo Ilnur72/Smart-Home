@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, OneToOne } from 'typeorm';
 import { BaseEntity } from '../../../shared/entities/base.entity';
 import { IntercomStatus } from '../../../shared/types/enums';
 import { Entrance } from '../../entrance/entities/entrance.entity';
@@ -27,6 +27,6 @@ export class Intercom extends BaseEntity {
   })
   status: IntercomStatus;
 
-  @OneToMany(() => Entrance, (entrance) => entrance.intercom)
-  entrances: Entrance[];
+  @OneToOne(() => Entrance, (entrance) => entrance.intercom)
+  entrance: Entrance;
 }

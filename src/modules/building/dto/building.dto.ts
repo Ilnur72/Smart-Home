@@ -17,6 +17,9 @@ export class BuildingDto {
   operator_id: string;
 
   @ApiProperty()
+  location: string;
+
+  @ApiProperty()
   created_at: string;
 }
 

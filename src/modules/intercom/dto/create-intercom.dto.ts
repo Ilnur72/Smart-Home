@@ -13,6 +13,21 @@ export class CreateIntercomDto {
   @IsString()
   url: string;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  ip: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  username: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  password: string;
+
   @ApiProperty({ enum: IntercomStatus })
   @IsNotEmpty()
   @IsEnum(IntercomStatus)
