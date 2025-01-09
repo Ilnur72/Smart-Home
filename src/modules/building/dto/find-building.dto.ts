@@ -66,6 +66,14 @@ export class FilterBuildingDto {
   })
   @IsOptional()
   floor?: string;
+
+  @ApiProperty({
+    required: false,
+    description: 'Filter by operator',
+    type: 'string',
+  })
+  @IsOptional()
+  operator_id?: string;
 }
 
 export class FindBuildingDto {

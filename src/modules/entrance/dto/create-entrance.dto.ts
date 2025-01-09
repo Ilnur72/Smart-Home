@@ -10,14 +10,29 @@ import {
 
 export class CreateEntranceDto {
   @ApiProperty()
-  @IsUUID()
+  @IsString()
   @IsNotEmpty()
   building_id: string;
 
   @ApiProperty()
-  @IsUUID()
+  @IsString()
   @IsNotEmpty()
   name: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  intercom_ip: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  intercom_login: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  intercom_password: string;
 
   @ApiProperty()
   @IsUUID()

@@ -11,10 +11,25 @@ export class EntranceDto {
   apartments_count: number;
 
   @ApiProperty()
+  first_apartment_number: number;
+
+  @ApiProperty()
+  last_apartment_number: number;
+
+  @ApiProperty()
+  intercom_ip: number;
+
+  @ApiProperty()
+  intercom_login: number;
+
+  @ApiProperty()
+  intercom_password: number;
+
+  @ApiProperty()
   camera_ids: string[];
 
   @ApiProperty()
-  name: number;
+  name: string;
 }
 
 export class ResponseEntranceDto {

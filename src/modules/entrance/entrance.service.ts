@@ -18,41 +18,36 @@ export class EntranceService {
     private apartmentService: ApartmentService,
   ) {}
 
-  async create(createEntranceDto: CreateEntranceDto[], language?: LanguageDto) {
+  async create(createEntranceDto: CreateEntranceDto, language?: LanguageDto) {
     try {
-      const savedEntrances: Entrance[] = [];
-      for (const entrance of createEntranceDto) {
-        const {
-          first_apartment_number,
-          last_apartment_number,
-          ...entranceData
-        } = entrance;
-        console.log(entranceData);
-        const newEntrance = this.entranceRepository.create(entranceData);
-        const savedEntrance = await this.entranceRepository.save(newEntrance);
+      console.log(createEntranceDto);
 
-        const step = Math.ceil(
-          (+last_apartment_number - +first_apartment_number + 1) /
-            entrance.apartments_count,
-        );
-        console.log(step, 'step');
-        const apartmentPromises = Array.from(
-          { length: entrance.apartments_count },
-          (_, index) => {
-            const apartmentNumber = first_apartment_number + index * step;
-            return this.apartmentService.create({
-              number: apartmentNumber.toString(),
-              entrance_id: savedEntrance.id,
-            });
-          },
-        );
+      const { first_apartment_number, last_apartment_number } =
+        createEntranceDto;
+      const newEntrance = this.entranceRepository.create(createEntranceDto);
+      const savedEntrance = await this.entranceRepository.save(newEntrance);
 
-        await Promise.all(apartmentPromises);
-        savedEntrances.push(savedEntrance);
-      }
+      const step = Math.ceil(
+        (+last_apartment_number - +first_apartment_number + 1) /
+          createEntranceDto.apartments_count,
+      );
+      console.log(step, 'step');
+      const apartmentPromises = Array.from(
+        { length: createEntranceDto.apartments_count },
+        (_, index) => {
+          const apartmentNumber = first_apartment_number + index * step;
+          return this.apartmentService.create({
+            number: apartmentNumber.toString(),
+            entrance_id: savedEntrance.id,
+          });
+        },
+      );
 
-      return savedEntrances;
+      await Promise.all(apartmentPromises);
+
+      return savedEntrance;
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         this.messageService.getMessage(
           'entrance',

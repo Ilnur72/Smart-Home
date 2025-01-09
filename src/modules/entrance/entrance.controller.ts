@@ -43,7 +43,7 @@ export class EntranceController {
   })
   @HttpCode(201)
   async create(
-    @Body() createEntranceDto: CreateEntranceDto[],
+    @Body() createEntranceDto: CreateEntranceDto,
     @Language() language: LanguageDto,
   ) {
     try {

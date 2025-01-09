@@ -20,7 +20,6 @@ export class BuildingService {
     try {
       const newBuilding = this.buildingRepository.create(createBuildingDto);
       const result = await this.buildingRepository.save(newBuilding);
-      console.log(newBuilding);
 
       return result;
     } catch (error) {
@@ -83,7 +82,7 @@ export class BuildingService {
         .getMany();
       return {
         total,
-        data: data.map((building) => {
+        buildings: data.map((building) => {
           const { address, district, operator, ...filteredBuilding } = building;
           return {
             ...filteredBuilding,
