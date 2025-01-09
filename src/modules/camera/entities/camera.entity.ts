@@ -8,17 +8,26 @@ export class Camera extends BaseEntity {
   @Column()
   building_id: string;
 
-  @Column()
+  @Column({ nullable: true })
   model: string;
 
-  @Column('json')
+  @Column({ type: 'json', nullable: true })
   location: Record<string, any>;
+
+  @Column()
+  login: string;
+
+  @Column()
+  password: string;
 
   @Column()
   ip_address: string;
 
   @Column({ nullable: true })
   stream_link: string;
+
+  @Column({ nullable: true, type: 'text', array: true })
+  entrance_ids: string[];
 
   @Column({
     type: 'enum',

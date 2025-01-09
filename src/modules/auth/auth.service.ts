@@ -119,7 +119,6 @@ export class AuthService {
       .where({ email: body.email, is_deleted: false })
       .addSelect(['staff.password', 'staff.role'])
       .getOne();
-    console.log(staff);
     if (!staff) {
       throw new HttpException(
         this.messageService.getMessage('auth', language, 'user_not_found'),

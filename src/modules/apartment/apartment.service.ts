@@ -81,7 +81,6 @@ export class ApartmentService {
         data,
       };
     } catch (error) {
-      console.log(error);
       throw new HttpException(
         this.messageService.getMessage(
           'apartment',

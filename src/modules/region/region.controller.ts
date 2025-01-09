@@ -105,8 +105,6 @@ export class RegionController {
         // ),
       };
     } catch (error) {
-      // console.log(error);
-
       throw error;
     }
   }

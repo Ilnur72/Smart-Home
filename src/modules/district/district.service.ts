@@ -43,7 +43,6 @@ export class DistrictService {
           HttpStatus.BAD_REQUEST,
         );
       }
-      console.log(error);
       throw new HttpException(
         this.messageService.getMessage(
           'district',
@@ -91,7 +90,6 @@ export class DistrictService {
       const existing = await this.districtRepository.findOne({
         where: { id, is_deleted: false },
       });
-      console.log(existing);
 
       if (!existing) {
         throw new HttpException(
@@ -105,7 +103,6 @@ export class DistrictService {
       }
       return existing;
     } catch (error) {
-      console.log(error);
       if (error.status === 404) {
         throw error;
       }

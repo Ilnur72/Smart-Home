@@ -35,8 +35,6 @@ export class IntercomService {
         },
       };
       const result = httpClient.request(url, options);
-      console.log(result);
-
       return 'opened';
     } catch (error) {
       throw new HttpException(

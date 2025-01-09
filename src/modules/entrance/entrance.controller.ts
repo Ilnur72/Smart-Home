@@ -62,7 +62,6 @@ export class EntranceController {
         ),
       };
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }

@@ -131,10 +131,6 @@ export class BuildingService {
         district: district.name,
         region: district.region.name,
       };
-      console.log({
-        ...filteredBuilding,
-        address: fullAddress,
-      });
 
       return {
         ...filteredBuilding,

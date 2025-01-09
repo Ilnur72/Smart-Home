@@ -20,8 +20,6 @@ export class EntranceService {
 
   async create(createEntranceDto: CreateEntranceDto, language?: LanguageDto) {
     try {
-      console.log(createEntranceDto);
-
       const { first_apartment_number, last_apartment_number } =
         createEntranceDto;
       const newEntrance = this.entranceRepository.create(createEntranceDto);
@@ -47,7 +45,6 @@ export class EntranceService {
 
       return savedEntrance;
     } catch (error) {
-      console.log(error);
       throw new HttpException(
         this.messageService.getMessage(
           'entrance',

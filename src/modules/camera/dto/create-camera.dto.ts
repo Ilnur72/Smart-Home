@@ -8,6 +8,7 @@ import {
   IsNumber,
   IsNotEmptyObject,
   ValidateNested,
+  IsOptional,
 } from 'class-validator';
 import { CameraStatus } from '../../../shared/types/enums';
 import { Type } from 'class-transformer';
@@ -31,29 +32,39 @@ export class CreateCameraDto {
   building_id: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  model: string;
+  model?: string;
+
+  @IsNotEmpty()
+  @IsOptional()
+  @IsString()
+  login: string;
+
+  @IsNotEmpty()
+  @IsOptional()
+  @IsString()
+  password: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @IsNotEmptyObject()
   @ValidateNested()
   @Type(() => LocationDto)
-  location: LocationDto;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsIP()
-  ip_address: string;
+  location?: LocationDto;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  stream_link: string;
+  ip_address: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  stream_link?: string;
 
   @ApiProperty({ enum: CameraStatus })
-  @IsNotEmpty()
+  @IsOptional()
   @IsEnum(CameraStatus)
-  status: CameraStatus;
+  status?: CameraStatus;
 }
