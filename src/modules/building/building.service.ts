@@ -128,7 +128,9 @@ export class BuildingService {
 
       const fullAddress = {
         street: address,
+        districtId: district.id,
         district: district.name,
+        regionId: district.region.id,
         region: district.region.name,
       };
 
