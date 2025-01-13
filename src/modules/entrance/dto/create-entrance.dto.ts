@@ -40,11 +40,6 @@ export class CreateEntranceDto {
   intercom_id?: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  apartments_count: number;
-
-  @ApiProperty()
   @IsOptional()
   @IsNumber()
   first_apartment_number?: number;

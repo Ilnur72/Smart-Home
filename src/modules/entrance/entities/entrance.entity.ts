@@ -22,9 +22,6 @@ export class Entrance extends BaseEntity {
   @Column({ type: 'uuid', nullable: true })
   intercom_id: string;
 
-  @Column({ type: 'int', nullable: false })
-  apartments_count: number;
-
   @Column({ type: 'int', nullable: true })
   first_apartment_number?: number;
 

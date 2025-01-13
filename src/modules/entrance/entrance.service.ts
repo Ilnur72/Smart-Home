@@ -24,14 +24,15 @@ export class EntranceService {
         createEntranceDto;
       const newEntrance = this.entranceRepository.create(createEntranceDto);
       const savedEntrance = await this.entranceRepository.save(newEntrance);
-
+      const apartmentsCount =
+        +last_apartment_number - +first_apartment_number + 1;
       const step = Math.ceil(
         (+last_apartment_number - +first_apartment_number + 1) /
-          createEntranceDto.apartments_count,
+          apartmentsCount,
       );
       console.log(step, 'step');
       const apartmentPromises = Array.from(
-        { length: createEntranceDto.apartments_count },
+        { length: apartmentsCount },
         (_, index) => {
           const apartmentNumber = first_apartment_number + index * step;
           return this.apartmentService.create({

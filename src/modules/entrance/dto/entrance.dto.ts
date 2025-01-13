@@ -8,9 +8,6 @@ export class EntranceDto {
   intercom_id: string;
 
   @ApiProperty()
-  apartments_count: number;
-
-  @ApiProperty()
   first_apartment_number: number;
 
   @ApiProperty()

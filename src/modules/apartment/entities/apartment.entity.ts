@@ -11,9 +11,6 @@ export class Apartment extends BaseEntity {
   @Column({ nullable: true })
   intercom_id?: string;
 
-  // @Column()
-  // apartments_count: number;
-
   @Column()
   number: string;
 
