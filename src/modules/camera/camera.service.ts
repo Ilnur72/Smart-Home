@@ -100,7 +100,7 @@ export class CameraService {
     try {
       const camera = await this.cameraRepository.findOne({
         where: { id },
-        relations: ['building'],
+        relations: ['buildings'],
       });
 
       if (!camera) {
