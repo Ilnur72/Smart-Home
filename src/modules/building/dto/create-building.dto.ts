@@ -1,11 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsJSON,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
   IsUUID,
 } from 'class-validator';
+import { LocationDto } from 'src/shared/dto/location.dto';
 
 export class CreateBuildingDto {
   @ApiProperty()
@@ -19,9 +21,8 @@ export class CreateBuildingDto {
   address: string;
 
   @ApiProperty()
-  @IsString()
   @IsOptional()
-  location?: string;
+  location?: LocationDto;
 
   @ApiProperty()
   @IsNumber()

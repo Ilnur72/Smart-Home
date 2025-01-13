@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { LocationDto } from '../../../shared/dto/location.dto';
 
 export class BuildingDto {
   @ApiProperty()
@@ -17,7 +18,7 @@ export class BuildingDto {
   operator_id: string;
 
   @ApiProperty()
-  location: string;
+  location: LocationDto;
 
   @ApiProperty()
   created_at: string;

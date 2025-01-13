@@ -4,6 +4,7 @@ import { Operator } from '../../operator/entities/operator.entity';
 import { District } from '../../district/entities/district.entity';
 import { Camera } from '../../camera/entities/camera.entity';
 import { Entrance } from '../../entrance/entities/entrance.entity';
+import { LocationDto } from '../../../shared/dto/location.dto';
 
 @Entity()
 export class Building extends BaseEntity {
@@ -25,8 +26,8 @@ export class Building extends BaseEntity {
   @Column({ nullable: true })
   operator_id: string;
 
-  @Column({ nullable: true })
-  location: string;
+  @Column({ nullable: true, type: 'json' })
+  location: LocationDto;
 
   @ManyToOne(() => District, (district) => district.buildings)
   @JoinColumn({ name: 'district_id' })
