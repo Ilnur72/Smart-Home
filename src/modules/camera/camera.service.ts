@@ -7,6 +7,7 @@ import { CreateCameraDto } from './dto/create-camera.dto';
 import { UpdateCameraDto } from './dto/update-camera.dto';
 import { FindCameraDto } from './dto/find-camera.dto';
 import { LanguageDto } from '../../shared/types/enums';
+import { EntranceService } from '../entrance/entrance.service';
 
 @Injectable()
 export class CameraService {
@@ -14,6 +15,7 @@ export class CameraService {
     @InjectRepository(Camera)
     private cameraRepository: Repository<Camera>,
     private readonly messageService: MessageService,
+    private readonly entranceService: EntranceService,
   ) {}
 
   async create(createCameraDto: CreateCameraDto, language?: LanguageDto) {
@@ -43,7 +45,8 @@ export class CameraService {
         .createQueryBuilder('camera')
         .where('camera.is_deleted = :is_deleted', {
           is_deleted: filters?.is_deleted ?? false,
-        });
+        })
+        .orderBy(`camera.created_at`, 'DESC');
 
       if (search) {
         existing.where(
@@ -103,6 +106,12 @@ export class CameraService {
         relations: ['buildings'],
       });
 
+      const entranceList = await Promise.all(
+        camera.entrance_ids.map((id) => {
+          return this.entranceService.findOne(id);
+        }),
+      );
+
       if (!camera) {
         throw new HttpException(
           this.messageService.getMessage(
@@ -113,8 +122,7 @@ export class CameraService {
           HttpStatus.NOT_FOUND,
         );
       }
-
-      return camera;
+      return { ...camera, entrance_list: entranceList };
     } catch (error) {
       if (error.status === 404) throw error;
       throw new HttpException(

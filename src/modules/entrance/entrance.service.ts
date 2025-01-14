@@ -64,6 +64,7 @@ export class EntranceService {
         page = { offset: 1, limit: 10 },
         search,
         filters,
+        sort,
       } = findEntranceDto;
       const existing = await this.entranceRepository
         .createQueryBuilder('entrance')
@@ -94,7 +95,9 @@ export class EntranceService {
         //   });
         // }
       }
-
+      if (sort?.by && sort?.order) {
+        existing.orderBy(`entrance.${sort.by}`, sort.order);
+      }
       const [items, count] = await existing
         .skip((page.offset - 1) * page.limit)
         .take(page.limit)

@@ -4,7 +4,6 @@ import {
   IsString,
   IsUUID,
   IsEnum,
-  IsIP,
   IsNumber,
   IsNotEmptyObject,
   ValidateNested,
