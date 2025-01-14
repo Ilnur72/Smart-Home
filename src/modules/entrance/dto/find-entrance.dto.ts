@@ -18,7 +18,7 @@ export class SortEntranceDto {
     required: false,
   })
   @IsOptional()
-  @IsEnum(['created_at', 'floor'])
+  @IsEnum(['created_at', 'name'])
   by?: string;
 
   @ApiProperty({
