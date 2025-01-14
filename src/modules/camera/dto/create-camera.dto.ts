@@ -33,6 +33,10 @@ export class CreateCameraDto {
 
   @ApiProperty()
   @IsOptional()
+  entrance_ids: string[];
+
+  @ApiProperty()
+  @IsOptional()
   @IsString()
   model?: string;
 

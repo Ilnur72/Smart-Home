@@ -36,3 +36,8 @@ export enum CameraStatus {
   INACTIVE = 'inactive',
   MAINTENANCE = 'maintenance',
 }
+
+export enum ApartmentStatus {
+  SOLD_OUT = 'SOLD_OUT',
+  ON_SALE = 'ON_SALE',
+}

@@ -9,6 +9,9 @@ export class ApartmentDto {
 
   @ApiProperty()
   number: string;
+
+  @ApiProperty()
+  status: string;
 }
 
 export class ResponseApartmentDto {

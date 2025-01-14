@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../../../shared/entities/base.entity';
 import { Entrance } from '../../entrance/entities/entrance.entity';
 import { Intercom } from '../../intercom/entities/intercom.entity';
+import { ApartmentStatus } from 'src/shared/types/enums';
 
 @Entity('apartment')
 export class Apartment extends BaseEntity {
@@ -13,6 +14,9 @@ export class Apartment extends BaseEntity {
 
   @Column()
   number: string;
+
+  @Column({ enum: ApartmentStatus, default: ApartmentStatus.SOLD_OUT })
+  status: ApartmentStatus;
 
   @ManyToOne(() => Entrance, (entrance) => entrance.apartments)
   @JoinColumn({ name: 'entrance_id' })

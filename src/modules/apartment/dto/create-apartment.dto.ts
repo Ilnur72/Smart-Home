@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
+import { ApartmentStatus } from 'src/shared/types/enums';
 
 export class CreateApartmentDto {
   @ApiProperty()
@@ -16,4 +17,9 @@ export class CreateApartmentDto {
   @IsNotEmpty()
   @IsString()
   number: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsEnum(ApartmentStatus)
+  status: ApartmentStatus;
 }
