@@ -24,6 +24,7 @@ import { ResponseDistrictDto } from './dto/district.dto';
 import { Language } from '../../shared/decorators/language.decorator';
 @ApiTags('District')
 @Controller('district')
+@UseGuards(IsLoggedIn)
 export class DistrictController {
   constructor(
     private readonly districtService: DistrictService,

@@ -29,6 +29,7 @@ import { DistrictDto } from '../district/dto/district.dto';
 @ApiTags('Region')
 @Controller('region')
 @ApiTags('Region')
+@UseGuards(IsLoggedIn)
 // @ApiHeader({
 //   name: 'accept-language',
 //   required: false,

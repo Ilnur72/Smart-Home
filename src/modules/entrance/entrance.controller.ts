@@ -27,6 +27,7 @@ const { OPERATOR, OPERATOR_USER, SYSTEM_ADMIN } = UserRole;
 
 @ApiTags('Entrance')
 @Controller('entrance')
+@UseGuards(IsLoggedIn)
 export class EntranceController {
   constructor(
     private readonly entranceService: EntranceService,

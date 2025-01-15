@@ -25,6 +25,7 @@ import { MessageService } from '../../i18n/message.service';
 
 @ApiTags('Camera')
 @Controller('camera')
+@UseGuards(IsLoggedIn)
 export class CameraController {
   constructor(
     private readonly cameraService: CameraService,

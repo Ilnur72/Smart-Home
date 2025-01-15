@@ -29,6 +29,7 @@ const { OPERATOR, OPERATOR_USER, SYSTEM_ADMIN } = UserRole;
 @ApiTags('Building')
 @Controller('building')
 @SetRoles(SYSTEM_ADMIN)
+@UseGuards(IsLoggedIn)
 export class BuildingController {
   constructor(
     private readonly buildingService: BuildingService,

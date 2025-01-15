@@ -25,7 +25,7 @@ import { Language } from '../../shared/decorators/language.decorator';
 import { FindOperatorDto } from './dto/find-operator.dto';
 
 // @SetRoles(OperatorRole.SYSTEM_ADMIN)
-// @UseGuards(IsLoggedIn, HasRole)
+@UseGuards(IsLoggedIn, HasRole)
 @ApiTags('Operator')
 @Controller('operator')
 export class OperatorController {

@@ -9,6 +9,7 @@ import {
   Put,
   // UseGuards,
   Inject,
+  UseGuards,
 } from '@nestjs/common';
 import { SystemUserService } from './systemUser.service';
 
@@ -23,9 +24,11 @@ import { REQUEST } from '@nestjs/core';
 import { Language } from '../../shared/decorators/language.decorator';
 import { FindSystemUserDto } from './dto/find-systemUser.dto';
 import { UpdateSystemUserDto } from './dto/update-systemUser.dto';
+import { IsLoggedIn } from 'src/shared/guards/is-loggedin.guard';
+import { HasRole } from 'src/shared/guards/has-roles.guard';
 
 // @SetRoles(SystemUserRole.SYSTEM_ADMIN)
-// @UseGuards(IsLoggedIn, HasRole)
+@UseGuards(IsLoggedIn, HasRole)
 @ApiTags('SystemUser')
 @Controller('system-user')
 export class SystemUserController {

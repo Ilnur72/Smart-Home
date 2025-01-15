@@ -25,6 +25,7 @@ import { MessageService } from '../../i18n/message.service';
 
 @ApiTags('Intercom')
 @Controller('intercom')
+@UseGuards(IsLoggedIn)
 export class IntercomController {
   constructor(
     private readonly intercomService: IntercomService,
