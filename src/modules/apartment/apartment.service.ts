@@ -43,7 +43,11 @@ export class ApartmentService {
         .createQueryBuilder('apartment')
         .where('apartment.is_deleted = :is_deleted', {
           is_deleted: filters?.is_deleted ?? false,
-        });
+        })
+        .orderBy(
+          `CAST(SUBSTRING(apartment.number FROM '^[0-9]+') AS INTEGER)`,
+          'ASC',
+        );
 
       if (search) {
         existing.where('apartment.number ILIKE :search', {

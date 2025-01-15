@@ -122,7 +122,10 @@ export class EntranceService {
         .createQueryBuilder('entrance')
         .leftJoinAndSelect('entrance.apartments', 'apartment')
         .where('entrance.id = :id', { id })
-        .orderBy('apartment.number', 'ASC')
+        .orderBy(
+          `CAST(SUBSTRING(apartment.number FROM '^[0-9]+') AS INTEGER)`,
+          'ASC',
+        )
         .getOne();
 
       if (!entrance) {
