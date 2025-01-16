@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsPhoneNumber, IsString } from 'class-validator';
 
 export class LoginUserDto {
-  @ApiProperty({ default: '+998901234567' })
+  @ApiProperty({ example: '+998901234567' })
   @IsString()
   @IsNotEmpty()
   @IsPhoneNumber('UZ')
@@ -20,12 +20,12 @@ export class LoginStaffDto {
 }
 
 export class VerifyDto {
-  @ApiProperty()
+  @ApiProperty({ example: '+998901234567' })
   @IsPhoneNumber('UZ')
   @IsNotEmpty()
   phone: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: '1234' })
   @IsNotEmpty()
   @IsNumber()
   code: number;

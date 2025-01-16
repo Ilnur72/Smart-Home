@@ -15,30 +15,30 @@ export class AuthController {
     private readonly messageService: MessageService,
   ) {}
 
-  @ApiResponse({
-    status: 201,
-    description: 'You have successfully registered.',
-  })
-  @Post('register')
-  async register(
-    @Body() body: CreateUserDto,
-    @Language() language: LanguageDto,
-  ) {
-    try {
-      await this.authService.register(body, language);
-      return {
-        success: true,
-        code: 200,
-        message: this.messageService.getMessage(
-          'auth',
-          language,
-          'registration_success',
-        ),
-      };
-    } catch (error) {
-      throw error;
-    }
-  }
+  // @ApiResponse({
+  //   status: 201,
+  //   description: 'You have successfully registered.',
+  // })
+  // @Post('register')
+  // async register(
+  //   @Body() body: CreateUserDto,
+  //   @Language() language: LanguageDto,
+  // ) {
+  //   try {
+  //     await this.authService.register(body, language);
+  //     return {
+  //       success: true,
+  //       code: 200,
+  //       message: this.messageService.getMessage(
+  //         'auth',
+  //         language,
+  //         'registration_success',
+  //       ),
+  //     };
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
 
   @Post('login')
   async login(@Body() body: LoginUserDto, @Language() language: LanguageDto) {
