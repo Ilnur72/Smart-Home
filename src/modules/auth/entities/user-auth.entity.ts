@@ -10,4 +10,7 @@ export class UserAuth {
 
   @Column({ type: 'int' })
   sms_code: number;
+
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
+  created_at: Date;
 }
