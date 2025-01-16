@@ -11,15 +11,19 @@ import { MessageService } from '../../i18n/message.service';
 // import { UserRole } from '../../shared/types/enums';
 import { compare } from 'bcryptjs';
 import { BaseUser } from '../../shared/entities/base-staff.entity';
+import { UserAuth } from 'src/shared/entities/user-auth.entity';
+import { UserRole } from 'src/shared/types/enums';
 
 @Injectable()
 export class AuthService {
-  // private verificationCodes: Map<string, string> = new Map();
+  private verificationCodes: Map<string, string> = new Map();
 
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private readonly userService: UserService,
+    @InjectRepository(UserAuth)
+    private userAuthRepository: Repository<UserAuth>,
     // private readonly eskizService: EskizService,
     private readonly messageService: MessageService,
     private jwtService: JwtService,
@@ -33,7 +37,7 @@ export class AuthService {
     private baseUserRepository: Repository<BaseUser>,
   ) {}
 
-  // async validateUser(body: LoginUserDto) {
+  // async validateUser: LoginUserDto) {
   //   const existing = await this.userService.findOneByPhone(body.phone);
 
   //   const token = this.generateToken(existing.id, existing.role);
@@ -57,61 +61,96 @@ export class AuthService {
     }
   }
 
-  async login(body: LoginUserDto, language: string): Promise<any> {
+  async login(body: LoginUserDto): Promise<any> {
+    try {
+      const verificationCode = Math.floor(1000 + Math.random() * 9000);
+
+      const userAuth = await this.userAuthRepository.findOne({
+        where: { phone: body.phone },
+      });
+
+      if (!userAuth) {
+        const newUserAuth = this.userAuthRepository.create({
+          phone: body.phone,
+          sms_code: verificationCode,
+        });
+        const { phone, sms_code } = await this.userAuthRepository.save(
+          newUserAuth,
+        );
+        return { phone, sms_code };
+      } else {
+        const updateUserAuth = this.userAuthRepository.merge(userAuth, {
+          sms_code: verificationCode,
+        });
+        const { phone, sms_code } = await this.userAuthRepository.save(
+          updateUserAuth,
+        );
+        return { phone, sms_code };
+      }
+
+      // await this.eskizService.sendSms(
+      //   phone,
+      //   `Код подтверждения для ketti.uz: ${verificationCode}`,
+      // );
+
+      // this.verificationCodes.set(body.phone, verificationCode);
+
+      // return { code: existingUser.sms_code };
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  async verify(phone: string, code: number, language: string): Promise<any> {
+    const existingAuthUser = await this.userAuthRepository.findOne({
+      where: { phone },
+    });
+    if (+code !== +existingAuthUser.sms_code)
+      throw new HttpException(
+        this.messageService.getMessage(
+          'auth',
+          language,
+          'invalid_verification_code',
+        ),
+        HttpStatus.BAD_REQUEST,
+      );
+
+    interface existingUserInterface {
+      id: string;
+      status: 'NEW' | 'EXIST';
+      phone: string;
+      sms_code?: number;
+    }
+    let existingUser: existingUserInterface;
+
     const user = await this.userRepository
       .createQueryBuilder('user')
-      .where({ phone: body.phone, is_deleted: false })
+      .where({ phone: phone, is_deleted: false })
       .addSelect('user.password')
       .getOne();
 
-    if (!user) {
-      throw new HttpException(
-        this.messageService.getMessage('auth', language, 'user_not_found'),
-        HttpStatus.NOT_FOUND,
-      );
+    if (user) {
+      existingUser = {
+        id: user.id,
+        phone: existingAuthUser.phone,
+        status: 'EXIST',
+      };
+    } else {
+      const newUser = this.userRepository.create({
+        phone: phone,
+        role: UserRole.USER,
+      });
+      const result = await this.userRepository.save(newUser);
+      existingUser = {
+        id: result.id,
+        phone: result.phone,
+        status: 'NEW',
+      };
     }
-
-    const match =
-      body?.password && (await compare(body?.password, user?.password));
-
-    if (!match) {
-      throw new HttpException(
-        this.messageService.getMessage('auth', language, 'invalid_credentials'),
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
-    const token = this.generateToken(user.id, user.role, user.fullname);
-    return token;
-    // }
-
-    // if (user) {
-    // const verificationCode = Math.floor(
-    //   1000 + Math.random() * 9000,
-    // ).toString();
-    // await this.eskizService.sendSms(
-    //   phone,
-    //   `Код подтверждения для ketti.uz: ${verificationCode}`,
-    // );
-    //   this.verificationCodes.set(body.phone, '1111');
-    // }
+    const token = this.generateToken(existingUser.id, UserRole.USER);
+    return { token, status: existingUser.status };
   }
-
-  // async verify(phone: string, code: number, language: string): Promise<any> {
-  //   const storedCode = this.verificationCodes.get(phone);
-  //   if (+code !== +storedCode)
-  //     throw new HttpException(
-  //       this.messageService.getMessage(
-  //         'auth',
-  //         language,
-  //         'invalid_verification_code',
-  //       ),
-  //       HttpStatus.BAD_REQUEST,
-  //     );
-  //   this.verificationCodes.delete(phone);
-  //   const token = await this.validateUser({ phone });
-  //   return token;
-  // }
 
   async staffLogin(body: LoginStaffDto, language: string) {
     const staff = await this.baseUserRepository
@@ -134,11 +173,11 @@ export class AuthService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    return this.generateToken(staff.id, staff.role, staff.name);
+    return this.generateToken(staff.id, staff.role);
   }
 
-  private generateToken(id: string, role: string, fullname: string) {
-    const token = this.jwtService.sign({ user: { id, role, fullname } });
+  private generateToken(id: string, role: string) {
+    const token = this.jwtService.sign({ user: { id, role } });
     return { token };
   }
 }

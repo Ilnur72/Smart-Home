@@ -9,7 +9,7 @@ export class User {
   @Column({ enum: UserRole, default: UserRole.USER })
   role: UserRole;
 
-  @Column()
+  @Column({ nullable: true })
   fullname: string;
 
   @Column({ nullable: true })

@@ -5,6 +5,8 @@ export const authMessages = {
     user_not_found: 'Foydalanuvchi topilmadi',
     account_blocked: 'Akkount bloklangan',
     login_success: 'Tizimga muvaffaqiyatli kirdingiz',
+    invalid_verification_code: "Tasdiqlash kodi noto'g'ri.",
+    verification_code_sent: 'Tasdiqlash kodi telefoningizga yuborildi.',
 
     // Register xabarlari
     user_already_exists: 'Bunday foydalanuvchi allaqachon mavjud',
@@ -23,6 +25,8 @@ export const authMessages = {
     user_not_found: 'Пользователь не найден',
     account_blocked: 'Аккаунт заблокирован',
     login_success: 'Вы успешно вошли в систему',
+    invalid_verification_code: 'Неверный код подтверждения.',
+    verification_code_sent: 'Код подтверждения отправлен на ваш телефон.',
 
     // Register сообщения
     user_already_exists: 'Такой пользователь уже существует',
@@ -41,6 +45,8 @@ export const authMessages = {
     user_not_found: 'User not found',
     account_blocked: 'Account is blocked',
     login_success: 'Successfully logged in',
+    invalid_verification_code: 'Invalid verification code.',
+    verification_code_sent: 'Verification code sent to your phone.',
 
     // Register messages
     user_already_exists: 'User already exists',

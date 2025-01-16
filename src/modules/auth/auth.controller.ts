@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginUserDto, LoginStaffDto } from './dto/login.dto';
+import { LoginUserDto, LoginStaffDto, VerifyDto } from './dto/login.dto';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { MessageService } from '../../i18n/message.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -43,7 +43,7 @@ export class AuthController {
   @Post('login')
   async login(@Body() body: LoginUserDto, @Language() language: LanguageDto) {
     try {
-      const data = await this.authService.login(body, language);
+      const data = await this.authService.login(body);
       return {
         success: true,
         code: 200,
@@ -51,7 +51,7 @@ export class AuthController {
         message: this.messageService.getMessage(
           'auth',
           language,
-          'login_success',
+          'verification_code_sent',
         ),
       };
     } catch (error) {
@@ -81,29 +81,26 @@ export class AuthController {
     }
   }
 
-  // @Post('verify')
-  // async verify(
-  //   @Body() body: VerifyDto,
-  // @Language() language: LanguageDto,
-  // ) {
-  //   try {
-  //     const data = await this.authService.verify(
-  //       body.phone,
-  //       body.code,
-  //       language,
-  //     );
-  //     return {
-  //       success: true,
-  //       code: 201,
-  //       data: data,
-  //       message: this.messageService.getMessage(
-  //         'auth',
-  //         language,
-  //         'phone_number_verified_successfully',
-  //       ),
-  //     };
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
+  @Post('verify')
+  async verify(@Body() body: VerifyDto, @Language() language: LanguageDto) {
+    try {
+      const data = await this.authService.verify(
+        body.phone,
+        body.code,
+        language,
+      );
+      return {
+        success: true,
+        code: 201,
+        data: data,
+        message: this.messageService.getMessage(
+          'auth',
+          language,
+          'phone_number_verified_successfully',
+        ),
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
 }

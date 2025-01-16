@@ -7,10 +7,6 @@ export class LoginUserDto {
   @IsNotEmpty()
   @IsPhoneNumber('UZ')
   phone: string;
-
-  @IsString()
-  @IsNotEmpty()
-  password?: string;
 }
 
 export class LoginStaffDto {
