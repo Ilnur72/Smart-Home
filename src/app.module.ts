@@ -13,6 +13,7 @@ import { ApartmentModule } from './modules/apartment/apartment.module';
 import { IntercomModule } from './modules/intercom/intercom.module';
 import { CameraModule } from './modules/camera/camera.module';
 import { EntranceModule } from './modules/entrance/entrance.module';
+import { UserApartmentModule } from './modules/user-apartment/user-apartment.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { EntranceModule } from './modules/entrance/entrance.module';
     IntercomModule,
     CameraModule,
     EntranceModule,
+    UserApartmentModule,
   ],
 })
 export class AppModule {}

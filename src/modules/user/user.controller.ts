@@ -15,7 +15,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { LanguageDto } from '../../shared/types/enums';
+import { LanguageDto, UserRole } from '../../shared/types/enums';
 import { MessageService } from '../../i18n/message.service';
 import { IsLoggedIn } from '../../shared/guards/is-loggedin.guard';
 import { REQUEST } from '@nestjs/core';
@@ -23,8 +23,12 @@ import { REQUEST } from '@nestjs/core';
 import { HasRole } from '../../shared/guards/has-roles.guard';
 import { Language } from '../../shared/decorators/language.decorator';
 import { FindUserDto } from './dto/find-user.dto';
+import { SetRoles } from '../auth/set-roles.decorator';
+
+const { OPERATOR, OPERATOR_USER, USER, SYSTEM_ADMIN } = UserRole;
 
 @UseGuards(IsLoggedIn, HasRole)
+@SetRoles(OPERATOR, OPERATOR_USER, SYSTEM_ADMIN)
 @ApiTags('User')
 @Controller('user')
 export class UserController {
@@ -80,6 +84,7 @@ export class UserController {
   }
 
   @Get('current')
+  @SetRoles(OPERATOR, OPERATOR_USER, USER)
   async findMe(@Language() language: LanguageDto) {
     try {
       const data = await this.userService.findOne(
@@ -102,6 +107,7 @@ export class UserController {
   }
 
   @Get(':id')
+  @SetRoles(OPERATOR, OPERATOR_USER, USER)
   async findOne(@Param('id') id: string, @Language() language: LanguageDto) {
     try {
       const data = await this.userService.findOne(id, language);
@@ -120,8 +126,8 @@ export class UserController {
     }
   }
 
-  // @SetRoles(UserRole.SYSTEM_ADMIN, UserRole.USER)
   @Put()
+  @SetRoles(OPERATOR, OPERATOR_USER, USER)
   async update(
     // @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
@@ -147,8 +153,8 @@ export class UserController {
     }
   }
 
-  // @SetRoles(UserRole.SYSTEM_ADMIN, UserRole.USER)
   @Delete()
+  @SetRoles(OPERATOR, OPERATOR_USER, USER)
   async remove(@Language() language: LanguageDto) {
     try {
       await this.userService.remove(this.request['user'].id, language);

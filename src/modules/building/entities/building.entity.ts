@@ -9,6 +9,9 @@ import { LocationDto } from '../../../shared/dto/location.dto';
 @Entity()
 export class Building extends BaseEntity {
   @Column()
+  name: string;
+
+  @Column()
   district_id: string;
 
   @Column()

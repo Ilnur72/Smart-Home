@@ -3,6 +3,9 @@ import { LocationDto } from '../../../shared/dto/location.dto';
 
 export class BuildingDto {
   @ApiProperty()
+  name: string;
+
+  @ApiProperty()
   address: string;
 
   @ApiProperty()

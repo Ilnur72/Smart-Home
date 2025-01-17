@@ -17,6 +17,11 @@ export class CreateBuildingDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  name: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
   address: string;
 
   @ApiProperty()

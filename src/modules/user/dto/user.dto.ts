@@ -8,9 +8,6 @@ export class UserDto {
   phone: string;
 
   @ApiProperty()
-  apartment_id: string;
-
-  @ApiProperty()
   email: string;
 
   @ApiProperty()

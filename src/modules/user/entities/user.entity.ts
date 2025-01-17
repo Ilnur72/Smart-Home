@@ -12,9 +12,6 @@ export class User {
   @Column({ nullable: true })
   fullname: string;
 
-  @Column({ nullable: true })
-  apartment_id: string;
-
   @Column({ unique: true })
   phone: string;
 
