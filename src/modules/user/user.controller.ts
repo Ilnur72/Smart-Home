@@ -126,10 +126,9 @@ export class UserController {
     }
   }
 
-  @Put()
+  @Put('/current')
   @SetRoles(OPERATOR, OPERATOR_USER, USER)
-  async update(
-    // @Param('id') id: string,
+  async updateCurrent(
     @Body() updateUserDto: UpdateUserDto,
     @Language() language: LanguageDto,
   ) {
@@ -139,6 +138,29 @@ export class UserController {
         updateUserDto,
         language,
       );
+      return {
+        success: true,
+        code: 200,
+        message: this.messageService.getMessage(
+          'user',
+          language,
+          'user_updated_successfully',
+        ),
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @Put(':id')
+  @SetRoles(OPERATOR, OPERATOR_USER, USER, SYSTEM_ADMIN)
+  async update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+    @Language() language: LanguageDto,
+  ) {
+    try {
+      await this.userService.update(id, updateUserDto, language);
       return {
         success: true,
         code: 200,
