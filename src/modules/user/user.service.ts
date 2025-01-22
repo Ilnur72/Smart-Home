@@ -119,7 +119,6 @@ export class UserService {
     try {
       const existing = await this.userRepository.findOne({
         where: { id, is_deleted: false },
-        relations: ['orders'],
       });
 
       if (!existing) {

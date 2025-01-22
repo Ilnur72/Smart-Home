@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from '../../../shared/types/enums';
+import { UserApartment } from 'src/modules/user-apartment/entities/user-apartment.entity';
 
 @Entity()
 export class User {
@@ -33,4 +34,7 @@ export class User {
   // @ManyToOne(() => Region, (region) => region.users)
   // @JoinColumn({ name: 'regionId' })
   // region: Region;
+
+  @OneToMany(() => UserApartment, (userApartment) => userApartment.user)
+  userApartments: UserApartment[];
 }

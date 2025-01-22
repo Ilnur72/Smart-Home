@@ -52,11 +52,12 @@ export class UserApartmentService {
   ): Promise<any> {
     try {
       const existing = this.userApartmentRepository
-        .createQueryBuilder('user')
-        .where('user.is_deleted = :is_deleted', {
+        .createQueryBuilder('userApartment')
+        .leftJoinAndSelect('userApartment.user', 'user') // User bilan bog'lanish
+        .leftJoinAndSelect('userApartment.apartment', 'apartment') // Apartment bilan bog'lanish
+        .where('userApartment.is_deleted = :is_deleted', {
           is_deleted: filters?.is_deleted ?? false,
         });
-
       if (filters) {
         existing.andWhere(filters);
       }
@@ -84,7 +85,6 @@ export class UserApartmentService {
     try {
       const existing = await this.userApartmentRepository.findOne({
         where: { id, is_deleted: false },
-        relations: ['orders'],
       });
 
       if (!existing) {

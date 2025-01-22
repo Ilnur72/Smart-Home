@@ -1,5 +1,7 @@
+import { Apartment } from 'src/modules/apartment/entities/apartment.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 import { BaseEntity } from 'src/shared/entities/base.entity';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity()
 export class UserApartment extends BaseEntity {
@@ -8,4 +10,12 @@ export class UserApartment extends BaseEntity {
 
   @Column()
   apartment_id: string;
+
+  @ManyToOne(() => User, (user) => user.userApartments)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
+
+  @ManyToOne(() => Apartment, (apartment) => apartment.userApartments)
+  @JoinColumn({ name: 'apartment_id' })
+  apartment: Apartment;
 }

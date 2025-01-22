@@ -107,7 +107,7 @@ export class UserController {
   }
 
   @Get(':id')
-  @SetRoles(OPERATOR, OPERATOR_USER, USER)
+  @SetRoles(OPERATOR, OPERATOR_USER, USER, SYSTEM_ADMIN)
   async findOne(@Param('id') id: string, @Language() language: LanguageDto) {
     try {
       const data = await this.userService.findOne(id, language);
@@ -153,7 +153,29 @@ export class UserController {
     }
   }
 
-  @Delete()
+  @Delete(':id')
+  @SetRoles(OPERATOR, OPERATOR_USER, USER, SYSTEM_ADMIN)
+  async removeCurrentUser(
+    @Param('id') id: string,
+    @Language() language: LanguageDto,
+  ) {
+    try {
+      await this.userService.remove(id, language);
+      return {
+        success: true,
+        code: 200,
+        message: this.messageService.getMessage(
+          'user',
+          language,
+          'user_deleted_successfully',
+        ),
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @Delete('/current')
   @SetRoles(OPERATOR, OPERATOR_USER, USER)
   async remove(@Language() language: LanguageDto) {
     try {
