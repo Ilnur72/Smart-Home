@@ -19,7 +19,7 @@ export class SortBuildingDto {
     required: false,
   })
   @IsOptional()
-  @IsEnum(['created_at', 'floor'])
+  @IsEnum(['created_at', 'floor', 'name'])
   by?: string;
 
   @ApiProperty({

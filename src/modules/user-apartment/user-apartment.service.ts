@@ -55,6 +55,8 @@ export class UserApartmentService {
         .createQueryBuilder('userApartment')
         .leftJoinAndSelect('userApartment.user', 'user') // User bilan bog'lanish
         .leftJoinAndSelect('userApartment.apartment', 'apartment') // Apartment bilan bog'lanish
+        .leftJoinAndSelect('apartment.entrance', 'entrance') // Entrance bilan bog'lanish
+        .leftJoinAndSelect('entrance.buildings', 'building')
         .where('userApartment.is_deleted = :is_deleted', {
           is_deleted: filters?.is_deleted ?? false,
         });
