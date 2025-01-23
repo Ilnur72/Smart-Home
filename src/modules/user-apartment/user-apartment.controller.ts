@@ -85,10 +85,10 @@ export class UserApartmentController {
   }
 
   // @SetRoles(UserApartmentRole.SYSTEM_ADMIN, UserApartmentRole.USER)
-  @Delete()
-  async remove(@Language() language: LanguageDto) {
+  @Delete(':id')
+  async remove(@Param('id') id: string, @Language() language: LanguageDto) {
     try {
-      await this.userApartmentService.remove(this.request['user'].id, language);
+      await this.userApartmentService.remove(id, language);
       return {
         success: true,
         code: 200,
