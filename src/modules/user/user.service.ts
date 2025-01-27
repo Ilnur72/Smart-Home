@@ -85,9 +85,12 @@ export class UserService {
         });
 
       if (search) {
-        existing.where('user.fullname ILIKE :search', {
-          search: `%${search}%`,
-        });
+        existing.where(
+          'user.fullname ILIKE :search OR user.phone ILIKE :search',
+          {
+            search: `%${search}%`,
+          },
+        );
       }
       if (sort.by && sort.order) {
         existing.orderBy(`user.${sort.by}`, sort.order);

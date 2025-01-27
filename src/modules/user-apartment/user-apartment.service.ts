@@ -123,11 +123,11 @@ export class UserApartmentService {
           HttpStatus.NOT_FOUND,
         );
       }
-      const user = this.userApartmentRepository.merge(existing, {
-        is_deleted: true,
-        deleted_at: new Date(),
-      });
-      await this.userApartmentRepository.save(user);
+      // const user = this.userApartmentRepository.merge(existing, {
+      //   is_deleted: true,
+      //   deleted_at: new Date(),
+      // });
+      await this.userApartmentRepository.delete(id);
     } catch (error) {
       if (error.status === 404) {
         throw error;

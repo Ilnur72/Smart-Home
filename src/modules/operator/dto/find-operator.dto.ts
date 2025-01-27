@@ -2,12 +2,34 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
+  IsEnum,
   IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
 import { TransformBoolean } from '../../../shared/decorators/transform-boolean.decorator';
 import { OffsetPaginationDto } from '../../../shared/dto/offset-pagination.dto';
+import { SortOrder } from 'src/shared/types/enums';
+
+export class SortCompanyDto {
+  @ApiProperty({
+    description: 'Sort by field: created_at or name',
+    enum: ['created_at', 'name'],
+    required: false,
+  })
+  @IsOptional()
+  @IsEnum(['created_at', 'name'])
+  by?: string;
+
+  @ApiProperty({
+    description: 'Sort order: asc or desc',
+    enum: SortOrder,
+    required: false,
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  order?: SortOrder;
+}
 
 export class FitlerOperatorDto {
   @ApiProperty({
@@ -35,6 +57,16 @@ export class FindOperatorDto {
   @ValidateNested()
   @Type(() => OffsetPaginationDto)
   page?: OffsetPaginationDto;
+
+  @ApiProperty({
+    description: 'Sorting parameters',
+    type: SortCompanyDto,
+    required: false,
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => SortCompanyDto)
+  sort?: SortCompanyDto;
 
   @ApiProperty({
     description: 'Filtering parameters',

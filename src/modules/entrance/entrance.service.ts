@@ -121,6 +121,8 @@ export class EntranceService {
       const entrance = await this.entranceRepository
         .createQueryBuilder('entrance')
         .leftJoinAndSelect('entrance.apartments', 'apartment')
+        .leftJoinAndSelect('apartment.userApartments', 'userApartments')
+        .leftJoinAndSelect('userApartments.user', 'user')
         .where('entrance.id = :id', { id })
         .orderBy(
           `CAST(SUBSTRING(apartment.number FROM '^[0-9]+') AS INTEGER)`,

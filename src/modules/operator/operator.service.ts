@@ -4,7 +4,7 @@ import { UpdateOperatorDto } from './dto/update-operator.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
-import { LanguageDto, UserRole } from '../../shared/types/enums';
+import { LanguageDto, SortOrder, UserRole } from '../../shared/types/enums';
 import { Operator } from './entities/operator.entity';
 import { FindUserDto } from '../user/dto/find-user.dto';
 import { hash } from 'bcryptjs';
@@ -63,7 +63,12 @@ export class OperatorService {
   }
 
   async findAll(
-    { page = { limit: 10, offset: 1 }, search, filters }: FindUserDto,
+    {
+      page = { limit: 10, offset: 1 },
+      search,
+      filters,
+      sort = { by: 'created_at', order: SortOrder.DESC },
+    }: FindUserDto,
     language: LanguageDto,
   ): Promise<any> {
     try {
@@ -77,6 +82,9 @@ export class OperatorService {
           'operator.name ILIKE :search OR operator.email ILIKE :search',
           { search: `%${search}%` },
         );
+      }
+      if (sort.by && sort.order) {
+        existing.orderBy(`operator.${sort.by}`, sort.order);
       }
       if (filters) {
         existing.andWhere(filters);
