@@ -44,7 +44,10 @@ export class UserController {
     @Language() language: LanguageDto,
   ) {
     try {
-      const data = await this.userService.create(createUserDto, language);
+      const data = await this.userService.create(
+        { ...createUserDto, staff_id: this.request['user'].id },
+        language,
+      );
 
       return {
         success: true,

@@ -50,6 +50,14 @@ export class FilterUserDto {
   })
   @IsOptional()
   role?: string;
+
+  @ApiProperty({
+    description: 'Filter by staff',
+    type: 'string',
+    required: false,
+  })
+  @IsOptional()
+  staff_id?: string;
 }
 
 export class FindUserDto {

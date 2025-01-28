@@ -26,4 +26,8 @@ export class CreateUserDto {
   @IsString()
   @IsOptional()
   password?: string;
+
+  @IsString()
+  @IsOptional()
+  staff_id: string;
 }

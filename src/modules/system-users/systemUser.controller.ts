@@ -94,7 +94,7 @@ export class SystemUserController {
   async findMe(@Language() language: LanguageDto) {
     try {
       const data = await this.systemService.findOne(
-        this.request['system'].id,
+        this.request['user'].id,
         language,
       );
       return {

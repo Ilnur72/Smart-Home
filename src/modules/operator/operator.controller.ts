@@ -91,7 +91,7 @@ export class OperatorController {
   async findMe(@Language() language: LanguageDto) {
     try {
       const data = await this.operatorService.findOne(
-        this.request['operator'].id,
+        this.request['user'].id,
         language,
       );
       return {
