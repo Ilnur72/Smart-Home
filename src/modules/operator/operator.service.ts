@@ -161,10 +161,16 @@ export class OperatorService {
           ),
           HttpStatus.NOT_FOUND,
         );
-      const updatedOperator = this.operatorRepository.merge(
-        existing,
-        updateOperatorDto,
-      );
+      const hashedPassword: any = {};
+
+      if (updateOperatorDto.password)
+        hashedPassword.password = await hash(updateOperatorDto.password, 10);
+
+      const updatedOperator = this.operatorRepository.merge(existing, {
+        ...updateOperatorDto,
+        ...hashedPassword,
+      });
+
       return await this.operatorRepository.save(updatedOperator);
     } catch (error) {
       if (error.status === 404) {

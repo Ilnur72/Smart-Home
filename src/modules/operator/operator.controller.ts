@@ -20,7 +20,7 @@ import { MessageService } from '../../i18n/message.service';
 import { IsLoggedIn } from '../../shared/guards/is-loggedin.guard';
 import { REQUEST } from '@nestjs/core';
 // import { SetRoles } from '../auth/set-roles.decorator';
-import { HasRole } from '../../shared/guards/has-roles.guard';
+// import { HasRole } from '../../shared/guards/has-roles.guard';
 import { Language } from '../../shared/decorators/language.decorator';
 import { FindOperatorDto } from './dto/find-operator.dto';
 
