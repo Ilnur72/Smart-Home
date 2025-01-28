@@ -6,7 +6,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import { LocationDto } from 'src/shared/dto/location.dto';
+import { LocationDto } from '../../../shared/dto/location.dto';
 
 export class CreateBuildingDto {
   @ApiProperty()

@@ -1,6 +1,6 @@
-import { Apartment } from 'src/modules/apartment/entities/apartment.entity';
-import { User } from 'src/modules/user/entities/user.entity';
-import { BaseEntity } from 'src/shared/entities/base.entity';
+import { Apartment } from '../../apartment/entities/apartment.entity';
+import { User } from '../../user/entities/user.entity';
+import { BaseEntity } from '../../../shared/entities/base.entity';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity()

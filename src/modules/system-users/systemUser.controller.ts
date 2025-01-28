@@ -24,8 +24,8 @@ import { REQUEST } from '@nestjs/core';
 import { Language } from '../../shared/decorators/language.decorator';
 import { FindSystemUserDto } from './dto/find-systemUser.dto';
 import { UpdateSystemUserDto } from './dto/update-systemUser.dto';
-import { IsLoggedIn } from 'src/shared/guards/is-loggedin.guard';
-import { HasRole } from 'src/shared/guards/has-roles.guard';
+import { IsLoggedIn } from '../../shared/guards/is-loggedin.guard';
+import { HasRole } from '../../shared/guards/has-roles.guard';
 
 // @SetRoles(SystemUserRole.SYSTEM_ADMIN)
 @UseGuards(IsLoggedIn, HasRole)

@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from '../../../shared/types/enums';
-import { UserApartment } from 'src/modules/user-apartment/entities/user-apartment.entity';
+import { UserApartment } from '../../user-apartment/entities/user-apartment.entity';
 
 @Entity()
 export class User {

@@ -11,7 +11,7 @@ import { Operator } from '../operator/entities/operator.entity';
 import { SystemUser } from '../system-users/entities/systemUser.entity';
 import { OperatorUser } from '../operator-users/entities/operatorUser.entity';
 import { BaseUser } from '../../shared/entities/base-staff.entity';
-import { UserAuth } from 'src/modules/auth/entities/user-auth.entity';
+import { UserAuth } from '../auth/entities/user-auth.entity';
 // import { EskizService } from '../eskiz/eskiz.service';
 // import { EskizModule } from '../eskiz/eskiz.module';
 // import { Eskiz } from '../eskiz/entities/eskiz.entity';

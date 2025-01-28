@@ -6,7 +6,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import { ApartmentStatus } from 'src/shared/types/enums';
+import { ApartmentStatus } from '../../../shared/types/enums';
 
 export class CreateApartmentDto {
   @ApiProperty()

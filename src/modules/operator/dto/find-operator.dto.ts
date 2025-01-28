@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { TransformBoolean } from '../../../shared/decorators/transform-boolean.decorator';
 import { OffsetPaginationDto } from '../../../shared/dto/offset-pagination.dto';
-import { SortOrder } from 'src/shared/types/enums';
+import { SortOrder } from '../../../shared/types/enums';
 
 export class SortCompanyDto {
   @ApiProperty({

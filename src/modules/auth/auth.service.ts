@@ -11,8 +11,8 @@ import { MessageService } from '../../i18n/message.service';
 // import { UserRole } from '../../shared/types/enums';
 import { compare } from 'bcryptjs';
 import { BaseUser } from '../../shared/entities/base-staff.entity';
-import { UserAuth } from 'src/modules/auth/entities/user-auth.entity';
-import { UserRole } from 'src/shared/types/enums';
+import { UserAuth } from '../auth/entities/user-auth.entity';
+import { UserRole } from '../../shared/types/enums';
 
 @Injectable()
 export class AuthService {

@@ -2,8 +2,8 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../../shared/entities/base.entity';
 import { Entrance } from '../../entrance/entities/entrance.entity';
 import { Intercom } from '../../intercom/entities/intercom.entity';
-import { ApartmentStatus } from 'src/shared/types/enums';
-import { UserApartment } from 'src/modules/user-apartment/entities/user-apartment.entity';
+import { ApartmentStatus } from '../../../shared/types/enums';
+import { UserApartment } from '../../user-apartment/entities/user-apartment.entity';
 
 @Entity('apartment')
 export class Apartment extends BaseEntity {
