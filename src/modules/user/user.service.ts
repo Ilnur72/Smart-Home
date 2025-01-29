@@ -80,6 +80,10 @@ export class UserService {
     try {
       const existing = this.userRepository
         .createQueryBuilder('user')
+        .leftJoinAndSelect('user.userApartments', 'userApartment')
+        .leftJoinAndSelect('userApartment.apartment', 'apartment')
+        .leftJoinAndSelect('apartment.entrance', 'entrance')
+        .leftJoinAndSelect('entrance.buildings', 'building')
         .where('user.is_deleted = :is_deleted', {
           is_deleted: filters?.is_deleted ?? false,
         });
@@ -102,10 +106,17 @@ export class UserService {
       const data = await existing
         .skip((page.offset - 1) * page.limit)
         .take(page.limit)
+        // .select([
+        //   'user',
+        //   'userApartment.apartment.number', // Select apartment number
+        //   // 'building.name AS buildingName', // Select building name
+        // ])
         .getMany();
 
       return { total, data, limit: page.limit, offset: page.offset };
     } catch (error) {
+      console.log(error);
+
       throw new HttpException(
         this.messageService.getMessage(
           'user',
