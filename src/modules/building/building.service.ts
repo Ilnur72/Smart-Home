@@ -111,7 +111,7 @@ export class BuildingService {
     try {
       const existing = await this.buildingRepository.findOne({
         where: { id, is_deleted: false },
-        relations: ['district', 'district.region', 'entrances'],
+        relations: ['district', 'district.region', 'entrances', 'operator'],
       });
 
       if (!existing) {

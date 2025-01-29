@@ -16,9 +16,6 @@ export class User {
   @Column({ unique: true })
   phone: string;
 
-  @Column({ nullable: true })
-  email: string;
-
   @Column()
   staff_id: string;
 
