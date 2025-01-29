@@ -1,5 +1,4 @@
-import { ChildEntity, Column, Entity } from 'typeorm';
-import { BaseEntity } from '../../../shared/entities/base.entity';
+import { ChildEntity, Column } from 'typeorm';
 import { UserRole } from '../../../shared/types/enums';
 import { BaseUser } from '../../../shared/entities/base-staff.entity';
 
