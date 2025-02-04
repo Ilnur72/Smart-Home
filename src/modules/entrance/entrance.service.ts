@@ -69,6 +69,8 @@ export class EntranceService {
       const existing = await this.entranceRepository
         .createQueryBuilder('entrance')
         .leftJoinAndSelect('entrance.intercom', 'intercom')
+        .leftJoinAndSelect('entrance.apartments', 'apartments')
+        .leftJoinAndSelect('apartments.userApartments', 'userApartments')
         .where('entrance.is_deleted = :is_deleted', { is_deleted: false });
 
       if (search) {
