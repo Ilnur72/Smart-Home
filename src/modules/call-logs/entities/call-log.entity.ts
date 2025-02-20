@@ -25,8 +25,8 @@ export class CallLog extends BaseEntity {
 
   @Column('json')
   data: {
-    caller: number;
-    dest: number;
+    Caller: number;
+    Dest: number;
     startTime: string;
     endTime: string;
     answerTime: string;

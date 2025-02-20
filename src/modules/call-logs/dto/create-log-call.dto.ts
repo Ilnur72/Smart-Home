@@ -12,12 +12,12 @@ class CallData {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  caller: number;
+  Caller: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  dest: number;
+  Dest: number;
 
   @ApiProperty()
   @IsNotEmpty()
