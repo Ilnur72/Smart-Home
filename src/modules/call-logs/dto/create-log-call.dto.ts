@@ -48,8 +48,8 @@ class CallData {
 export class CreateLogCallDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsEnum(['Cancelled', 'Busy', 'Answered'])
-  status: 'Cancelled' | 'Busy' | 'Answered';
+  @IsEnum(['Cancelled', 'Busy', 'Answered', 'Ringing'])
+  status: 'Cancelled' | 'Busy' | 'Answered' | 'Ringing';
 
   @ApiProperty()
   @IsNotEmpty()

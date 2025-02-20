@@ -20,8 +20,8 @@ import { Column, Entity } from 'typeorm';
 
 @Entity('callLog')
 export class CallLog extends BaseEntity {
-  @Column({ enum: ['Cancelled', 'Busy', 'Answered'] })
-  status: 'Cancelled' | 'Busy' | 'Answered';
+  @Column({ enum: ['Cancelled', 'Busy', 'Answered', 'Ringing'] })
+  status: 'Cancelled' | 'Busy' | 'Answered' | 'Ringing';
 
   @Column('json')
   data: {
