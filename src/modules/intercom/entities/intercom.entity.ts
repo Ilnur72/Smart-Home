@@ -15,6 +15,9 @@ export class Intercom extends BaseEntity {
   ip: string;
 
   @Column({ nullable: true })
+  sip: string;
+
+  @Column({ nullable: true })
   username: string;
 
   @Column({ nullable: true })

@@ -1,3 +1,4 @@
+import { logCallModule } from './modules/call-logs/logCall.module';
 import { Module } from '@nestjs/common';
 import { CoreModule } from './shared/core/core.modules';
 import { UserModule } from './modules/user/user.module';
@@ -17,6 +18,7 @@ import { UserApartmentModule } from './modules/user-apartment/user-apartment.mod
 
 @Module({
   imports: [
+    logCallModule,
     CoreModule,
     UserModule,
     BuildingModule,
