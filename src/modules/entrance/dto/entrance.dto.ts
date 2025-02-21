@@ -17,6 +17,9 @@ export class EntranceDto {
   intercom_ip: number;
 
   @ApiProperty()
+  stream_ip: string;
+
+  @ApiProperty()
   intercom_login: number;
 
   @ApiProperty()

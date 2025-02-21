@@ -40,6 +40,9 @@ export class Entrance extends BaseEntity {
   @Column({ nullable: true })
   intercom_password: string;
 
+  @Column({ nullable: true })
+  stream_ip: string;
+
   @ManyToOne(() => Building, (building) => building.entrances)
   @JoinColumn({ name: 'building_id' })
   buildings: Building;

@@ -35,6 +35,11 @@ export class CreateEntranceDto {
   intercom_password: string;
 
   @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  stream_ip: string;
+
+  @ApiProperty()
   @IsUUID()
   @IsOptional()
   intercom_id?: string;
