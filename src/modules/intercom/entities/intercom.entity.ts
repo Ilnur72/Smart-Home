@@ -18,6 +18,9 @@ export class Intercom extends BaseEntity {
   sip: string;
 
   @Column({ nullable: true })
+  stream_link: string;
+
+  @Column({ nullable: true })
   username: string;
 
   @Column({ nullable: true })
