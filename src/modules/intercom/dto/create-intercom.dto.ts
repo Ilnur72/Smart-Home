@@ -11,7 +11,7 @@ export class CreateIntercomDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  ip: string;
+  device_ip: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -31,12 +31,12 @@ export class CreateIntercomDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  login: string;
+  device_login: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  password: string;
+  device_password: string;
 
   @ApiProperty({ enum: IntercomStatus })
   @IsNotEmpty()
