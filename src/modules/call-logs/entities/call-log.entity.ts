@@ -1,5 +1,5 @@
 // import { Apartment } from 'src/modules/apartment/entities/apartment.entity';
-import { BaseEntity } from 'src/shared/entities/base.entity';
+import { BaseEntity } from '../../../shared/entities/base.entity';
 import { Column, Entity } from 'typeorm';
 
 // @Entity()

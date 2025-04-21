@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CallLog } from './entities/call-log.entity';
 import { Repository } from 'typeorm';
-import { SortOrder } from 'src/shared/types/enums';
+import { SortOrder } from '../../shared/types/enums';
 import { CreateLogCallDto } from './dto/create-log-call.dto';
 import { FindLogCallDto } from './dto/find-log-call.dto';
 

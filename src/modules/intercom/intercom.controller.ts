@@ -32,10 +32,10 @@ export class IntercomController {
     private readonly messageService: MessageService,
   ) {}
 
-  @Put('control-door')
-  openDoor(@Language() language: LanguageDto) {
+  @Put('control-door/:id')
+  openDoor(@Language() language: LanguageDto, @Param('id') id: string) {
     try {
-      const data = this.intercomService.controlDoor();
+      const data = this.intercomService.controlDoor(id, language);
       return {
         success: true,
         code: 200,

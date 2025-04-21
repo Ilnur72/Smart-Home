@@ -1,4 +1,9 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageService } from '../../i18n/message.service';
@@ -17,14 +22,20 @@ export class IntercomService {
     private readonly messageService: MessageService,
   ) {}
 
-  controlDoor(id?: string, language?: LanguageDto) {
+  async controlDoor(intercomId?: string, language?: LanguageDto) {
     try {
+      const intercom = await this.intercomRepository.findOne({
+        where: { id: intercomId },
+      });
+      console.log(intercom);
+
       const data = `<RemoteControlDoor version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">
     <doorNo min="1" max="1"></doorNo>
     <cmd>open</cmd>
   </RemoteControlDoor>`;
-      const url =
-        'https://172.25.25.96/ISAPI/AccessControl/RemoteControl/door/1';
+      const url = intercom.sip;
+      // const url =
+      //   'https://172.25.25.96/ISAPI/AccessControl/RemoteControl/door/1';
       const options = {
         method: 'PUT',
         rejectUnauthorized: false,
@@ -50,9 +61,21 @@ export class IntercomService {
 
   async create(createIntercomDto: CreateIntercomDto, language?: LanguageDto) {
     try {
+      const existing = await this.intercomRepository.findOne({
+        where: { entrance_id: createIntercomDto.entrance_id },
+      });
+      console.log(existing);
+
+      if (existing)
+        throw new BadRequestException(
+          'Bir podyezd uchun faqat bitta domofon yarata olasiz',
+        );
       const newIntercom = this.intercomRepository.create(createIntercomDto);
       return await this.intercomRepository.save(newIntercom);
     } catch (error) {
+      console.log(error);
+      if (error.response.statusCode === 400)
+        throw new HttpException(error.response.message, HttpStatus.BAD_REQUEST);
       throw new HttpException(
         this.messageService.getMessage(
           'intercom',

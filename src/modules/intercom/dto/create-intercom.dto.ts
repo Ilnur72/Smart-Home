@@ -11,17 +11,27 @@ export class CreateIntercomDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  url: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
   ip: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  username: string;
+  sip: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  stream_link: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  entrance_id: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  login: string;
 
   @ApiProperty()
   @IsNotEmpty()

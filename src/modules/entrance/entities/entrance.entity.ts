@@ -19,9 +19,6 @@ export class Entrance extends BaseEntity {
   @Column()
   name: string;
 
-  @Column({ type: 'uuid', nullable: true })
-  intercom_id: string;
-
   @Column({ type: 'int', nullable: true })
   first_apartment_number?: number;
 
@@ -31,18 +28,6 @@ export class Entrance extends BaseEntity {
   @Column('text', { array: true, nullable: true })
   camera_ids: string[];
 
-  @Column({ nullable: true })
-  intercom_ip: string;
-
-  @Column({ nullable: true })
-  intercom_login: string;
-
-  @Column({ nullable: true })
-  intercom_password: string;
-
-  @Column({ nullable: true })
-  stream_ip: string;
-
   @ManyToOne(() => Building, (building) => building.entrances)
   @JoinColumn({ name: 'building_id' })
   buildings: Building;
@@ -50,7 +35,7 @@ export class Entrance extends BaseEntity {
   @OneToOne(() => Intercom, (intercom) => intercom.entrance, {
     nullable: true,
   })
-  @JoinColumn({ name: 'intercom_id' })
+  @JoinColumn()
   intercom: Intercom;
 
   @OneToMany(() => Apartment, (apartment) => apartment.entrance, {

@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { BaseEntity } from '../../../shared/entities/base.entity';
 import { IntercomStatus } from '../../../shared/types/enums';
 import { Entrance } from '../../entrance/entities/entrance.entity';
@@ -7,9 +7,6 @@ import { Entrance } from '../../entrance/entities/entrance.entity';
 export class Intercom extends BaseEntity {
   @Column()
   model: string;
-
-  @Column()
-  url: string;
 
   @Column({ nullable: true })
   ip: string;
@@ -21,10 +18,13 @@ export class Intercom extends BaseEntity {
   stream_link: string;
 
   @Column({ nullable: true })
-  username: string;
+  login: string;
 
   @Column({ nullable: true })
   password: string;
+
+  @Column({ nullable: true })
+  entrance_id: string;
 
   @Column({
     type: 'enum',
@@ -34,5 +34,6 @@ export class Intercom extends BaseEntity {
   status: IntercomStatus;
 
   @OneToOne(() => Entrance, (entrance) => entrance.intercom)
+  @JoinColumn({ name: 'entrance_id' })
   entrance: Entrance;
 }

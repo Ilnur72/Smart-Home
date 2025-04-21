@@ -27,7 +27,7 @@ export class UserService {
   async create(createUserDto: CreateUserDto, language?: string) {
     try {
       const existing = await this.userRepository.findOne({
-        where: { phone: createUserDto.phone },
+        where: { phone: createUserDto.phone, is_deleted: false },
       });
       if (existing)
         throw new HttpException(

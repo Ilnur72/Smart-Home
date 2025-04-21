@@ -21,8 +21,8 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TimezoneInterceptor());
 
   const config = new DocumentBuilder()
-    .setTitle('Smart Home API')
-    .addServer(`http://localhost:8070`)
+    .setTitle('My Home API')
+    .addServer(`http://84.54.118.39:8920`)
     .setVersion('1.0')
     .build();
 

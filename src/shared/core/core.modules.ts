@@ -4,8 +4,6 @@ import configService from '../config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from '../utils/typeorm-config.service';
 import { JwtModule } from '@nestjs/jwt';
-import { CacheModule, CacheModuleOptions } from '@nestjs/cache-manager';
-import * as redisStore from 'cache-manager-redis-store';
 
 @Global()
 @Module({
@@ -27,16 +25,7 @@ import * as redisStore from 'cache-manager-redis-store';
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
     }),
-    CacheModule.registerAsync<CacheModuleOptions>({
-      useFactory: () => ({
-        store: redisStore,
-        url: 'redis://default:DvFWylDVXoFJxNyDPdnXmMIsRRyVBFrr@junction.proxy.rlwy.net:34191',
-        // host: process.env.REDIS_HOST,
-        // port: process.env.REDIS_PORT,
-        // ttl: 60, // Standart TTL (sekundda)
-      }),
-    }),
   ],
-  exports: [ConfigModule, TypeOrmModule, CacheModule],
+  exports: [ConfigModule, TypeOrmModule],
 })
 export class CoreModule {}

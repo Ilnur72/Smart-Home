@@ -59,6 +59,7 @@ export class AuthController {
     }
   }
 
+  @ApiResponse({ type: LoginStaffDto })
   @Post('login-staff')
   async staffLogin(
     @Body() body: LoginStaffDto,

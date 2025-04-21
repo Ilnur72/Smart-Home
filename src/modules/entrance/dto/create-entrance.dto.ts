@@ -20,31 +20,6 @@ export class CreateEntranceDto {
   name: string;
 
   @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  intercom_ip: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  intercom_login: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  intercom_password: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  stream_ip: string;
-
-  @ApiProperty()
-  @IsUUID()
-  @IsOptional()
-  intercom_id?: string;
-
-  @ApiProperty()
   @IsOptional()
   @IsNumber()
   first_apartment_number?: number;

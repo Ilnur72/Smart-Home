@@ -122,6 +122,7 @@ export class EntranceService {
     try {
       const entrance = await this.entranceRepository
         .createQueryBuilder('entrance')
+        .leftJoinAndSelect('entrance.intercom', 'intercom')
         .leftJoinAndSelect('entrance.apartments', 'apartment')
         .leftJoinAndSelect('apartment.userApartments', 'userApartments')
         .leftJoinAndSelect('userApartments.user', 'user')
