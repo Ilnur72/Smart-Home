@@ -47,7 +47,7 @@ export class IntercomController {
         ),
       };
     } catch (error) {
-      throw new error();
+      throw error;
     }
   }
 

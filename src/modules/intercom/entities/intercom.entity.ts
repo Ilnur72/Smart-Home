@@ -8,22 +8,22 @@ export class Intercom extends BaseEntity {
   @Column()
   model: string;
 
-  @Column({ nullable: true })
+  @Column()
   device_ip: string;
 
-  @Column({ nullable: true })
+  @Column()
   sip: string;
 
-  @Column({ nullable: true })
+  @Column()
   stream_link: string;
 
-  @Column({ nullable: true })
+  @Column()
   device_login: string;
 
-  @Column({ nullable: true })
+  @Column()
   device_password: string;
 
-  @Column({ nullable: true })
+  @Column()
   entrance_id: string;
 
   @Column({

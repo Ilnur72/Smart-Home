@@ -122,7 +122,12 @@ export class EntranceService {
     try {
       const entrance = await this.entranceRepository
         .createQueryBuilder('entrance')
-        .leftJoinAndSelect('entrance.intercom', 'intercom')
+        .leftJoinAndSelect(
+          'entrance.intercom',
+          'intercom',
+          'intercom.is_deleted = :is_deleted',
+          { is_deleted: false },
+        )
         .leftJoinAndSelect('entrance.apartments', 'apartment')
         .leftJoinAndSelect('apartment.userApartments', 'userApartments')
         .leftJoinAndSelect('userApartments.user', 'user')

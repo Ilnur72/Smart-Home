@@ -35,7 +35,6 @@ export class Entrance extends BaseEntity {
   @OneToOne(() => Intercom, (intercom) => intercom.entrance, {
     nullable: true,
   })
-  @JoinColumn()
   intercom: Intercom;
 
   @OneToMany(() => Apartment, (apartment) => apartment.entrance, {

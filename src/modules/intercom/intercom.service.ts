@@ -3,6 +3,7 @@ import {
   HttpException,
   HttpStatus,
   BadRequestException,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -27,25 +28,23 @@ export class IntercomService {
       const intercom = await this.intercomRepository.findOne({
         where: { id: intercomId },
       });
-      console.log(intercom);
+      if (!intercom) throw new NotFoundException('Intercom not found');
 
       const data = `<RemoteControlDoor version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">
     <doorNo min="1" max="1"></doorNo>
     <cmd>open</cmd>
   </RemoteControlDoor>`;
-      const url = intercom.sip;
-      // const url =
-      //   'https://172.25.25.96/ISAPI/AccessControl/RemoteControl/door/1';
+      const url = `https://${intercom.device_ip}/ISAPI/AccessControl/RemoteControl/door/1`;
       const options = {
         method: 'PUT',
         rejectUnauthorized: false,
-        digestAuth: 'admin:12345678a',
+        digestAuth: `${intercom.device_login}:${intercom.device_password}`,
         content: data,
         headers: {
           'Content-Type': 'application/xml',
         },
       };
-      const result = httpClient.request(url, options);
+      await httpClient.request(url, options);
       return 'opened';
     } catch (error) {
       throw new HttpException(
